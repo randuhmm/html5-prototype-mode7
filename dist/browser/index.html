@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title>Candy Shot</title>
+
+		<link rel="stylesheet" href="css/default.css" type="text/css" />
+		<script type="text/javascript" charset="utf-8" src="js/lib/prototype.js"></script>
+		<script type="text/javascript">
+			(function() {
+
+				var onWindowLoad = function()
+				{
+					var paramString = window.location.search.substring(1);
+					var params = paramString.toQueryParams();
+
+					var settings = {
+						'debug': false,
+						'mainElement': $('wrapper')
+					};
+
+					if('w' in params) settings.width = params.w;
+					if('h' in params) settings.height = params.h;
+
+					window.settings = settings;
+
+					var dataMain = 'js/config.min.js';
+					if('unmin' in params) {
+						dataMain = 'js/config.js';
+					}
+
+					var requireJS = 'js/lib/requirejs/require.js';
+					var script = new Element('script', {
+						'type'		:	'text/javascript',
+						'charset'	: 	'utf-8',
+						'src'		: 	requireJS,
+						'data-main'	: 	dataMain
+					});
+					$$('head')[0].insert(script);
+				};
+
+				Event.observe(window, 'load', function() {
+					onWindowLoad();
+				});
+
+			}());
+		</script>
+	</head>
+	<body>
+		<div id="debug"></div>
+		<div id="wrapper"></div>
+	</body>
+</html>

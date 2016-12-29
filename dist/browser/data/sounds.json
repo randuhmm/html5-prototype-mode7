@@ -1,0 +1,52 @@
+[
+	{
+		"id": "bgm.game",
+		"src": "snd/bgm/bgm.game.ogg",
+		"type": "bgm"
+	},
+	{
+		"id": "sfx.candy.hit.candy.01",
+		"src": "snd/sfx/sfx.candy.hit.candy.01.ogg",
+		"type": "sfx"
+	},
+	{
+		"id": "sfx.candy.hit.candy.02",
+		"src": "snd/sfx/sfx.candy.hit.candy.02.ogg",
+		"type": "sfx"
+	},
+	{
+		"id": "sfx.candy.hit.candy.03",
+		"src": "snd/sfx/sfx.candy.hit.candy.03.ogg",
+		"type": "sfx"
+	},
+	{
+		"id": "sfx.candy.hit.candy.04",
+		"src": "snd/sfx/sfx.candy.hit.candy.04.ogg",
+		"type": "sfx"
+	},
+	{
+		"id": "sfx.candy.shatter.01",
+		"src": "snd/sfx/sfx.candy.shatter.01.ogg",
+		"type": "sfx"
+	},
+	{
+		"id": "sfx.candy.shatter.02",
+		"src": "snd/sfx/sfx.candy.shatter.02.ogg",
+		"type": "sfx"
+	},
+	{
+		"id": "sfx.candy.shatter.03",
+		"src": "snd/sfx/sfx.candy.shatter.03.ogg",
+		"type": "sfx"
+	},
+	{
+		"id": "sfx.candy.shatter.04",
+		"src": "snd/sfx/sfx.candy.shatter.04.ogg",
+		"type": "sfx"
+	},
+	{
+		"id": "sfx.time.penalty",
+		"src": "snd/sfx/sfx.time.penalty.ogg",
+		"type": "sfx"
+	}
+]

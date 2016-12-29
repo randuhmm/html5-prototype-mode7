@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTML5 Demo: Mode7</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/default.css" type="text/css" />
+    <script type="text/javascript" src="js/lib/puremvc-1.0.1.js"></script>
+    <script type="text/javascript" src="js/lib/minibot-browser.js"></script>
+    <script type="text/javascript" src="js/loader.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript">
+      (function() {
+
+        var onWindowLoad = function()
+        {
+
+          /*
+          var paramString = window.location.search.substring(1);
+          var params = paramString.toQueryParams();
+          */
+
+          var settings = {
+            'debug': true,
+            'debugElement': document.getElementById('debug'),
+            'mainElement': document.getElementById('wrapper')
+          };
+
+          /*
+          if('w' in params) settings.width = params.w;
+          if('h' in params) settings.height = params.h;
+
+          if('weinre' in params) {
+            var weinre_script = new Element('script', {
+              'type'    : 'text/javascript',
+              'src'   :   'http://mode7.local:8081/target/target-script-min.js#anonymous'
+            });
+            $$('head')[0].insert(weinre_script);
+          }
+
+          window.settings = settings;
+          */
+
+          start(settings);
+
+        };
+
+        window.onload = onWindowLoad;
+
+      }());
+    </script>
+  </head>
+  <body>
+    <div id="debug"></div>
+    <div id="wrapper"></div>
+  </body>
+</html>
