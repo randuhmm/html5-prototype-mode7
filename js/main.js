@@ -79,6 +79,7 @@
 
 		canvas = new Element('canvas', { 'width': WIDTH, 'height': HEIGHT});
 		context = canvas.getContext("2d");
+		context.imageSmoothingEnabled = false;
 		$$('body')[0].insert(canvas);
 
 		Event.observe(window, 'keydown', handleKeydown);
@@ -128,7 +129,8 @@
 
 		groundCanvas = new Element('canvas', { 'width': max, 'height': max, 'style': 'width:' + max/2 + 'px;height:' + max/2 + 'px'});
 		groundContext = groundCanvas.getContext("2d");
-		//$$('body')[0].insert(groundCanvas);
+		groundContext.imageSmoothingEnabled = false;
+		$$('body')[0].insert(groundCanvas);
 
 		/*
 		scaleCanvas = new Element('canvas', { 'width': max, 'height': max, 'style': 'width:' + max/2 + 'px;height:' + max/2 + 'px'});

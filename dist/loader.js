@@ -142,11 +142,10 @@ var ModelPrepCommand = function (_puremvc$SimpleComman) {
 
       var head = data.head;
       var scriptsArray = data.scriptsArray;
-      var scriptsLoadedCallback = data.scriptsLoadedCallback;
 
       // Load and initialize the data
       if (!this.facade.hasProxy(_ScriptsProxy2.default.NAME)) {
-        var scriptsProxy = new _ScriptsProxy2.default(head, scriptsArray, scriptsLoadedCallback);
+        var scriptsProxy = new _ScriptsProxy2.default(head, scriptsArray);
         this.facade.registerProxy(scriptsProxy);
       }
     }

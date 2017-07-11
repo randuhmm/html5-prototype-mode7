@@ -7,6 +7,6 @@
   "private": true,
   "dependencies": {
     "puremvc": "1.0.1",
-    "minibot-engine": "file:///C:/Users/Jonny/Projects/me/minibot-engine/.git"
+    "minibot-engine": "file:///C/Users/Jonny/Projects/me/minibot-engine/.git"
   }
 }
