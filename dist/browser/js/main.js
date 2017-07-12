@@ -1,8 +1,18 @@
 (function(global) {
 
-  var start = function(settings)
-  {
+  var settings = null
 
+  var init = function(_settings) {
+    settings = _settings;
+    var startButton = document.getElementById('startButton');
+    var started = false;
+    startButton.onclick = function(event) {
+      startButton.style = "display: none;";
+      start();
+    };
+  };
+
+  var start = function() {
     var minibot = require('minibot').default;
     var loader = require('loader').default;
     var app = require('app').default;
@@ -20,8 +30,8 @@
     var platformType = minibot.system.GetPlatformType();
     var platformName = minibot.system.GetPlatformName();
 
-    var width = 600;
-    var height = 600;
+    var width = 320;
+    var height = 200;
     var ratio = 1;
     var eventTypes = minibot.display.scene.Scene.MOUSE_EVENTS;
 
@@ -39,6 +49,16 @@
 
       var canvas = document.createElement('canvas');
       base.appendChild(canvas);
+
+      // Scale the canvas to fit
+      var rect = base.getBoundingClientRect();
+      if(rect.width <= rect.height) {
+        ratio = width / rect.width;
+        canvas.style.marginTop = (rect.height - (height / ratio)) / 2 + 'px';
+      } else {
+        ratio = height / rect.height;
+        canvas.style.marginLeft = (rect.width - (width / ratio)) / 2 + 'px';
+      }
 
       var options = {
         "progressCallback": minibot.core.Utils.Bind(loaderView.update, loaderView),
@@ -108,6 +128,29 @@
         }
       }, this));
     };
+
+    var onFullscreenChange = function(event) {
+      if(document.webkitIsFullScreen) {
+        base.style.width = '100%';
+        base.style.height = '100%';
+        base.style.backgroundColor = '#000000';
+        console.log("Enter Fullscreen");
+      } else {
+        // TODO: Destroy the game
+        var startButton = document.getElementById('startButton');
+        startButton.style = "display: visible;";
+        while(base.children.length) {
+          base.children[0].remove();
+        }
+        console.log("Exit Fullscreen");
+      }
+    };
+
+    // Request fullscreen
+    if (base.webkitRequestFullscreen) {
+      document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+      base.webkitRequestFullscreen();
+    }
 
     if(platformType == minibot.system.PlatformType.MOBILE) {
       if(platformName == minibot.system.PlatformName.IOS) {
@@ -187,6 +230,6 @@
     }
   };
 
-  global.start = start;
+  global.init = init;
 
 })(window);

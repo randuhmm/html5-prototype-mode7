@@ -41,10 +41,8 @@ ul {
 }
 
 div#wrapper {
-	margin: 0 auto;
+	margin: 0;
 	padding: 0;
-	width: 600px;
-	position: relative;
 }
 
 div#debug {
@@ -82,29 +80,27 @@ canvas {
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 div#splash_div {
-	width: 600px;
-	height: 600px;
-	background: #FFFFFF;
+	width: 100%;
+	height: 100%;
 	background-image: url('../img/splash/splash.miniboss.png');
 	background-repeat: no-repeat;
 	background-position: center center;
 	color: #FFFFFF;
-	position: absolute;
 	z-index: -1;
 }
 
 div#progressWrap_div {
-    border: 4px solid #CCCCCC;
-    height: 26px;
-    margin: 380px 38px 0;
-    padding: 4px;
+    border: 0.5em solid #CCCCCC;
+    height: 4%;
+    margin: 44% 5% 0;
+    padding: 1%;
     width: auto;
-}    
+}
 
 div#progressBar_div {
     background: none repeat scroll 0 0 #CCCCCC;
     float: left;
-    height: 26px;
+    height: 100%;
 }    
 
 /*

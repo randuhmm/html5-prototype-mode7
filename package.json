@@ -32,7 +32,7 @@
     ]
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install && cp -R ./dist/lib/minibot-engine/dist/minibot-browser.* ./dist/browser/js/lib",
     "prestart": "npm install",
     "start": "http-server -a 0.0.0.0 -p 8000 -c-1 ./dist/browser",
     "pretest": "npm install",
