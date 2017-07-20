@@ -7585,7 +7585,9 @@ exports.default = {
   LOAD_OPTIONS: "LoadOptions",
 
   LOAD_VIEW_RESOURCES: "LoadViewResources",
-  LOAD_ENGINE_RESOURCES: "LoadEngineResources"
+  LOAD_ENGINE_RESOURCES: "LoadEngineResources",
+
+  EXIT_APP: "ExitApp"
 
 };
 
@@ -7795,7 +7797,7 @@ var LoadGameResourcesCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadGameResourcesCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/ResourceProxy":60}],40:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/ResourceProxy":59}],40:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7952,7 +7954,7 @@ var LoadOptionsCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadOptionsCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/display/Options":53,"app/model/ResourceProxy":60,"app/view/OptionsMediator":67}],42:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/display/Options":53,"app/model/ResourceProxy":59,"app/view/OptionsMediator":66}],42:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8028,7 +8030,7 @@ var LoadTitleCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadTitleCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/display/Title":55,"app/model/ResourceProxy":60,"app/view/TitleMediator":69}],43:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/display/Title":55,"app/model/ResourceProxy":59,"app/view/TitleMediator":68}],43:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8103,7 +8105,7 @@ var LoadViewResourcesCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadViewResourcesCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/ResourceProxy":60,"minibot":"minibot"}],44:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/ResourceProxy":59,"minibot":"minibot"}],44:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8213,7 +8215,7 @@ var ManagerDestroyCommand = function (_puremvc$SimpleComman) {
 exports.default = ManagerDestroyCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/DataProxy":59,"app/model/ResourceProxy":60,"app/model/SoundProxy":61,"minibot":"minibot"}],45:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/DataProxy":58,"app/model/ResourceProxy":59,"app/model/SoundProxy":60,"minibot":"minibot"}],45:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8322,7 +8324,7 @@ var ManagerPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ManagerPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/DataProxy":59,"app/model/ResourceProxy":60,"app/model/SoundProxy":61,"minibot":"minibot"}],46:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/DataProxy":58,"app/model/ResourceProxy":59,"app/model/SoundProxy":60,"minibot":"minibot"}],46:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8381,7 +8383,7 @@ var ModelDestroyCommand = function (_puremvc$SimpleComman) {
 exports.default = ModelDestroyCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/model/DataProxy":59,"app/model/ResourceProxy":60,"app/model/SoundProxy":61}],47:[function(require,module,exports){
+},{"app/model/DataProxy":58,"app/model/ResourceProxy":59,"app/model/SoundProxy":60}],47:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8439,7 +8441,7 @@ var ModelPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ModelPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/model/DataProxy":59,"app/model/ResourceProxy":60,"app/model/SoundProxy":61}],48:[function(require,module,exports){
+},{"app/model/DataProxy":58,"app/model/ResourceProxy":59,"app/model/SoundProxy":60}],48:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8633,7 +8635,7 @@ var ViewDestroyCommand = function (_puremvc$SimpleComman) {
 exports.default = ViewDestroyCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/display/BaseView":52,"app/display/Shell":54,"app/view/ShellMediator":68,"minibot":"minibot"}],51:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/Shell":54,"app/view/ShellMediator":67,"minibot":"minibot"}],51:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8697,7 +8699,7 @@ var ViewPrepCommand = function (_puremvc$SimpleComman) {
             _minibot2.default.system.SetRenderCallback(Utils.Bind(this.facade.render, this.facade));
 
             var shell = new _Shell2.default(scene);
-            this.facade.registerMediator(new _ShellMediator2.default(shell));
+            this.facade.registerMediator(new _ShellMediator2.default(shell, data));
 
             _BaseView2.default.WIDTH = scene.getWidth();
             _BaseView2.default.HEIGHT = scene.getHeight();
@@ -8712,7 +8714,7 @@ var ViewPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ViewPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/display/BaseView":52,"app/display/Shell":54,"app/view/ShellMediator":68,"minibot":"minibot"}],52:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/Shell":54,"app/view/ShellMediator":67,"minibot":"minibot"}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8805,7 +8807,7 @@ var Options = function (_BaseView) {
         var rect = new Rect(_this.w, _this.h, "", Color.FromHex("#1D96FE"));
         _this.addChild(rect);
 
-        var button1 = new _MainMenuButton2.default("BACK (1)", _this.w * 0.8, _this.h * 0.1);
+        var button1 = new _MainMenuButton2.default("BACK HI (1)", _this.w * 0.8, _this.h * 0.1);
         _this.addChild(button1);
         button1.x = _this.w * 0.1;
         button1.y = _this.h * 0.1;
@@ -8839,7 +8841,7 @@ var Options = function (_BaseView) {
 
 exports.default = Options;
 
-},{"app/display/BaseView":52,"app/display/component/MainMenuButton":56,"app/event/ViewEvent":58,"minibot":"minibot"}],54:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/component/MainMenuButton":56,"app/event/ViewEvent":57,"minibot":"minibot"}],54:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8912,9 +8914,9 @@ var _ViewEvent = require('app/event/ViewEvent');
 
 var _ViewEvent2 = _interopRequireDefault(_ViewEvent);
 
-var _TitleButton = require('app/display/component/TitleButton');
+var _MainMenuButton = require('app/display/component/MainMenuButton');
 
-var _TitleButton2 = _interopRequireDefault(_TitleButton);
+var _MainMenuButton2 = _interopRequireDefault(_MainMenuButton);
 
 var _ResourceType = require('app/resource/ResourceType');
 
@@ -8943,95 +8945,58 @@ var ButtonEvent = _minibot2.default.event.ButtonEvent,
 var Title = function (_BaseView) {
     _inherits(Title, _BaseView);
 
-    // playBtn: null,
-    // optionsBtn: null,
-    // creditsBtn: null,
-
     function Title(data) {
         _classCallCheck(this, Title);
 
         var _this = _possibleConstructorReturn(this, (Title.__proto__ || Object.getPrototypeOf(Title)).call(this, data));
 
-        var rect = new Rect(_this.w, _this.h, "", Color.FromHex("#1D96FE"));
+        var rect = new Rect(_this.w, _this.h, "", Color.FromHex("#CCCCCC"));
         _this.addChild(rect);
 
-        _this.setupLogo();
-        _this.setupButtons();
+        var buttonExit = new _MainMenuButton2.default("x", _this.w * 0.1, _this.h * 0.2);
+        _this.addChild(buttonExit);
+        buttonExit.x = _this.w * 0.8;
+        buttonExit.y = _this.h * 0.1;
+        buttonExit.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(_this.handleExitSelect, _this));
+
+        var button1 = new _MainMenuButton2.default("LEVEL 1", _this.w * 0.6, _this.h * 0.2);
+        _this.addChild(button1);
+        button1.x = _this.w * 0.1;
+        button1.y = _this.h * 0.1;
+        button1.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(_this.handleLevelSelect, _this, 1));
+
+        var button1 = new _MainMenuButton2.default("LEVEL 1", _this.w * 0.6, _this.h * 0.2);
+        _this.addChild(button1);
+        button1.x = _this.w * 0.1;
+        button1.y = _this.h * 0.1;
+        button1.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(_this.handleLevelSelect, _this, 1));
+
+        var button2 = new _MainMenuButton2.default("LEVEL 2", _this.w * 0.6, _this.h * 0.2);
+        _this.addChild(button2);
+        button2.x = _this.w * 0.1;
+        button2.y = _this.h * 0.2 + button2.h * 1;
+        button2.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(_this.handleLevelSelect, _this, 2));
+
+        var button3 = new _MainMenuButton2.default("LEVEL 3", _this.w * 0.6, _this.h * 0.2);
+        _this.addChild(button3);
+        button3.x = _this.w * 0.1;
+        button3.y = _this.h * 0.3 + button3.h * 2;
+        button3.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(_this.handleLevelSelect, _this, 3));
+
         return _this;
     }
 
     _createClass(Title, [{
-        key: 'setupLogo',
-        value: function setupLogo() {
-
-            var w = this.w * 0.6;
-
-            var container = new Container();
-            var cloud = new Sprite(DisplayObject.GetResource(Title, _ResourceType2.default.SPRITE, 'ui.title.cloud'));
-            var angel = new Sprite(DisplayObject.GetResource(Title, _ResourceType2.default.SPRITE, 'ui.title.angel'));
-            var logo = new Sprite(DisplayObject.GetResource(Title, _ResourceType2.default.SPRITE, 'ui.title.logo'));
-
-            angel.y = -240;
-
-            container.addChild(cloud);
-            container.addChild(angel);
-            container.addChild(logo);
-
-            container.setAlign(DisplayObject.ALIGN_HORZ_CENTER, [cloud, angel, logo]);
-            container.setAlign(DisplayObject.ALIGN_VERT_CENTER, [cloud, logo]);
-
-            container.setScale(w / container.getWidth());
-
-            this.addChild(container);
-
-            //container.y = this.getHeight()/2 - container.getHeight();
-            this.setAlign(DisplayObject.ALIGN_HORZ_CENTER, [container]);
-            this.setAlign(DisplayObject.ALIGN_VERT_CENTER, [container]);
-            //container.y -= container.getHeight()/4;
-        }
-    }, {
-        key: 'setupButtons',
-        value: function setupButtons() {
-
-            var BW = this.w * 0.5;
-            if (BW > 479) BW = 479;
-            if (BW <= 300) BW = 300;
-
-            this.playBtn = new _TitleButton2.default(_TitleButton2.default.START, BW);
-            this.addChild(this.playBtn);
-
-            this.optionsBtn = new _TitleButton2.default(_TitleButton2.default.OPTIONS, BW);
-            this.addChild(this.optionsBtn);
-
-            this.creditsBtn = new _TitleButton2.default(_TitleButton2.default.CREDITS, BW);
-            this.addChild(this.creditsBtn);
-
-            var BH = this.playBtn.getHeight();
-            var BBX = (this.w - BW) / 2;
-            var BBY = BBX > BH / 2 ? BH / 2 : BBX;
-
-            this.playBtn.x = BBX;
-            this.playBtn.y = this.h - BH * 3 - BBY * 5;
-            this.playBtn.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handlePlaySelect, this));
-
-            this.optionsBtn.x = BBX;
-            this.optionsBtn.y = this.h - BH * 2 - BBY * 4;
-            this.optionsBtn.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handleOptionsSelect, this));
-
-            this.creditsBtn.x = BBX;
-            this.creditsBtn.y = this.h - BH - BBY * 3;
-            this.creditsBtn.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handleOptionsSelect, this));
-        }
-    }, {
-        key: 'handlePlaySelect',
-        value: function handlePlaySelect(event) {
-            var viewEvent = new _ViewEvent2.default(_ViewEvent2.default.PLAY_SELECTED);
+        key: 'handleLevelSelect',
+        value: function handleLevelSelect(event, level) {
+            console.log('Title:handleLevelSelect - ' + level);
+            var viewEvent = new _ViewEvent2.default(_ViewEvent2.default.LEVEL_SELECTED);
             this.dispatchEvent(viewEvent);
         }
     }, {
-        key: 'handleOptionsSelect',
-        value: function handleOptionsSelect(event) {
-            var viewEvent = new _ViewEvent2.default(_ViewEvent2.default.OPTIONS_SELECTED);
+        key: 'handleExitSelect',
+        value: function handleExitSelect(event) {
+            var viewEvent = new _ViewEvent2.default(_ViewEvent2.default.EXIT_SELECTED);
             this.dispatchEvent(viewEvent);
         }
     }]);
@@ -9039,16 +9004,11 @@ var Title = function (_BaseView) {
     return Title;
 }(_BaseView3.default);
 
-DisplayObject.AddResource(Title, _ResourceType2.default.SPRITE, 'ui.title.logo');
-DisplayObject.AddResource(Title, _ResourceType2.default.SPRITE, 'ui.title.angel');
-DisplayObject.AddResource(Title, _ResourceType2.default.SPRITE, 'ui.title.cloud');
 DisplayObject.AddResource(Title, _ResourceType2.default.SPRITE, 'ui.title.bg');
-
-DisplayObject.AddObject(Title, _TitleButton2.default);
 
 exports.default = Title;
 
-},{"app/display/BaseView":52,"app/display/component/TitleButton":57,"app/event/ViewEvent":58,"app/resource/ResourceType":64,"minibot":"minibot"}],56:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/component/MainMenuButton":56,"app/event/ViewEvent":57,"app/resource/ResourceType":63,"minibot":"minibot"}],56:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9080,7 +9040,7 @@ var MainMenuButton = function (_Button) {
     function MainMenuButton(text, w, h) {
         _classCallCheck(this, MainMenuButton);
 
-        var style = new TextStyle("proxima-nova", h * 0.70, new Color(Color.RGB, 0, 0, 0), "center", "900");
+        var style = new TextStyle("monospace", h * 0.70, new Color(Color.RGB, 0, 0, 0), "center", "900");
 
         var upText = new Text(text, style);
         upText.x = w * 0.5;
@@ -9094,7 +9054,7 @@ var MainMenuButton = function (_Button) {
 
         var upRect = new Rect(w, h, "", Color.FromHex("#990000"));
         var overRect = new Rect(w, h, "", Color.FromHex("#CC0000"));
-        var downRect = new Rect(w, h, "", Color.FromHex("#0000CC"));
+        var downRect = new Rect(w, h, "", Color.FromHex("#660000"));
 
         var upContainer = new Container();
         upContainer.addChild(upRect);
@@ -9117,120 +9077,6 @@ var MainMenuButton = function (_Button) {
 exports.default = MainMenuButton;
 
 },{"minibot":"minibot"}],57:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _minibot = require('minibot');
-
-var _minibot2 = _interopRequireDefault(_minibot);
-
-var _ResourceType = require('app/resource/ResourceType');
-
-var _ResourceType2 = _interopRequireDefault(_ResourceType);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Button = _minibot2.default.display.scene.Button,
-    Text = _minibot2.default.display.scene.Text,
-    TextStyle = _minibot2.default.display.scene.TextStyle,
-    Rect = _minibot2.default.display.scene.Rect,
-    Color = _minibot2.default.graphics.Color,
-    Container = _minibot2.default.display.scene.Container,
-    DisplayObject = _minibot2.default.display.DisplayObject,
-    Sprite = _minibot2.default.display.scene.Sprite;
-
-var TitleButton = function (_Button) {
-    _inherits(TitleButton, _Button);
-
-    function TitleButton(type, w) {
-        _classCallCheck(this, TitleButton);
-
-        var barUp = new Sprite(DisplayObject.GetResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.bar'));
-        var barDown = new Sprite(DisplayObject.GetResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.bar'));
-
-        var textUp = null;
-        var textDown = null;
-
-        switch (type) {
-            case TitleButton.START:
-                textUp = new Sprite(DisplayObject.GetResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.start.up'));
-                textDown = new Sprite(DisplayObject.GetResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.start.down'));
-                break;
-            case TitleButton.OPTIONS:
-                textUp = new Sprite(DisplayObject.GetResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.options.up'));
-                textDown = new Sprite(DisplayObject.GetResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.options.down'));
-                break;
-            case TitleButton.CREDITS:
-                textUp = new Sprite(DisplayObject.GetResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.credits.up'));
-                textDown = new Sprite(DisplayObject.GetResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.credits.down'));
-                break;
-        }
-
-        if (textUp === null || textDown === null) return _possibleConstructorReturn(_this);
-
-        // Resize button
-        var scale = w / barUp.getWidth();
-        var barW = barUp.getWidth() * scale;
-        var barH = barUp.getHeight() * scale;
-        var textW = textUp.getWidth() * scale;
-        var textH = textUp.getHeight() * scale;
-
-        barUp.setWidth(barW);
-        barUp.setHeight(barH);
-        barDown.setWidth(barW);
-        barDown.setHeight(barH);
-        textUp.setWidth(textW);
-        textUp.setHeight(textH);
-        textDown.setWidth(textW);
-        textDown.setHeight(textH);
-
-        barUp.y = (textUp.getHeight() - barUp.getHeight()) / 2;
-        barDown.y = (textDown.getHeight() - barDown.getHeight()) / 2;
-
-        textUp.x = (barUp.getWidth() - textUp.getWidth()) / 2;
-        textDown.x = (barDown.getWidth() - textDown.getWidth()) / 2;
-
-        var upContainer = new Container();
-        upContainer.addChild(barUp);
-        upContainer.addChild(textUp);
-
-        var downContainer = new Container();
-        downContainer.addChild(barDown);
-        downContainer.addChild(textDown);
-
-        return _possibleConstructorReturn(this, (TitleButton.__proto__ || Object.getPrototypeOf(TitleButton)).call(this, upContainer, downContainer, downContainer));
-    }
-
-    return TitleButton;
-}(Button);
-
-TitleButton.START = "Start";
-TitleButton.CREDITS = "Credits";
-TitleButton.OPTIONS = "Options";
-
-DisplayObject.AddResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.bar');
-
-DisplayObject.AddResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.start.up');
-DisplayObject.AddResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.start.down');
-
-DisplayObject.AddResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.options.up');
-DisplayObject.AddResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.options.down');
-
-DisplayObject.AddResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.credits.up');
-DisplayObject.AddResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.credits.down');
-
-exports.default = TitleButton;
-
-},{"app/resource/ResourceType":64,"minibot":"minibot"}],58:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9271,6 +9117,7 @@ var ViewEvent = function (_minibot$event$BaseEv) {
 
 ViewEvent.EVENT_TYPE = "ViewEvent";
 
+ViewEvent.LEVEL_SELECTED = "LevelSelected";
 ViewEvent.PLAY_SELECTED = "PlaySelected";
 ViewEvent.OPTIONS_SELECTED = "OptionsSelected";
 ViewEvent.BACK_SELECTED = "BackSelected";
@@ -9281,7 +9128,7 @@ ViewEvent.NEXT_STAGE = "NextStage";
 
 exports.default = ViewEvent;
 
-},{"minibot":"minibot"}],59:[function(require,module,exports){
+},{"minibot":"minibot"}],58:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9485,7 +9332,7 @@ DataProxy.DATA = {
 exports.default = DataProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./vo/LevelVO":63}],60:[function(require,module,exports){
+},{"./vo/LevelVO":62}],59:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9728,7 +9575,7 @@ ResourceProxy.TEMPLATE_URL = "tpl/";
 exports.default = ResourceProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/resource/ResourceType":64,"app/resource/TemplateResource":65,"http":27,"minibot":"minibot"}],61:[function(require,module,exports){
+},{"app/resource/ResourceType":63,"app/resource/TemplateResource":64,"http":27,"minibot":"minibot"}],60:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9936,7 +9783,7 @@ var SoundProxy = function (_puremvc$Proxy) {
 exports.default = SoundProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],62:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9957,7 +9804,7 @@ var BaseVO = function BaseVO(data) {
 
 exports.default = BaseVO;
 
-},{}],63:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9996,7 +9843,7 @@ var LevelVO = function (_BaseVO) {
 
 exports.default = LevelVO;
 
-},{"./BaseVO":62}],64:[function(require,module,exports){
+},{"./BaseVO":61}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10018,7 +9865,7 @@ exports.default = {
   TEMPLATE: 13
 };
 
-},{"minibot":"minibot"}],65:[function(require,module,exports){
+},{"minibot":"minibot"}],64:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10098,7 +9945,7 @@ var TemplateResource = function (_minibot$resource$Res) {
 
 exports.default = TemplateResource;
 
-},{"app/resource/ResourceType":64,"minibot":"minibot"}],66:[function(require,module,exports){
+},{"app/resource/ResourceType":63,"minibot":"minibot"}],65:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -10172,7 +10019,7 @@ var BaseMediator = function (_puremvc$Mediator) {
 exports.default = BaseMediator;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/event/ViewEvent":58,"minibot":"minibot"}],67:[function(require,module,exports){
+},{"app/event/ViewEvent":57,"minibot":"minibot"}],66:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10238,7 +10085,7 @@ OptionsMediator.NAME = "OptionsMediator";
 
 exports.default = OptionsMediator;
 
-},{"app/ApplicationConstants":37,"app/event/ViewEvent":58,"app/view/BaseMediator":66}],68:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/event/ViewEvent":57,"app/view/BaseMediator":65}],67:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -10267,17 +10114,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ShellMediator = function (_puremvc$Mediator) {
   _inherits(ShellMediator, _puremvc$Mediator);
 
-  function ShellMediator(viewComponent) {
+  function ShellMediator(viewComponent, options) {
     _classCallCheck(this, ShellMediator);
 
     console.log("ShellMediator::constructor");
-    return _possibleConstructorReturn(this, (ShellMediator.__proto__ || Object.getPrototypeOf(ShellMediator)).call(this, ShellMediator.NAME, viewComponent));
+
+    var _this = _possibleConstructorReturn(this, (ShellMediator.__proto__ || Object.getPrototypeOf(ShellMediator)).call(this, ShellMediator.NAME, viewComponent));
+
+    _this.options = options;
+    return _this;
   }
 
   _createClass(ShellMediator, [{
     key: 'listNotificationInterests',
     value: function listNotificationInterests() {
-      return [_ApplicationConstants2.default.SHOW_VIEW];
+      return [_ApplicationConstants2.default.SHOW_VIEW, _ApplicationConstants2.default.EXIT_APP];
     }
   }, {
     key: 'handleNotification',
@@ -10288,12 +10139,23 @@ var ShellMediator = function (_puremvc$Mediator) {
         case _ApplicationConstants2.default.SHOW_VIEW:
           this.handleShowView(body);
           break;
+        case _ApplicationConstants2.default.EXIT_APP:
+          this.handleExitApp(body);
+          break;
       }
     }
   }, {
     key: 'handleShowView',
     value: function handleShowView(view) {
       this.viewComponent.addChild(view);
+    }
+  }, {
+    key: 'handleExitApp',
+    value: function handleExitApp(body) {
+      console.log('ShellMediator::handleExitApp');
+      if ('exitCallback' in this.options) {
+        this.options.exitCallback();
+      }
     }
   }]);
 
@@ -10303,7 +10165,7 @@ var ShellMediator = function (_puremvc$Mediator) {
 exports.default = ShellMediator;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37}],69:[function(require,module,exports){
+},{"app/ApplicationConstants":37}],68:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10347,27 +10209,28 @@ var TitleMediator = function (_BaseMediator) {
       var eventName = event.eventName;
       var data = event.data;
       switch (eventName) {
-        case _ViewEvent2.default.PLAY_SELECTED:
-          this.handlePlaySelected();
+        case _ViewEvent2.default.LEVEL_SELECTED:
+          this.handleLevelSelected();
           break;
-        case _ViewEvent2.default.OPTIONS_SELECTED:
-          this.handleOptionsSelected();
+        case _ViewEvent2.default.EXIT_SELECTED:
+          this.handleExitSelected();
           break;
         default:
           break;
       }
     }
   }, {
-    key: 'handlePlaySelected',
-    value: function handlePlaySelected() {
-      this.sendNotification(_ApplicationConstants2.default.LOAD_GAME);
-      this.facade.removeMediator(this.getMediatorName());
+    key: 'handleLevelSelected',
+    value: function handleLevelSelected() {
+      // this.sendNotification(ApplicationConstants.LOAD_GAME);
+      // this.facade.removeMediator(this.getMediatorName());
     }
   }, {
-    key: 'handleOptionsSelected',
-    value: function handleOptionsSelected() {
-      this.sendNotification(_ApplicationConstants2.default.LOAD_OPTIONS);
-      this.facade.removeMediator(this.getMediatorName());
+    key: 'handleExitSelected',
+    value: function handleExitSelected() {
+      console.log('TitleMediator::handleExitSelected');
+      this.sendNotification(_ApplicationConstants2.default.EXIT_APP);
+      //this.facade.removeMediator(this.getMediatorName());
     }
   }]);
 
@@ -10378,7 +10241,7 @@ TitleMediator.NAME = "TitleMediator";
 
 exports.default = TitleMediator;
 
-},{"app/ApplicationConstants":37,"app/event/ViewEvent":58,"app/view/BaseMediator":66}],"app":[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/event/ViewEvent":57,"app/view/BaseMediator":65}],"app":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10417,4 +10280,4 @@ app.view.ShellMediator = require('app/view/ShellMediator').default;
 
 exports.default = app;
 
-},{"app/ApplicationConstants":37,"app/ApplicationFacade":38,"app/controller/ManagerPrepCommand":45,"app/controller/ModelPrepCommand":47,"app/controller/StartupCommand":49,"app/controller/ViewPrepCommand":51,"app/display/Shell":54,"app/model/DataProxy":59,"app/model/ResourceProxy":60,"app/view/ShellMediator":68}]},{},[]);
+},{"app/ApplicationConstants":37,"app/ApplicationFacade":38,"app/controller/ManagerPrepCommand":45,"app/controller/ModelPrepCommand":47,"app/controller/StartupCommand":49,"app/controller/ViewPrepCommand":51,"app/display/Shell":54,"app/model/DataProxy":58,"app/model/ResourceProxy":59,"app/view/ShellMediator":67}]},{},[]);

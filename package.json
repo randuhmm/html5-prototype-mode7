@@ -45,7 +45,7 @@
     "build": "npm run build-loader && npm run build-app",
     "build-loader": "browserify -x minibot -x puremvc -r ./src/loader.js:loader -t babelify --outfile ./dist/loader.js && cp ./dist/loader.js ./dist/browser/js",
     "build-app": "browserify -x minibot -x puremvc -r ./src/app.js:app -t babelify --outfile ./dist/app.js && cp ./dist/app.js ./dist/browser/js",
-    "watch-app": "watchify -v -r ./src/app.js:app -t babelify --outfile ./dist/app.js",
+    "watch-app": "watchify -v -x minibot -x puremvc -r ./src/app.js:app -t babelify --outfile ./dist/browser/js/app.js",
     "minify-app": "uglifyjs dist/app.js -o dist/app.min.js"
   }
 }

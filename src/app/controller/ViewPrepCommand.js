@@ -24,7 +24,7 @@ class ViewPrepCommand extends puremvc.SimpleCommand
     minibot.system.SetRenderCallback(Utils.Bind(this.facade.render, this.facade));
 
     var shell = new Shell(scene);
-    this.facade.registerMediator(new ShellMediator(shell));
+    this.facade.registerMediator(new ShellMediator(shell, data));
 
     BaseView.WIDTH = scene.getWidth();
     BaseView.HEIGHT = scene.getHeight();

@@ -15,7 +15,7 @@ class MainMenuButton extends Button
   constructor(text, w, h)
   {
 
-    var style = new TextStyle("proxima-nova", h*0.70, new Color(Color.RGB, 0, 0, 0), "center", "900");
+    var style = new TextStyle("monospace", h*0.70, new Color(Color.RGB, 0, 0, 0), "center", "900");
 
     var upText = new Text(text, style);
     upText.x = w*0.5;
@@ -29,7 +29,7 @@ class MainMenuButton extends Button
 
     var upRect = new Rect(w, h, "", Color.FromHex("#990000"));
     var overRect = new Rect(w, h, "", Color.FromHex("#CC0000"));
-    var downRect = new Rect(w, h, "", Color.FromHex("#0000CC"));
+    var downRect = new Rect(w, h, "", Color.FromHex("#660000"));
 
     var upContainer = new Container();
     upContainer.addChild(upRect);

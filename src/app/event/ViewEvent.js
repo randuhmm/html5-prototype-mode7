@@ -17,6 +17,7 @@ class ViewEvent extends minibot.event.BaseEvent
 
 ViewEvent.EVENT_TYPE = "ViewEvent";
 
+ViewEvent.LEVEL_SELECTED = "LevelSelected";
 ViewEvent.PLAY_SELECTED = "PlaySelected";
 ViewEvent.OPTIONS_SELECTED = "OptionsSelected";
 ViewEvent.BACK_SELECTED = "BackSelected";

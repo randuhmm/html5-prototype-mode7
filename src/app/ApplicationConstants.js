@@ -11,6 +11,8 @@ export default {
   LOAD_OPTIONS:     "LoadOptions",
 
   LOAD_VIEW_RESOURCES:  "LoadViewResources",
-  LOAD_ENGINE_RESOURCES:  "LoadEngineResources"
+  LOAD_ENGINE_RESOURCES:  "LoadEngineResources",
+
+  EXIT_APP:    "ExitApp"
 
 };

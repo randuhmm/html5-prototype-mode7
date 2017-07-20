@@ -1,7 +1,7 @@
 
 import BaseView from 'app/display/BaseView';
 import ViewEvent from 'app/event/ViewEvent';
-import TitleButton from 'app/display/component/TitleButton';
+import MainMenuButton from 'app/display/component/MainMenuButton';
 import ResourceType from 'app/resource/ResourceType';
 import minibot from 'minibot';
 
@@ -16,102 +16,60 @@ var ButtonEvent = minibot.event.ButtonEvent,
 class Title extends BaseView
 {
 
-  // playBtn: null,
-  // optionsBtn: null,
-  // creditsBtn: null,
-
   constructor(data)
   {
     super(data);
 
-    var rect = new Rect(this.w, this.h, "", Color.FromHex("#1D96FE"));
+    var rect = new Rect(this.w, this.h, "", Color.FromHex("#CCCCCC"));
     this.addChild(rect);
 
-    this.setupLogo();
-    this.setupButtons();
-  }
+    var buttonExit = new MainMenuButton("x", this.w*0.1, this.h*0.2);
+    this.addChild(buttonExit);
+    buttonExit.x = this.w*0.8;
+    buttonExit.y = this.h*0.1;
+    buttonExit.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handleExitSelect, this));
 
-  setupLogo()
-  {
+    var button1 = new MainMenuButton("LEVEL 1", this.w*0.6, this.h*0.2);
+    this.addChild(button1);
+    button1.x = this.w*0.1;
+    button1.y = this.h*0.1;
+    button1.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handleLevelSelect, this, 1));
 
-    var w = this.w * 0.6;
+    var button1 = new MainMenuButton("LEVEL 1", this.w*0.6, this.h*0.2);
+    this.addChild(button1);
+    button1.x = this.w*0.1;
+    button1.y = this.h*0.1;
+    button1.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handleLevelSelect, this, 1));
 
-    var container = new Container();
-    var cloud = new Sprite(DisplayObject.GetResource(Title, ResourceType.SPRITE, 'ui.title.cloud'));
-    var angel = new Sprite(DisplayObject.GetResource(Title, ResourceType.SPRITE, 'ui.title.angel'));
-    var logo = new Sprite(DisplayObject.GetResource(Title, ResourceType.SPRITE, 'ui.title.logo'));
+    var button2 = new MainMenuButton("LEVEL 2", this.w*0.6, this.h*0.2);
+    this.addChild(button2);
+    button2.x = this.w*0.1;
+    button2.y = (this.h*0.2) + (button2.h*1);
+    button2.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handleLevelSelect, this, 2));
 
-    angel.y = -240;
-
-    container.addChild(cloud);
-    container.addChild(angel);
-    container.addChild(logo);
-
-    container.setAlign(DisplayObject.ALIGN_HORZ_CENTER, [cloud, angel, logo]);
-    container.setAlign(DisplayObject.ALIGN_VERT_CENTER, [cloud, logo]);
-
-    container.setScale(w/container.getWidth());
-
-    this.addChild(container);
-
-    //container.y = this.getHeight()/2 - container.getHeight();
-    this.setAlign(DisplayObject.ALIGN_HORZ_CENTER, [container]);
-    this.setAlign(DisplayObject.ALIGN_VERT_CENTER, [container]);
-    //container.y -= container.getHeight()/4;
+    var button3 = new MainMenuButton("LEVEL 3", this.w*0.6, this.h*0.2);
+    this.addChild(button3);
+    button3.x = this.w*0.1;
+    button3.y = (this.h*0.3) + (button3.h*2);
+    button3.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handleLevelSelect, this, 3));
 
   }
 
-  setupButtons()
+  handleLevelSelect(event, level)
   {
-
-    var BW = this.w*0.5;
-    if(BW > 479) BW = 479;
-    if(BW <= 300) BW = 300;
-
-    this.playBtn = new TitleButton(TitleButton.START, BW);
-    this.addChild(this.playBtn);
-
-    this.optionsBtn = new TitleButton(TitleButton.OPTIONS, BW);
-    this.addChild(this.optionsBtn);
-
-    this.creditsBtn = new TitleButton(TitleButton.CREDITS, BW);
-    this.addChild(this.creditsBtn);
-
-    var BH = this.playBtn.getHeight();
-    var BBX = (this.w - BW) / 2;
-    var BBY = (BBX > BH/2)?(BH/2):(BBX);
-
-    this.playBtn.x = BBX;
-    this.playBtn.y = this.h - BH*3 - BBY*5;
-    this.playBtn.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handlePlaySelect, this));
-
-    this.optionsBtn.x = BBX;
-    this.optionsBtn.y = this.h - BH*2 - BBY*4;
-    this.optionsBtn.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handleOptionsSelect, this));
-
-    this.creditsBtn.x = BBX;
-    this.creditsBtn.y = this.h - BH - BBY*3;
-    this.creditsBtn.addEventListener(ButtonEvent.SELECT, Utils.BindAsEventListener(this.handleOptionsSelect, this));
-  }
-
-  handlePlaySelect(event)
-  {
-    var viewEvent = new ViewEvent(ViewEvent.PLAY_SELECTED);
+    console.log('Title:handleLevelSelect - ' + level);
+    var viewEvent = new ViewEvent(ViewEvent.LEVEL_SELECTED);
     this.dispatchEvent(viewEvent);
   }
 
-  handleOptionsSelect(event)
+  handleExitSelect(event)
   {
-    var viewEvent = new ViewEvent(ViewEvent.OPTIONS_SELECTED);
+    var viewEvent = new ViewEvent(ViewEvent.EXIT_SELECTED);
     this.dispatchEvent(viewEvent);
   }
+
 }
 
-DisplayObject.AddResource(Title, ResourceType.SPRITE, 'ui.title.logo');
-DisplayObject.AddResource(Title, ResourceType.SPRITE, 'ui.title.angel');
-DisplayObject.AddResource(Title, ResourceType.SPRITE, 'ui.title.cloud');
 DisplayObject.AddResource(Title, ResourceType.SPRITE, 'ui.title.bg');
-
-DisplayObject.AddObject(Title, TitleButton);
 
 export default Title

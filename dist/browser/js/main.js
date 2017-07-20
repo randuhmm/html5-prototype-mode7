@@ -16,7 +16,6 @@
     var minibot = require('minibot').default;
     var loader = require('loader').default;
     var app = require('app').default;
-    //var puremvc = require('puremvc').default;
 
     var loaderApp;
     var loaderView;
@@ -39,7 +38,7 @@
     var onLoaderLoaded = function()
     {
       console.log('onLoaderLoaded - called');
-      setTimeout(minibot.core.Utils.Bind(loaderApp.loadScripts, loaderApp, onScriptsLoaded), 500);
+      setTimeout(minibot.core.Utils.Bind(loaderApp.loadScripts, loaderApp, onScriptsLoaded), 100);
     };
 
     var onScriptsLoaded = function()
@@ -49,6 +48,7 @@
       shellApp = app.ApplicationFacade.getInstance(app.ApplicationFacade.KEY);
 
       var canvas = document.createElement('canvas');
+      canvas.style.imageRendering = 'pixelated';
       base.appendChild(canvas);
 
       // Scale the canvas to fit
@@ -64,6 +64,7 @@
       var options = {
         "progressCallback": minibot.core.Utils.Bind(loaderView.update, loaderView),
         "completeCallback": onShellLoaded,
+        "exitCallback": onAppExit,
         "sceneOptions": {
           "element": canvas,
           "width": ((settings.width !== undefined)?(settings.width):(width)),
@@ -130,14 +131,18 @@
       }, this));
     };
 
+    var onAppExit = function() {
+      document.webkitExitFullscreen();
+    };
+
     var onFullscreenChange = function(event) {
       if(document.webkitIsFullScreen) {
+        console.log("Enter Fullscreen");
         base.style.width = '100%';
         base.style.height = '100%';
         base.style.backgroundColor = '#000000';
-        console.log("Enter Fullscreen");
       } else {
-        // TODO: Destroy the game
+        console.log("Exit Fullscreen");
         var startButton = document.getElementById('startButton');
         startButton.style = "display: visible;";
         while(base.children.length) {
@@ -145,7 +150,6 @@
         }
         shellApp.shutdown();
         app.ApplicationFacade.removeCore(app.ApplicationFacade.KEY);
-        console.log("Exit Fullscreen");
       }
     };
 
@@ -168,12 +172,12 @@
         // }
         //window.addEventListener("orientationchange", hideMobileBrowser, false);
 
-        window.addEventListener("touchstart", function (event) {
-          // Disable page swipe scrolling
-          event.preventDefault();
-          // If the address bar was visible, bring the game back into full view
-          //window.scrollTo(-1, 0);
-        }, false);
+        // window.addEventListener("touchstart", function (event) {
+        //   // Disable page swipe scrolling
+        //   event.preventDefault();
+        //   // If the address bar was visible, bring the game back into full view
+        //   //window.scrollTo(-1, 0);
+        // }, false);
 
         var htmlStyle = document.documentElement.style;
         // Ensure the page is tall enough to scroll
@@ -186,13 +190,13 @@
         window.setTimeout(function () {
           htmlStyle.minHeight = "";
           // Resize the canvas to the new viewport size (at true pixel scale)
-          ratio = window.devicePixelRatio;
-          width = Math.ceil(ratio*window.innerWidth);
-          height = Math.ceil(ratio*window.innerHeight);
+          // ratio = window.devicePixelRatio;
+          // width = Math.ceil(ratio*window.innerWidth);
+          // height = Math.ceil(ratio*window.innerHeight);
           eventTypes = minibot.display.scene.Scene.TOUCH_EVENTS;
 
           main();
-        }.bind(this), 500);
+        }.bind(this), 100);
 
       } else if(platformName == minibot.system.PlatformName.ANDROID) {
         head.innerHTML +=
@@ -200,12 +204,12 @@
           '<meta name="format-detection" content="telephone=no">';
 
         // disable scrolling
-        var preventDefault = function(e){
-          e.preventDefault();
-        };
+        // var preventDefault = function(e){
+        //   e.preventDefault();
+        // };
 
-        window.addEventListener('touchstart',  preventDefault, false);
-        window.addEventListener('touchend',    preventDefault,   false);
+        // window.addEventListener('touchstart',  preventDefault, false);
+        // window.addEventListener('touchend',    preventDefault,   false);
 
 
         var htmlStyle = document.documentElement.style;
@@ -219,13 +223,13 @@
         window.setTimeout(function () {
           htmlStyle.minHeight = "";
           // Resize the canvas to the new viewport size (at true pixel scale)
-          ratio = window.devicePixelRatio;
-          width = Math.ceil(ratio*window.innerWidth);
-          height = Math.ceil(ratio*window.innerHeight);
+          // ratio = window.devicePixelRatio;
+          // width = Math.ceil(ratio*window.innerWidth);
+          // height = Math.ceil(ratio*window.innerHeight);
           eventTypes = minibot.display.scene.Scene.TOUCH_EVENTS;
 
           main();
-        }.bind(this), 500);
+        }.bind(this), 100);
 
       }
     } else {

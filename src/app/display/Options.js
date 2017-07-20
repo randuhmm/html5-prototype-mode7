@@ -21,7 +21,7 @@ class Options extends BaseView
     var rect = new Rect(this.w, this.h, "", Color.FromHex("#1D96FE"));
     this.addChild(rect);
 
-    var button1 = new MainMenuButton("BACK (1)", this.w*0.8, this.h*0.1);
+    var button1 = new MainMenuButton("BACK HI (1)", this.w*0.8, this.h*0.1);
     this.addChild(button1);
     button1.x = this.w*0.1;
     button1.y = this.h*0.1;
