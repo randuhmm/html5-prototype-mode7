@@ -16,6 +16,7 @@
     var minibot = require('minibot').default;
     var loader = require('loader').default;
     var app = require('app').default;
+    //var puremvc = require('puremvc').default;
 
     var loaderApp;
     var loaderView;
@@ -142,6 +143,8 @@
         while(base.children.length) {
           base.children[0].remove();
         }
+        shellApp.shutdown();
+        app.ApplicationFacade.removeCore(app.ApplicationFacade.KEY);
         console.log("Exit Fullscreen");
       }
     };

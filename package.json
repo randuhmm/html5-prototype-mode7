@@ -33,7 +33,7 @@
   },
   "scripts": {
     "postinstall": "bower install && cp -R ./dist/lib/minibot-engine/dist/minibot-browser.* ./dist/browser/js/lib",
-    "prestart": "npm install",
+    "prestart": "npm install && npm run build",
     "start": "http-server -a 0.0.0.0 -p 8000 -c-1 ./dist/browser",
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
@@ -42,8 +42,9 @@
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor e2e-tests/protractor.conf.js",
-    "build-loader": "browserify -x minibot -x puremvc -r ./src/loader.js:loader -t babelify --outfile ./dist/loader.js",
-    "build-app": "browserify -x minibot -x puremvc -r ./src/app.js:app -t babelify --outfile ./dist/app.js",
+    "build": "npm run build-loader && npm run build-app",
+    "build-loader": "browserify -x minibot -x puremvc -r ./src/loader.js:loader -t babelify --outfile ./dist/loader.js && cp ./dist/loader.js ./dist/browser/js",
+    "build-app": "browserify -x minibot -x puremvc -r ./src/app.js:app -t babelify --outfile ./dist/app.js && cp ./dist/app.js ./dist/browser/js",
     "watch-app": "watchify -v -r ./src/app.js:app -t babelify --outfile ./dist/app.js",
     "minify-app": "uglifyjs dist/app.js -o dist/app.min.js"
   }

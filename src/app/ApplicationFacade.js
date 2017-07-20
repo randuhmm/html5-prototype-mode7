@@ -4,6 +4,7 @@ import puremvc from 'puremvc';
 import ApplicationConstants from 'app/ApplicationConstants';
 import StartupCommand from 'app/controller/StartupCommand';
 import ManagerPrepCommand from 'app/controller/ManagerPrepCommand';
+import ShutdownCommand from 'app/controller/ShutdownCommand';
 import LoadTitleCommand from 'app/controller/LoadTitleCommand';
 import LoadGameCommand from 'app/controller/LoadGameCommand';
 import LoadOptionsCommand from 'app/controller/LoadOptionsCommand';
@@ -24,6 +25,7 @@ class ApplicationFacade extends puremvc.Facade
   {
     super.initializeController();
     this.registerCommand(ApplicationConstants.STARTUP, StartupCommand);
+    this.registerCommand(ApplicationConstants.SHUTDOWN, ShutdownCommand);
     this.registerCommand(ApplicationConstants.MANAGER_PREP, ManagerPrepCommand);
 
     this.registerCommand(ApplicationConstants.LOAD_TITLE, LoadTitleCommand);
@@ -37,6 +39,10 @@ class ApplicationFacade extends puremvc.Facade
   startup(options)
   {
     this.sendNotification(ApplicationConstants.STARTUP, options);
+  }
+
+  shutdown(options) {
+    this.sendNotification(ApplicationConstants.SHUTDOWN, options);
   }
 
   update(dt)
@@ -71,8 +77,13 @@ ApplicationFacade.getInstance = function(key)
   return retVal;
 };
 
+
+
+ApplicationFacade.removeCore = function(key)
+{
+  puremvc.Facade.removeCore(key);
+};
+
 ApplicationFacade.KEY = "App.Shell";
 
 export default ApplicationFacade;
-
-

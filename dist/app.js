@@ -7575,6 +7575,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
 
   STARTUP: "Startup",
+  SHUTDOWN: "Shutdown",
   MANAGER_PREP: "ManagerPrep",
 
   SHOW_VIEW: "ShowView",
@@ -7620,6 +7621,10 @@ var _ManagerPrepCommand = require('app/controller/ManagerPrepCommand');
 
 var _ManagerPrepCommand2 = _interopRequireDefault(_ManagerPrepCommand);
 
+var _ShutdownCommand = require('app/controller/ShutdownCommand');
+
+var _ShutdownCommand2 = _interopRequireDefault(_ShutdownCommand);
+
 var _LoadTitleCommand = require('app/controller/LoadTitleCommand');
 
 var _LoadTitleCommand2 = _interopRequireDefault(_LoadTitleCommand);
@@ -7664,6 +7669,7 @@ var ApplicationFacade = function (_puremvc$Facade) {
     value: function initializeController() {
       _get(ApplicationFacade.prototype.__proto__ || Object.getPrototypeOf(ApplicationFacade.prototype), 'initializeController', this).call(this);
       this.registerCommand(_ApplicationConstants2.default.STARTUP, _StartupCommand2.default);
+      this.registerCommand(_ApplicationConstants2.default.SHUTDOWN, _ShutdownCommand2.default);
       this.registerCommand(_ApplicationConstants2.default.MANAGER_PREP, _ManagerPrepCommand2.default);
 
       this.registerCommand(_ApplicationConstants2.default.LOAD_TITLE, _LoadTitleCommand2.default);
@@ -7677,6 +7683,11 @@ var ApplicationFacade = function (_puremvc$Facade) {
     key: 'startup',
     value: function startup(options) {
       this.sendNotification(_ApplicationConstants2.default.STARTUP, options);
+    }
+  }, {
+    key: 'shutdown',
+    value: function shutdown(options) {
+      this.sendNotification(_ApplicationConstants2.default.SHUTDOWN, options);
     }
   }, {
     key: 'update',
@@ -7710,12 +7721,16 @@ ApplicationFacade.getInstance = function (key) {
   return retVal;
 };
 
+ApplicationFacade.removeCore = function (key) {
+  _puremvc2.default.Facade.removeCore(key);
+};
+
 ApplicationFacade.KEY = "App.Shell";
 
 exports.default = ApplicationFacade;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/controller/LoadEngineResourcesCommand":39,"app/controller/LoadGameCommand":40,"app/controller/LoadOptionsCommand":41,"app/controller/LoadTitleCommand":42,"app/controller/LoadViewResourcesCommand":43,"app/controller/ManagerPrepCommand":44,"app/controller/StartupCommand":46,"minibot":"minibot"}],39:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/controller/LoadEngineResourcesCommand":39,"app/controller/LoadGameCommand":40,"app/controller/LoadOptionsCommand":41,"app/controller/LoadTitleCommand":42,"app/controller/LoadViewResourcesCommand":43,"app/controller/ManagerPrepCommand":45,"app/controller/ShutdownCommand":48,"app/controller/StartupCommand":49,"minibot":"minibot"}],39:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7780,7 +7795,7 @@ var LoadGameResourcesCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadGameResourcesCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/ResourceProxy":56}],40:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/ResourceProxy":60}],40:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7937,7 +7952,7 @@ var LoadOptionsCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadOptionsCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/display/Options":49,"app/model/ResourceProxy":56,"app/view/OptionsMediator":63}],42:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/display/Options":53,"app/model/ResourceProxy":60,"app/view/OptionsMediator":67}],42:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8013,7 +8028,7 @@ var LoadTitleCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadTitleCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/display/Title":51,"app/model/ResourceProxy":56,"app/view/TitleMediator":65}],43:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/display/Title":55,"app/model/ResourceProxy":60,"app/view/TitleMediator":69}],43:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8088,7 +8103,117 @@ var LoadViewResourcesCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadViewResourcesCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/ResourceProxy":56,"minibot":"minibot"}],44:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/ResourceProxy":60,"minibot":"minibot"}],44:[function(require,module,exports){
+(function (global){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _puremvc = (typeof window !== "undefined" ? window['puremvc'] : typeof global !== "undefined" ? global['puremvc'] : null);
+
+var _puremvc2 = _interopRequireDefault(_puremvc);
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ApplicationConstants = require('app/ApplicationConstants');
+
+var _ApplicationConstants2 = _interopRequireDefault(_ApplicationConstants);
+
+var _DataProxy = require('app/model/DataProxy');
+
+var _DataProxy2 = _interopRequireDefault(_DataProxy);
+
+var _ResourceProxy = require('app/model/ResourceProxy');
+
+var _ResourceProxy2 = _interopRequireDefault(_ResourceProxy);
+
+var _SoundProxy = require('app/model/SoundProxy');
+
+var _SoundProxy2 = _interopRequireDefault(_SoundProxy);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Utils = _minibot2.default.core.Utils;
+
+var ManagerDestroyCommand = function (_puremvc$SimpleComman) {
+    _inherits(ManagerDestroyCommand, _puremvc$SimpleComman);
+
+    function ManagerDestroyCommand() {
+        _classCallCheck(this, ManagerDestroyCommand);
+
+        return _possibleConstructorReturn(this, (ManagerDestroyCommand.__proto__ || Object.getPrototypeOf(ManagerDestroyCommand)).apply(this, arguments));
+    }
+
+    _createClass(ManagerDestroyCommand, [{
+        key: 'execute',
+        value: function execute(notification) {
+            console.log('App::ManagerDestroyCommand');
+            // var data = notification.getBody();
+
+            // var progressCallback = data.progressCallback;
+            // var completeCallback = data.completeCallback;
+
+            // // Load and initialize the data
+            // var dataProxy = this.facade.retrieveProxy(DataProxy.NAME);
+            // if(!dataProxy.isManagerLoaded) {
+            //   dataProxy.initDataManager(Utils.Bind(function() {
+            //     console.log('App::ManagerDestroyCommand - Finished Prepping Data');
+            //     this.sendNotification(ApplicationConstants.MANAGER_PREP, data);
+            //   }, this), progressCallback);
+            //   return;
+            // }
+
+            // // Load and initialize the resources
+            // var resourceProxy = this.facade.retrieveProxy(ResourceProxy.NAME);
+            // if(!resourceProxy.isManagerLoaded) {
+            //   resourceProxy.initResourceManager(Utils.Bind(function() {
+            //     console.log('App::ManagerDestroyCommand - Finished Prepping Resources');
+            //     this.sendNotification(ApplicationConstants.MANAGER_PREP, data);
+            //   }, this), progressCallback);
+            //   return;
+            // }
+
+            // // Load and initialize the sounds
+            // // var soundProxy = this.facade.retrieveProxy(SoundProxy.NAME);
+            // // if(!soundProxy.isManagerLoaded) {
+            // //   soundProxy.initSoundManager(function() {
+            // //     console.log('App::ManagerDestroyCommand - Finished Prepping Sounds');
+            // //     this.sendNotification(ApplicationConstants.MANAGER_PREP, data);
+            // //   }.bind(this), progressCallback);
+            // //   return;
+            // // }
+
+            // this.sendNotification(ApplicationConstants.LOAD_TITLE);
+
+            // // This will let the loader know that the app has completed loading
+            // // and the loading screen will be removed.
+
+            // Stop the system
+            _minibot2.default.system.Stop();
+
+            // Utils.Defer(completeCallback, this);
+        }
+    }]);
+
+    return ManagerDestroyCommand;
+}(_puremvc2.default.SimpleCommand);
+
+exports.default = ManagerDestroyCommand;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"app/ApplicationConstants":37,"app/model/DataProxy":59,"app/model/ResourceProxy":60,"app/model/SoundProxy":61,"minibot":"minibot"}],45:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8197,7 +8322,66 @@ var ManagerPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ManagerPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/DataProxy":55,"app/model/ResourceProxy":56,"app/model/SoundProxy":57,"minibot":"minibot"}],45:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/DataProxy":59,"app/model/ResourceProxy":60,"app/model/SoundProxy":61,"minibot":"minibot"}],46:[function(require,module,exports){
+(function (global){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _puremvc = (typeof window !== "undefined" ? window['puremvc'] : typeof global !== "undefined" ? global['puremvc'] : null);
+
+var _puremvc2 = _interopRequireDefault(_puremvc);
+
+var _DataProxy = require('app/model/DataProxy');
+
+var _DataProxy2 = _interopRequireDefault(_DataProxy);
+
+var _ResourceProxy = require('app/model/ResourceProxy');
+
+var _ResourceProxy2 = _interopRequireDefault(_ResourceProxy);
+
+var _SoundProxy = require('app/model/SoundProxy');
+
+var _SoundProxy2 = _interopRequireDefault(_SoundProxy);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ModelDestroyCommand = function (_puremvc$SimpleComman) {
+  _inherits(ModelDestroyCommand, _puremvc$SimpleComman);
+
+  function ModelDestroyCommand() {
+    _classCallCheck(this, ModelDestroyCommand);
+
+    return _possibleConstructorReturn(this, (ModelDestroyCommand.__proto__ || Object.getPrototypeOf(ModelDestroyCommand)).apply(this, arguments));
+  }
+
+  _createClass(ModelDestroyCommand, [{
+    key: 'execute',
+    value: function execute(notification) {
+      console.log('App::ModelDestroyCommand');
+      // this.facade.registerProxy(new DataProxy());
+      // this.facade.registerProxy(new ResourceProxy());
+      // this.facade.registerProxy(new SoundProxy());
+    }
+  }]);
+
+  return ModelDestroyCommand;
+}(_puremvc2.default.SimpleCommand);
+
+exports.default = ModelDestroyCommand;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"app/model/DataProxy":59,"app/model/ResourceProxy":60,"app/model/SoundProxy":61}],47:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8255,7 +8439,65 @@ var ModelPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ModelPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/model/DataProxy":55,"app/model/ResourceProxy":56,"app/model/SoundProxy":57}],46:[function(require,module,exports){
+},{"app/model/DataProxy":59,"app/model/ResourceProxy":60,"app/model/SoundProxy":61}],48:[function(require,module,exports){
+(function (global){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _puremvc = (typeof window !== "undefined" ? window['puremvc'] : typeof global !== "undefined" ? global['puremvc'] : null);
+
+var _puremvc2 = _interopRequireDefault(_puremvc);
+
+var _ModelDestroyCommand = require('app/controller/ModelDestroyCommand');
+
+var _ModelDestroyCommand2 = _interopRequireDefault(_ModelDestroyCommand);
+
+var _ViewDestroyCommand = require('app/controller/ViewDestroyCommand');
+
+var _ViewDestroyCommand2 = _interopRequireDefault(_ViewDestroyCommand);
+
+var _ManagerDestroyCommand = require('app/controller/ManagerDestroyCommand');
+
+var _ManagerDestroyCommand2 = _interopRequireDefault(_ManagerDestroyCommand);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var StartupCommand = function (_puremvc$MacroCommand) {
+  _inherits(StartupCommand, _puremvc$MacroCommand);
+
+  function StartupCommand() {
+    _classCallCheck(this, StartupCommand);
+
+    return _possibleConstructorReturn(this, (StartupCommand.__proto__ || Object.getPrototypeOf(StartupCommand)).apply(this, arguments));
+  }
+
+  _createClass(StartupCommand, [{
+    key: 'initializeMacroCommand',
+    value: function initializeMacroCommand() {
+      this.addSubCommand(_ModelDestroyCommand2.default);
+      this.addSubCommand(_ViewDestroyCommand2.default);
+      this.addSubCommand(_ManagerDestroyCommand2.default);
+    }
+  }]);
+
+  return StartupCommand;
+}(_puremvc2.default.MacroCommand);
+
+exports.default = StartupCommand;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"app/controller/ManagerDestroyCommand":44,"app/controller/ModelDestroyCommand":46,"app/controller/ViewDestroyCommand":50}],49:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8313,7 +8555,85 @@ var StartupCommand = function (_puremvc$MacroCommand) {
 exports.default = StartupCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/controller/ManagerPrepCommand":44,"app/controller/ModelPrepCommand":45,"app/controller/ViewPrepCommand":47}],47:[function(require,module,exports){
+},{"app/controller/ManagerPrepCommand":45,"app/controller/ModelPrepCommand":47,"app/controller/ViewPrepCommand":51}],50:[function(require,module,exports){
+(function (global){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _puremvc = (typeof window !== "undefined" ? window['puremvc'] : typeof global !== "undefined" ? global['puremvc'] : null);
+
+var _puremvc2 = _interopRequireDefault(_puremvc);
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ShellMediator = require('app/view/ShellMediator');
+
+var _ShellMediator2 = _interopRequireDefault(_ShellMediator);
+
+var _Shell = require('app/display/Shell');
+
+var _Shell2 = _interopRequireDefault(_Shell);
+
+var _BaseView = require('app/display/BaseView');
+
+var _BaseView2 = _interopRequireDefault(_BaseView);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Utils = _minibot2.default.core.Utils;
+
+var ViewDestroyCommand = function (_puremvc$SimpleComman) {
+    _inherits(ViewDestroyCommand, _puremvc$SimpleComman);
+
+    function ViewDestroyCommand() {
+        _classCallCheck(this, ViewDestroyCommand);
+
+        return _possibleConstructorReturn(this, (ViewDestroyCommand.__proto__ || Object.getPrototypeOf(ViewDestroyCommand)).apply(this, arguments));
+    }
+
+    _createClass(ViewDestroyCommand, [{
+        key: 'execute',
+        value: function execute(notification) {
+            console.log('App::ViewDestroyCommand');
+            // var data = notification.getBody();
+
+            // var sceneOptions = {};
+            // if(data['sceneOptions'] != undefined) {
+            //   sceneOptions = data.sceneOptions;
+            // }
+
+            // var scene = minibot.system.CreateScene(sceneOptions);
+            // this.facade.setScene(scene);
+            // minibot.system.SetRenderCallback(Utils.Bind(this.facade.render, this.facade));
+
+            // var shell = new Shell(scene);
+            // this.facade.registerMediator(new ShellMediator(shell));
+
+            // BaseView.WIDTH = scene.getWidth();
+            // BaseView.HEIGHT = scene.getHeight();
+        }
+    }]);
+
+    return ViewDestroyCommand;
+}(_puremvc2.default.SimpleCommand);
+
+exports.default = ViewDestroyCommand;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"app/display/BaseView":52,"app/display/Shell":54,"app/view/ShellMediator":68,"minibot":"minibot"}],51:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8392,7 +8712,7 @@ var ViewPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ViewPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/display/BaseView":48,"app/display/Shell":50,"app/view/ShellMediator":64,"minibot":"minibot"}],48:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/Shell":54,"app/view/ShellMediator":68,"minibot":"minibot"}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8434,7 +8754,7 @@ var BaseView = function (_minibot$display$scen) {
 
 exports.default = BaseView;
 
-},{"minibot":"minibot"}],49:[function(require,module,exports){
+},{"minibot":"minibot"}],53:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8519,7 +8839,7 @@ var Options = function (_BaseView) {
 
 exports.default = Options;
 
-},{"app/display/BaseView":48,"app/display/component/MainMenuButton":52,"app/event/ViewEvent":54,"minibot":"minibot"}],50:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/component/MainMenuButton":56,"app/event/ViewEvent":58,"minibot":"minibot"}],54:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8575,7 +8895,7 @@ var Shell = function () {
 
 exports.default = Shell;
 
-},{"minibot":"minibot"}],51:[function(require,module,exports){
+},{"minibot":"minibot"}],55:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8728,7 +9048,7 @@ DisplayObject.AddObject(Title, _TitleButton2.default);
 
 exports.default = Title;
 
-},{"app/display/BaseView":48,"app/display/component/TitleButton":53,"app/event/ViewEvent":54,"app/resource/ResourceType":60,"minibot":"minibot"}],52:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/component/TitleButton":57,"app/event/ViewEvent":58,"app/resource/ResourceType":64,"minibot":"minibot"}],56:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8796,7 +9116,7 @@ var MainMenuButton = function (_Button) {
 
 exports.default = MainMenuButton;
 
-},{"minibot":"minibot"}],53:[function(require,module,exports){
+},{"minibot":"minibot"}],57:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8910,7 +9230,7 @@ DisplayObject.AddResource(TitleButton, _ResourceType2.default.SPRITE, 'ui.title.
 
 exports.default = TitleButton;
 
-},{"app/resource/ResourceType":60,"minibot":"minibot"}],54:[function(require,module,exports){
+},{"app/resource/ResourceType":64,"minibot":"minibot"}],58:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8961,7 +9281,7 @@ ViewEvent.NEXT_STAGE = "NextStage";
 
 exports.default = ViewEvent;
 
-},{"minibot":"minibot"}],55:[function(require,module,exports){
+},{"minibot":"minibot"}],59:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9165,7 +9485,7 @@ DataProxy.DATA = {
 exports.default = DataProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./vo/LevelVO":59}],56:[function(require,module,exports){
+},{"./vo/LevelVO":63}],60:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9408,7 +9728,7 @@ ResourceProxy.TEMPLATE_URL = "tpl/";
 exports.default = ResourceProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/resource/ResourceType":60,"app/resource/TemplateResource":61,"http":27,"minibot":"minibot"}],57:[function(require,module,exports){
+},{"app/resource/ResourceType":64,"app/resource/TemplateResource":65,"http":27,"minibot":"minibot"}],61:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9616,7 +9936,7 @@ var SoundProxy = function (_puremvc$Proxy) {
 exports.default = SoundProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],58:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9637,7 +9957,7 @@ var BaseVO = function BaseVO(data) {
 
 exports.default = BaseVO;
 
-},{}],59:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9676,7 +9996,7 @@ var LevelVO = function (_BaseVO) {
 
 exports.default = LevelVO;
 
-},{"./BaseVO":58}],60:[function(require,module,exports){
+},{"./BaseVO":62}],64:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9698,7 +10018,7 @@ exports.default = {
   TEMPLATE: 13
 };
 
-},{"minibot":"minibot"}],61:[function(require,module,exports){
+},{"minibot":"minibot"}],65:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9778,7 +10098,7 @@ var TemplateResource = function (_minibot$resource$Res) {
 
 exports.default = TemplateResource;
 
-},{"app/resource/ResourceType":60,"minibot":"minibot"}],62:[function(require,module,exports){
+},{"app/resource/ResourceType":64,"minibot":"minibot"}],66:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9852,7 +10172,7 @@ var BaseMediator = function (_puremvc$Mediator) {
 exports.default = BaseMediator;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/event/ViewEvent":54,"minibot":"minibot"}],63:[function(require,module,exports){
+},{"app/event/ViewEvent":58,"minibot":"minibot"}],67:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9918,7 +10238,7 @@ OptionsMediator.NAME = "OptionsMediator";
 
 exports.default = OptionsMediator;
 
-},{"app/ApplicationConstants":37,"app/event/ViewEvent":54,"app/view/BaseMediator":62}],64:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/event/ViewEvent":58,"app/view/BaseMediator":66}],68:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9950,6 +10270,7 @@ var ShellMediator = function (_puremvc$Mediator) {
   function ShellMediator(viewComponent) {
     _classCallCheck(this, ShellMediator);
 
+    console.log("ShellMediator::constructor");
     return _possibleConstructorReturn(this, (ShellMediator.__proto__ || Object.getPrototypeOf(ShellMediator)).call(this, ShellMediator.NAME, viewComponent));
   }
 
@@ -9982,7 +10303,7 @@ var ShellMediator = function (_puremvc$Mediator) {
 exports.default = ShellMediator;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37}],65:[function(require,module,exports){
+},{"app/ApplicationConstants":37}],69:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10057,7 +10378,7 @@ TitleMediator.NAME = "TitleMediator";
 
 exports.default = TitleMediator;
 
-},{"app/ApplicationConstants":37,"app/event/ViewEvent":54,"app/view/BaseMediator":62}],"app":[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/event/ViewEvent":58,"app/view/BaseMediator":66}],"app":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10096,4 +10417,4 @@ app.view.ShellMediator = require('app/view/ShellMediator').default;
 
 exports.default = app;
 
-},{"app/ApplicationConstants":37,"app/ApplicationFacade":38,"app/controller/ManagerPrepCommand":44,"app/controller/ModelPrepCommand":45,"app/controller/StartupCommand":46,"app/controller/ViewPrepCommand":47,"app/display/Shell":50,"app/model/DataProxy":55,"app/model/ResourceProxy":56,"app/view/ShellMediator":64}]},{},[]);
+},{"app/ApplicationConstants":37,"app/ApplicationFacade":38,"app/controller/ManagerPrepCommand":45,"app/controller/ModelPrepCommand":47,"app/controller/StartupCommand":49,"app/controller/ViewPrepCommand":51,"app/display/Shell":54,"app/model/DataProxy":59,"app/model/ResourceProxy":60,"app/view/ShellMediator":68}]},{},[]);

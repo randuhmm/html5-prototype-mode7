@@ -7,6 +7,7 @@ class ShellMediator extends puremvc.Mediator
 
   constructor(viewComponent)
   {
+    console.log("ShellMediator::constructor");
     super(ShellMediator.NAME, viewComponent);
   }
 

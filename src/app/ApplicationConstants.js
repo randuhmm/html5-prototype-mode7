@@ -1,6 +1,7 @@
 export default {
 
   STARTUP:        "Startup",
+  SHUTDOWN:        "Shutdown",
   MANAGER_PREP:     "ManagerPrep",
 
   SHOW_VIEW:        "ShowView",
