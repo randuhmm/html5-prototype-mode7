@@ -1,9 +1,7 @@
 
 var GameObjectType = {};
 
-GameObjectType.CANDY = 1;
-GameObjectType.POWERUP = 2;
-GameObjectType.CAMERA = 3;
-GameObjectType.CURSOR = 4;
+GameObjectType.KART = 1;
+GameObjectType.CAMERA = 2;
 
 export default GameObjectType;

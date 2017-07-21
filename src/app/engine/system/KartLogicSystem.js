@@ -1,5 +1,4 @@
 
-import EngineSystem from 'app/engine/system/EngineSystem';
 import EngineEvent from 'app/event/EngineEvent';
 import ComponentType from 'app/engine/enum/ComponentType';
 import GameObjectType from 'app/engine/enum/GameObjectType';

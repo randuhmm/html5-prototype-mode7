@@ -4,7 +4,7 @@ import minibot from 'minibot';
 import ApplicationConstants from 'app/ApplicationConstants';
 import GameMediator from 'app/view/GameMediator';
 import Game from 'app/display/Game';
-import Engine from 'app/engine/Engine';
+import KartEngine from 'app/engine/KartEngine';
 import SoundProxy from 'app/model/SoundProxy';
 import DataProxy from 'app/model/DataProxy';
 
@@ -25,7 +25,7 @@ class LoadGameCommand extends puremvc.SimpleCommand
     var level = dataProxy.getLevel(levelNum);
 
     // Create the engine
-    var engine = new Engine(level);
+    var engine = new KartEngine(level);
 
     var soundProxy = this.facade.retrieveProxy(SoundProxy.NAME);
     // soundProxy.setBgm('bgm.game');

@@ -8831,6 +8831,10 @@ var _MatchesCounter = require('app/display/game/MatchesCounter');
 
 var _MatchesCounter2 = _interopRequireDefault(_MatchesCounter);
 
+var _MainMenuButton = require('app/display/component/MainMenuButton');
+
+var _MainMenuButton2 = _interopRequireDefault(_MainMenuButton);
+
 var _GameUiHorz = require('app/display/game/GameUiHorz');
 
 var _GameUiHorz2 = _interopRequireDefault(_GameUiHorz);
@@ -8863,8 +8867,10 @@ var MouseEvent = _minibot2.default.event.MouseEvent,
     TouchEvent = _minibot2.default.event.TouchEvent,
     DisplayObject = _minibot2.default.display.DisplayObject,
     Sprite = _minibot2.default.display.scene.Sprite,
+    Rect = _minibot2.default.display.scene.Rect,
     Rectangle = _minibot2.default.geom.Rectangle,
     MouseEvent = _minibot2.default.event.MouseEvent,
+    Color = _minibot2.default.graphics.Color,
     BindAsEventListener = _minibot2.default.core.Utils.BindAsEventListener;
 
 var Game = function (_BaseView) {
@@ -8872,6 +8878,13 @@ var Game = function (_BaseView) {
 
   function Game(data) {
     _classCallCheck(this, Game);
+
+    // var rect = new Rect(this.w, this.h, "", Color.FromHex("#CCCCCC"));
+    // this.addChild(rect);
+    // var buttonExit = new MainMenuButton("x", this.w*0.1, this.h*0.2);
+    // this.addChild(buttonExit);
+    // buttonExit.x = this.w*0.8;
+    // buttonExit.y = this.h*0.1;
 
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, data));
 
@@ -8893,6 +8906,7 @@ var Game = function (_BaseView) {
   _createClass(Game, [{
     key: 'onAddedToScene',
     value: function onAddedToScene() {
+      _get(Game.prototype.__proto__ || Object.getPrototypeOf(Game.prototype), 'onAddedToScene', this).call(this);
       var size = Math.min(this.getWidth(), this.getHeight());
       this.viewport = new Rectangle(0, 0, size, size);
       this.engine.setScene(this.getScene());
@@ -8956,7 +8970,7 @@ var Game = function (_BaseView) {
 
 exports.default = Game;
 
-},{"app/display/BaseView":52,"app/display/game/Bat":58,"app/display/game/ComboMeter":59,"app/display/game/GameFail":60,"app/display/game/GameTimer":62,"app/display/game/GameUiHorz":63,"app/display/game/GameUiVert":64,"app/display/game/GameWin":65,"app/display/game/MatchesCounter":66,"app/engine/enum/ComponentType":81,"app/engine/enum/InputType":84,"app/event/EngineEvent":95,"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],54:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/component/MainMenuButton":57,"app/display/game/Bat":58,"app/display/game/ComboMeter":59,"app/display/game/GameFail":60,"app/display/game/GameTimer":62,"app/display/game/GameUiHorz":63,"app/display/game/GameUiVert":64,"app/display/game/GameWin":65,"app/display/game/MatchesCounter":66,"app/engine/enum/ComponentType":81,"app/engine/enum/InputType":84,"app/event/EngineEvent":95,"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],54:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10595,8 +10609,8 @@ var Engine = function (_minibot$event$EventD) {
       }
 
       var candy = _ObjectFactory2.default.Create(_GameObjectType2.default.CANDY, {
-        //       "candyType": this.randomCandy(),
-        //       "x": x,
+        "candyType": this.randomCandy(),
+        "x": x,
         "y": y
       });
       this.addObject(candy);
@@ -10639,6 +10653,7 @@ EngineConstants.A = 1.0;
 EngineConstants.B = 6;
 EngineConstants.C = 32;
 EngineConstants.R = 800;
+EngineConstants.BASE_R = 800;
 
 EngineConstants.ScreenS = {};
 EngineConstants.ScreenR = {};
@@ -10669,7 +10684,6 @@ EngineConstants.INPUT_ADD_PIECE = 1;
 EngineConstants.INPUT_MOVE_CURSOR = 2;
 
 exports.default = EngineConstants;
-// export default {};
 
 },{}],69:[function(require,module,exports){
 'use strict';
@@ -12013,10 +12027,10 @@ var CursorPhysicsComponent = function (_PhysicsComponent) {
         var a = this.insertSection * _EngineConstants2.default.SECTION_ANGLE;
 
         var candy = this.system.engine.createObject(_GameObjectType2.default.CANDY, {
-          //         "candyType": type,
-          //         "fromCursor": true,
-          //         "h": h,
-          //         "a": a,
+          "candyType": type,
+          "fromCursor": true,
+          "h": h,
+          "a": a,
           "sec": this.insertSection
         });
 
@@ -12506,6 +12520,7 @@ var DisplaySystem = function (_EngineSystem) {
     _this.layers = [];
     _this.isInserting = false;
     _this.isZooming = false;
+    _this.zoomLevel = 2;
     return _this;
   }
 
@@ -12514,6 +12529,7 @@ var DisplaySystem = function (_EngineSystem) {
     value: function setup() {
       this.findMaxDepth();
       this.zoomLevel = this.maxDepth;
+      this.zoomLevel = 2;
     }
   }, {
     key: 'addObject',

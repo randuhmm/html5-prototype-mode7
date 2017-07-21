@@ -1,11 +1,13 @@
-import GameObjectType from 'app/engine/enum/GameObjectType';
-import EngineObject from 'app/engine/object/EngineObject';
-import CandyGridComponent from 'app/engine/component/candy/CandyGridComponent';
-import CandyDisplayComponent from 'app/engine/component/candy/CandyDisplayComponent';
-import CandyPhysicsComponent from 'app/engine/component/candy/CandyPhysicsComponent';
-import CursorPhysicsComponent from 'app/engine/component/cursor/CursorPhysicsComponent';
-import CursorInputComponent from 'app/engine/component/cursor/CursorInputComponent';
-import CursorDisplayComponent from 'app/engine/component/cursor/CursorDisplayComponent';
+
+import minibot from 'minibot';
+import GameObjectType from '../enum/GameObjectType';
+import KartDisplayComponent from '../component/kart/KartDisplayComponent';
+import KartInputComponent from '../component/kart/KartInputComponent';
+import KartPhysicsComponent from '../component/kart/KartPhysicsComponent';
+// import CameraPhysicsComponent from '../component/camera/CameraPhysicsComponent';
+// import CameraDisplayComponent from '../component/Camera/CameraDisplayComponent';
+
+var EngineObject = minibot.engine.EngineObject;
 
 var ObjectFactory = {};
 
@@ -14,15 +16,14 @@ ObjectFactory.Create = function(type, data)
 
   var object = new EngineObject(type, data);
   switch(type) {
-    case GameObjectType.CANDY:
-      object.addComponent(new CandyGridComponent());
-      object.addComponent(new CandyDisplayComponent());
-      object.addComponent(new CandyPhysicsComponent());
+    case GameObjectType.KART:
+      object.addComponent(new KartDisplayComponent());
+      object.addComponent(new KartInputComponent());
+      object.addComponent(new KartPhysicsComponent());
       break;
-    case GameObjectType.CURSOR:
-      object.addComponent(new CursorPhysicsComponent());
-      object.addComponent(new CursorInputComponent());
-      object.addComponent(new CursorDisplayComponent());
+    case GameObjectType.CAMERA:
+      // object.addComponent(new CameraPhysicsComponent());
+      // object.addComponent(new CameraDisplayComponent());
       break;
   }
 

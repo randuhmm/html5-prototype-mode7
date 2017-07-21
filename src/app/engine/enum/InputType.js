@@ -1,7 +1,9 @@
 
 var InputType = {};
 
-InputType.MOVE_CURSOR = 1;
-InputType.ADD_PIECE = 2;
+InputType.ACCEL = 1;
+InputType.BRAKE = 2;
+InputType.LEFT = 3;
+InputType.RIGHT = 4;
 
 export default  InputType;
