@@ -10,37 +10,37 @@ import GridFlag from 'app/engine/enum/GridFlag';
 import EngineComponent from 'app/engine/component/core/EngineComponent';
 import SigSlt from 'app/engine/message/SigSlt';
 
-class PenaltyLogicComponent extends LogicComponent
+class PenaltySoundComponent extends LogicComponent
 {
 
 
   constructor()
   {
-    $super();
+    super();
   }
-  
+
   onAddedToObject()
   {
-    $super();
+    super();
   }
 
   onComponentsAdded()
   {
 
   }
-  
+
   onAddedToSystem()
   {
-    
+
   }
-  
+
   onResourcesLoaded()
   {
 
   }
-  
+
 }
 
-export default PenaltyLogicComponent;
+export default PenaltySoundComponent;
 
 

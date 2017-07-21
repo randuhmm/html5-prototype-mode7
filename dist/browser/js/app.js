@@ -7677,16 +7677,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var LoadGameResourcesCommand = function (_puremvc$SimpleComman) {
-  _inherits(LoadGameResourcesCommand, _puremvc$SimpleComman);
+var LoadEngineResourcesCommand = function (_puremvc$SimpleComman) {
+  _inherits(LoadEngineResourcesCommand, _puremvc$SimpleComman);
 
-  function LoadGameResourcesCommand() {
-    _classCallCheck(this, LoadGameResourcesCommand);
+  function LoadEngineResourcesCommand() {
+    _classCallCheck(this, LoadEngineResourcesCommand);
 
-    return _possibleConstructorReturn(this, (LoadGameResourcesCommand.__proto__ || Object.getPrototypeOf(LoadGameResourcesCommand)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (LoadEngineResourcesCommand.__proto__ || Object.getPrototypeOf(LoadEngineResourcesCommand)).apply(this, arguments));
   }
 
-  _createClass(LoadGameResourcesCommand, [{
+  _createClass(LoadEngineResourcesCommand, [{
     key: 'execute',
     value: function execute(notification) {
       var engine = notification.getBody();
@@ -7706,13 +7706,13 @@ var LoadGameResourcesCommand = function (_puremvc$SimpleComman) {
     }
   }]);
 
-  return LoadGameResourcesCommand;
+  return LoadEngineResourcesCommand;
 }(_puremvc2.default.SimpleCommand);
 
-exports.default = LoadGameResourcesCommand;
+exports.default = LoadEngineResourcesCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/ResourceProxy":59}],40:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/ResourceProxy":98}],40:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7730,6 +7730,30 @@ var _minibot = require('minibot');
 
 var _minibot2 = _interopRequireDefault(_minibot);
 
+var _ApplicationConstants = require('app/ApplicationConstants');
+
+var _ApplicationConstants2 = _interopRequireDefault(_ApplicationConstants);
+
+var _GameMediator = require('app/view/GameMediator');
+
+var _GameMediator2 = _interopRequireDefault(_GameMediator);
+
+var _Game = require('app/display/Game');
+
+var _Game2 = _interopRequireDefault(_Game);
+
+var _Engine = require('app/engine/Engine');
+
+var _Engine2 = _interopRequireDefault(_Engine);
+
+var _SoundProxy = require('app/model/SoundProxy');
+
+var _SoundProxy2 = _interopRequireDefault(_SoundProxy);
+
+var _DataProxy = require('app/model/DataProxy');
+
+var _DataProxy2 = _interopRequireDefault(_DataProxy);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7737,13 +7761,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// import ApplicationConstants from 'app/ApplicationConstants';
-// import GameMediator from 'app/view/GameMediator';
-// import Game from 'app/display/Game';
-// import Engine from 'app/engine/Engine';
-// import SoundProxy from 'app/model/SoundProxy';
-// import DataProxy from 'app/model/DataProxy';
 
 var LoadGameCommand = function (_puremvc$SimpleComman) {
     _inherits(LoadGameCommand, _puremvc$SimpleComman);
@@ -7759,32 +7776,39 @@ var LoadGameCommand = function (_puremvc$SimpleComman) {
         value: function execute(notification) {
             console.log('LoadGameCommand::execute');
 
-            /*
-              var levelNum = notification.getBody();
-            if(!levelNum) levelNum = 1;
-              // Load the Game view resources
-            this.sendNotification(ApplicationConstants.LOAD_VIEW_RESOURCES, Game);
-              var dataProxy = this.facade.retrieveProxy(DataProxy.NAME);
+            var levelNum = notification.getBody();
+            if (!levelNum) levelNum = 1;
+
+            // Load the Game view resources
+            this.sendNotification(_ApplicationConstants2.default.LOAD_VIEW_RESOURCES, _Game2.default);
+
+            var dataProxy = this.facade.retrieveProxy(_DataProxy2.default.NAME);
             var level = dataProxy.getLevel(levelNum);
-              // Create the engine
-            var engine = new Engine(level);
-              var soundProxy = this.facade.retrieveProxy(SoundProxy.NAME);
-            soundProxy.setBgm('bgm.game');
-              // Add the engine to the update loop
-            minibot.system.SetUpdateCallback(engine.update.bind(engine));
-              // Load the Engine resources
-            this.sendNotification(ApplicationConstants.LOAD_ENGINE_RESOURCES, engine);
-              // Create the Game view
+
+            // Create the engine
+            var engine = new _Engine2.default(level);
+
+            var soundProxy = this.facade.retrieveProxy(_SoundProxy2.default.NAME);
+            // soundProxy.setBgm('bgm.game');
+
+            // Add the engine to the update loop
+            _minibot2.default.system.SetUpdateCallback(engine.update.bind(engine));
+
+            // Load the Engine resources
+            this.sendNotification(_ApplicationConstants2.default.LOAD_ENGINE_RESOURCES, engine);
+
+            // Create the Game view
             var viewData = {};
             viewData.level = level;
             viewData.engine = engine;
             viewData.soundProxy = soundProxy;
-            var view = new Game(viewData);
-              // Register the Mediator
-            this.facade.registerMediator(new GameMediator(view));
-              // Show the new view
-            this.sendNotification(ApplicationConstants.SHOW_VIEW, view);
-              */
+            var view = new _Game2.default(viewData);
+
+            // Register the Mediator
+            this.facade.registerMediator(new _GameMediator2.default(view));
+
+            // Show the new view
+            this.sendNotification(_ApplicationConstants2.default.SHOW_VIEW, view);
         }
     }]);
 
@@ -7794,7 +7818,7 @@ var LoadGameCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadGameCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"minibot":"minibot"}],41:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/display/Game":53,"app/engine/Engine":67,"app/model/DataProxy":97,"app/model/SoundProxy":99,"app/view/GameMediator":105,"minibot":"minibot"}],41:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7869,7 +7893,7 @@ var LoadOptionsCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadOptionsCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/display/Options":53,"app/model/ResourceProxy":59,"app/view/OptionsMediator":66}],42:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/display/Options":54,"app/model/ResourceProxy":98,"app/view/OptionsMediator":106}],42:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7945,7 +7969,7 @@ var LoadTitleCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadTitleCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/display/Title":55,"app/model/ResourceProxy":59,"app/view/TitleMediator":68}],43:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/display/Title":56,"app/model/ResourceProxy":98,"app/view/TitleMediator":108}],43:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8020,7 +8044,7 @@ var LoadViewResourcesCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadViewResourcesCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/ResourceProxy":59,"minibot":"minibot"}],44:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/ResourceProxy":98,"minibot":"minibot"}],44:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8130,7 +8154,7 @@ var ManagerDestroyCommand = function (_puremvc$SimpleComman) {
 exports.default = ManagerDestroyCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/DataProxy":58,"app/model/ResourceProxy":59,"app/model/SoundProxy":60,"minibot":"minibot"}],45:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/DataProxy":97,"app/model/ResourceProxy":98,"app/model/SoundProxy":99,"minibot":"minibot"}],45:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8239,7 +8263,7 @@ var ManagerPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ManagerPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/DataProxy":58,"app/model/ResourceProxy":59,"app/model/SoundProxy":60,"minibot":"minibot"}],46:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/DataProxy":97,"app/model/ResourceProxy":98,"app/model/SoundProxy":99,"minibot":"minibot"}],46:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8298,7 +8322,7 @@ var ModelDestroyCommand = function (_puremvc$SimpleComman) {
 exports.default = ModelDestroyCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/model/DataProxy":58,"app/model/ResourceProxy":59,"app/model/SoundProxy":60}],47:[function(require,module,exports){
+},{"app/model/DataProxy":97,"app/model/ResourceProxy":98,"app/model/SoundProxy":99}],47:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8356,7 +8380,7 @@ var ModelPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ModelPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/model/DataProxy":58,"app/model/ResourceProxy":59,"app/model/SoundProxy":60}],48:[function(require,module,exports){
+},{"app/model/DataProxy":97,"app/model/ResourceProxy":98,"app/model/SoundProxy":99}],48:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8550,7 +8574,7 @@ var ViewDestroyCommand = function (_puremvc$SimpleComman) {
 exports.default = ViewDestroyCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/display/BaseView":52,"app/display/Shell":54,"app/view/ShellMediator":67,"minibot":"minibot"}],51:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/Shell":55,"app/view/ShellMediator":107,"minibot":"minibot"}],51:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8629,7 +8653,7 @@ var ViewPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ViewPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/display/BaseView":52,"app/display/Shell":54,"app/view/ShellMediator":67,"minibot":"minibot"}],52:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/Shell":55,"app/view/ShellMediator":107,"minibot":"minibot"}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8672,6 +8696,196 @@ var BaseView = function (_minibot$display$scen) {
 exports.default = BaseView;
 
 },{"minibot":"minibot"}],53:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _BaseView2 = require('app/display/BaseView');
+
+var _BaseView3 = _interopRequireDefault(_BaseView2);
+
+var _ViewEvent = require('app/event/ViewEvent');
+
+var _ViewEvent2 = _interopRequireDefault(_ViewEvent);
+
+var _EngineEvent = require('app/event/EngineEvent');
+
+var _EngineEvent2 = _interopRequireDefault(_EngineEvent);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+var _InputType = require('app/engine/enum/InputType');
+
+var _InputType2 = _interopRequireDefault(_InputType);
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _GameTimer = require('app/display/game/GameTimer');
+
+var _GameTimer2 = _interopRequireDefault(_GameTimer);
+
+var _ComboMeter = require('app/display/game/ComboMeter');
+
+var _ComboMeter2 = _interopRequireDefault(_ComboMeter);
+
+var _MatchesCounter = require('app/display/game/MatchesCounter');
+
+var _MatchesCounter2 = _interopRequireDefault(_MatchesCounter);
+
+var _MainMenuButton = require('app/display/component/MainMenuButton');
+
+var _MainMenuButton2 = _interopRequireDefault(_MainMenuButton);
+
+var _GameUiHorz = require('app/display/game/GameUiHorz');
+
+var _GameUiHorz2 = _interopRequireDefault(_GameUiHorz);
+
+var _GameUiVert = require('app/display/game/GameUiVert');
+
+var _GameUiVert2 = _interopRequireDefault(_GameUiVert);
+
+var _Bat = require('app/display/game/Bat');
+
+var _Bat2 = _interopRequireDefault(_Bat);
+
+var _GameWin = require('app/display/game/GameWin');
+
+var _GameWin2 = _interopRequireDefault(_GameWin);
+
+var _GameFail = require('app/display/game/GameFail');
+
+var _GameFail2 = _interopRequireDefault(_GameFail);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MouseEvent = _minibot2.default.event.MouseEvent,
+    TouchEvent = _minibot2.default.event.TouchEvent,
+    DisplayObject = _minibot2.default.display.DisplayObject,
+    Sprite = _minibot2.default.display.scene.Sprite,
+    Rect = _minibot2.default.display.scene.Rect,
+    Rectangle = _minibot2.default.geom.Rectangle,
+    MouseEvent = _minibot2.default.event.MouseEvent,
+    Color = _minibot2.default.graphics.Color,
+    BindAsEventListener = _minibot2.default.core.Utils.BindAsEventListener;
+
+var Game = function (_BaseView) {
+  _inherits(Game, _BaseView);
+
+  function Game(data) {
+    _classCallCheck(this, Game);
+
+    // var rect = new Rect(this.w, this.h, "", Color.FromHex("#CCCCCC"));
+    // this.addChild(rect);
+    // var buttonExit = new MainMenuButton("x", this.w*0.1, this.h*0.2);
+    // this.addChild(buttonExit);
+    // buttonExit.x = this.w*0.8;
+    // buttonExit.y = this.h*0.1;
+
+    var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, data));
+
+    _this.viewport = null;
+    _this.engine = data.engine;
+
+    // Add mouse event listeners
+    _this.addEventListener(MouseEvent.MOUSE_DOWN, BindAsEventListener(_this.handleMouseDown, _this));
+    _this.addEventListener(MouseEvent.MOUSE_MOVE, BindAsEventListener(_this.handleMouseMove, _this));
+    _this.addEventListener(MouseEvent.MOUSE_UP, BindAsEventListener(_this.handleMouseUp, _this));
+
+    // Add touch event listeners
+    _this.addEventListener(TouchEvent.TOUCH_START, BindAsEventListener(_this.handleTouchStart, _this));
+    _this.addEventListener(TouchEvent.TOUCH_MOVE, BindAsEventListener(_this.handleTouchMove, _this));
+    _this.addEventListener(TouchEvent.TOUCH_END, BindAsEventListener(_this.handleTouchEnd, _this));
+    return _this;
+  }
+
+  _createClass(Game, [{
+    key: 'onAddedToScene',
+    value: function onAddedToScene() {
+      _get(Game.prototype.__proto__ || Object.getPrototypeOf(Game.prototype), 'onAddedToScene', this).call(this);
+      var size = Math.min(this.getWidth(), this.getHeight());
+      this.viewport = new Rectangle(0, 0, size, size);
+      this.engine.setScene(this.getScene());
+      this.engine.setViewport(this.viewport);
+      this.engine.start();
+    }
+  }, {
+    key: 'render',
+    value: function render(dt, x, y) {
+      this.engine.render(dt, x, y);
+      _get(Game.prototype.__proto__ || Object.getPrototypeOf(Game.prototype), 'render', this).call(this, dt, x, y);
+    }
+  }, {
+    key: 'handleMouseDown',
+    value: function handleMouseDown(event) {
+      this.sendEngineInput(_InputType2.default.ADD_PIECE, this.toAngle(event.x, event.y));
+    }
+  }, {
+    key: 'handleMouseUp',
+    value: function handleMouseUp(event) {
+      //
+    }
+  }, {
+    key: 'handleMouseMove',
+    value: function handleMouseMove(event) {
+      this.sendEngineInput(_InputType2.default.MOVE_CURSOR, this.toAngle(event.x, event.y));
+    }
+  }, {
+    key: 'handleTouchStart',
+    value: function handleTouchStart(event) {
+      this.sendEngineInput(_InputType2.default.MOVE_CURSOR, this.toAngle(event.x, event.y));
+    }
+  }, {
+    key: 'handleTouchEnd',
+    value: function handleTouchEnd(event) {
+      this.sendEngineInput(_InputType2.default.ADD_PIECE, this.toAngle(event.x, event.y));
+    }
+  }, {
+    key: 'handleTouchMove',
+    value: function handleTouchMove(event) {
+      this.sendEngineInput(_InputType2.default.MOVE_CURSOR, this.toAngle(event.x, event.y));
+    }
+  }, {
+    key: 'toAngle',
+    value: function toAngle(x, y) {
+      x = x - (this.viewport.x + this.viewport.w / 2);
+      y = this.viewport.y + this.viewport.h / 2 - y;
+      var a = Math.atan2(y, x);
+      if (a < 0) a += 2 * Math.PI;
+      return a;
+    }
+  }, {
+    key: 'sendEngineInput',
+    value: function sendEngineInput(type, data) {
+      this.engine.dispatchEvent(new _EngineEvent2.default(_EngineEvent2.default.INPUT, null, null, { type: type, data: data }));
+    }
+  }]);
+
+  return Game;
+}(_BaseView3.default);
+
+exports.default = Game;
+
+},{"app/display/BaseView":52,"app/display/component/MainMenuButton":57,"app/display/game/Bat":58,"app/display/game/ComboMeter":59,"app/display/game/GameFail":60,"app/display/game/GameTimer":62,"app/display/game/GameUiHorz":63,"app/display/game/GameUiVert":64,"app/display/game/GameWin":65,"app/display/game/MatchesCounter":66,"app/engine/enum/ComponentType":81,"app/engine/enum/InputType":84,"app/event/EngineEvent":95,"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],54:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8756,7 +8970,7 @@ var Options = function (_BaseView) {
 
 exports.default = Options;
 
-},{"app/display/BaseView":52,"app/display/component/MainMenuButton":56,"app/event/ViewEvent":57,"minibot":"minibot"}],54:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/component/MainMenuButton":57,"app/event/ViewEvent":96,"minibot":"minibot"}],55:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8812,7 +9026,7 @@ var Shell = function () {
 
 exports.default = Shell;
 
-},{"minibot":"minibot"}],55:[function(require,module,exports){
+},{"minibot":"minibot"}],56:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8905,7 +9119,7 @@ var Title = function (_BaseView) {
         key: 'handleLevelSelect',
         value: function handleLevelSelect(event, level) {
             console.log('Title:handleLevelSelect - ' + level);
-            var viewEvent = new _ViewEvent2.default(_ViewEvent2.default.LEVEL_SELECTED);
+            var viewEvent = new _ViewEvent2.default(_ViewEvent2.default.LEVEL_SELECTED, level);
             this.dispatchEvent(viewEvent);
         }
     }, {
@@ -8923,7 +9137,7 @@ DisplayObject.AddResource(Title, _ResourceType2.default.SPRITE, 'ui.title.bg');
 
 exports.default = Title;
 
-},{"app/display/BaseView":52,"app/display/component/MainMenuButton":56,"app/event/ViewEvent":57,"app/resource/ResourceType":63,"minibot":"minibot"}],56:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/component/MainMenuButton":57,"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],57:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8991,7 +9205,4417 @@ var MainMenuButton = function (_Button) {
 
 exports.default = MainMenuButton;
 
-},{"minibot":"minibot"}],57:[function(require,module,exports){
+},{"minibot":"minibot"}],58:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Bat = function (_minibot$display$scen) {
+    _inherits(Bat, _minibot$display$scen);
+
+    // body: null,
+    // leftWing: null,
+    // rightWing: null,
+
+    function Bat(gameSize) {
+        _classCallCheck(this, Bat);
+
+        var _this = _possibleConstructorReturn(this, (Bat.__proto__ || Object.getPrototypeOf(Bat)).call(this));
+
+        var ratio = gameSize / 5 / 400;
+
+        _this.leftWing = new Sprite(DisplayObject.GetResource(Bat, _ResourceType2.default.SPRITE, 'ui.game.bat.wing_1l'));
+        _this.leftWing.w *= ratio;
+        _this.leftWing.h *= ratio;
+        _this.leftWing.x -= 50 * ratio;
+        _this.leftWing.y += 25 * ratio;
+        _this.addChild(_this.leftWing);
+
+        _this.rightWing = new Sprite(DisplayObject.GetResource(Bat, _ResourceType2.default.SPRITE, 'ui.game.bat.wing_1r'));
+        _this.rightWing.w *= ratio;
+        _this.rightWing.h *= ratio;
+        _this.rightWing.x += 75 * ratio;
+        _this.rightWing.y += 25 * ratio;
+        _this.addChild(_this.rightWing);
+
+        _this.body = new Sprite(DisplayObject.GetResource(Bat, _ResourceType2.default.SPRITE, 'ui.game.bat.body'));
+        _this.body.w *= ratio;
+        _this.body.h *= ratio;
+        _this.addChild(_this.body);
+
+        _this.body.x -= _this.body.w / 2;
+        _this.body.y -= _this.body.h / 2;
+
+        _this.leftWing.x -= _this.body.w / 2;
+        _this.leftWing.y -= _this.body.h / 2;
+
+        _this.rightWing.x -= _this.body.w / 2;
+        _this.rightWing.y -= _this.body.h / 2;
+
+        return _this;
+    }
+
+    return Bat;
+}(_minibot2.default.display.scene.Container);
+
+exports.default = Bat;
+
+},{"app/resource/ResourceType":102,"minibot":"minibot"}],59:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+var _ViewEvent = require('app/event/ViewEvent');
+
+var _ViewEvent2 = _interopRequireDefault(_ViewEvent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ComboMeter = function (_minibot$display$scen) {
+  _inherits(ComboMeter, _minibot$display$scen);
+
+  // length: null,
+  // position: null,
+  // count: null,
+  // comboText: null,
+
+  function ComboMeter(width, height, length) {
+    _classCallCheck(this, ComboMeter);
+
+    var _this = _possibleConstructorReturn(this, (ComboMeter.__proto__ || Object.getPrototypeOf(ComboMeter)).call(this));
+
+    _this.length = length;
+    _this.position = 0;
+    _this.count = 0;
+
+    var style = new TextStyle("proxima-nova", 10, new Color(Color.RGB, 0, 0, 0), "left", "800");
+    _this.comboText = new Text("", style);
+    _this.comboText.hide();
+    _this.comboText.y = 18;
+    _this.addChild(_this.comboText);
+    return _this;
+  }
+
+  _createClass(ComboMeter, [{
+    key: 'handleComboUpdate',
+    value: function handleComboUpdate(value, count) {
+      this.position = value;
+      this.count = count;
+      if (count == 0) {
+        this.comboText.hide();
+      } else {
+        this.comboText.show();
+        this.comboText.setText("x" + count);
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render(dt, x, y) {
+      _get(ComboMeter.prototype.__proto__ || Object.getPrototypeOf(ComboMeter.prototype), 'render', this).call(this, dt, x, y);
+      for (var i = 0; i < this.length; i++) {
+        if (i < this.position) {
+          this.scene.setFillColor(Color.FromHex('#00AAAA'));
+          this.scene.drawRect('', x + this.x + 10 * i, y + this.y, 8, 8);
+        } else {
+          this.scene.setFillColor(Color.FromHex('#000000'));
+          this.scene.drawRect('', x + this.x + 10 * i, y + this.y, 8, 8);
+        }
+      }
+    }
+  }]);
+
+  return ComboMeter;
+}(_minibot2.default.display.scene.Container);
+
+exports.default = ComboMeter;
+
+},{"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],60:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+var _ViewEvent = require('app/event/ViewEvent');
+
+var _ViewEvent2 = _interopRequireDefault(_ViewEvent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GameFail = function (_minibot$display$scen) {
+  _inherits(GameFail, _minibot$display$scen);
+
+  // fail: null,
+
+  // t_b: null,
+  // t_c: null,
+  // t_t: null,
+
+  // showing: null,
+
+  function GameFail(size) {
+    _classCallCheck(this, GameFail);
+
+    var _this = _possibleConstructorReturn(this, (GameFail.__proto__ || Object.getPrototypeOf(GameFail)).call(this));
+
+    _this.fail = new Sprite(DisplayObject.GetResource(GameFail, _ResourceType2.default.SPRITE, 'ui.game.fail'));
+
+    var r = size / _this.fail.w * 0.9;
+    _this.fail.w *= r;
+    _this.fail.h *= r;
+    _this.addChild(_this.fail);
+
+    _this.y -= _this.h;
+    _this.x = (size - _this.w) / 2;
+
+    _this.showing = false;
+
+    _this.t_t = 0;
+    _this.t_b = 0;
+    _this.t_c = _this.h + size / 2;
+
+    _this.final = _this.t_c - _this.h;
+
+    return _this;
+  }
+
+  _createClass(GameFail, [{
+    key: 'show',
+    value: function show() {
+      this.showing = true;
+    }
+  }, {
+    key: 'tween',
+    value: function tween(t, b, c, d) {
+      t /= d;
+      return c * t * t + b;
+    }
+  }, {
+    key: 'render',
+    value: function render(dt, x, y) {
+      if (this.showing) {
+        this.t_t += dt;
+        this.y = this.tween(this.t_t, this.t_b, this.t_c, 1000) - this.h;
+        if (this.y >= this.final) {
+          this.showing = false;
+          this.y = this.final;
+        }
+      }
+      _get(GameFail.prototype.__proto__ || Object.getPrototypeOf(GameFail.prototype), 'render', this).call(this, dt, x, y);
+    }
+  }]);
+
+  return GameFail;
+}(_minibot2.default.display.scene.Container);
+
+exports.default = GameFail;
+
+},{"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],61:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _minibot = require("minibot");
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GameMenuButton = function (_minibot$display$scen) {
+    _inherits(GameMenuButton, _minibot$display$scen);
+
+    function GameMenuButton(text, w, h) {
+        _classCallCheck(this, GameMenuButton);
+
+        var style = new TextStyle("proxima-nova", h * 0.70, new Color(Color.RGB, 0, 0, 0), "center", "900");
+
+        var upText = new Text(text, style);
+        upText.x = w * 0.5;
+        upText.y = h * 0.8;
+        var overText = new Text(text, style);
+        overText.x = w * 0.5;
+        overText.y = h * 0.8;
+        var downText = new Text(text, style);
+        downText.x = w * 0.5;
+        downText.y = h * 0.8;
+
+        var upRect = new Rect(w, h, "", Color.FromHex("#990000"));
+        var overRect = new Rect(w, h, "", Color.FromHex("#CC0000"));
+        var downRect = new Rect(w, h, "", Color.FromHex("#0000CC"));
+
+        var upContainer = new Container();
+        upContainer.addChild(upRect);
+        upContainer.addChild(upText);
+
+        var overContainer = new Container();
+        overContainer.addChild(overRect);
+        overContainer.addChild(overText);
+
+        var downContainer = new Container();
+        downContainer.addChild(downRect);
+        downContainer.addChild(downText);
+
+        var _this = _possibleConstructorReturn(this, (GameMenuButton.__proto__ || Object.getPrototypeOf(GameMenuButton)).call(this, upContainer, downContainer, overContainer));
+
+        _this.addEventListener(MouseEvent.MOUSE_UP, function () {});
+        return _this;
+    }
+
+    return GameMenuButton;
+}(_minibot2.default.display.scene.Button);
+
+exports.default = GameMenuButton;
+
+},{"minibot":"minibot"}],62:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+var _ViewEvent = require('app/event/ViewEvent');
+
+var _ViewEvent2 = _interopRequireDefault(_ViewEvent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GameTimer = function (_minibot$display$scen) {
+  _inherits(GameTimer, _minibot$display$scen);
+
+  // length: null,
+  // position: null,
+
+  // ratio: null,
+
+  // unit: null,
+
+  function GameTimer(ratio, length) {
+    _classCallCheck(this, GameTimer);
+
+    var _this = _possibleConstructorReturn(this, (GameTimer.__proto__ || Object.getPrototypeOf(GameTimer)).call(this));
+
+    _this.length = length;
+    _this.position = length;
+    _this.ratio = ratio;
+
+    _this.unit = new Sprite(DisplayObject.GetResource(GameTimer, _ResourceType2.default.SPRITE, 'ui.game.timer_unit'));
+    _this.unit.w *= ratio + 0.1;
+    _this.unit.h *= ratio + 0.1;
+
+    var bg = new Sprite(DisplayObject.GetResource(GameTimer, _ResourceType2.default.SPRITE, 'ui.game.bar.04'));
+    bg.w *= ratio;
+    bg.h *= ratio;
+    _this.addChild(bg);
+
+    return _this;
+  }
+
+  _createClass(GameTimer, [{
+    key: 'handleDropTimerUpdate',
+    value: function handleDropTimerUpdate(value) {
+      this.position = value;
+    }
+  }, {
+    key: 'render',
+    value: function render(dt, x, y) {
+      _get(GameTimer.prototype.__proto__ || Object.getPrototypeOf(GameTimer.prototype), 'render', this).call(this, dt, x, y);
+      var dy = this.ratio * 3;
+      for (var i = 0; i < this.length; i++) {
+        var dx = this.ratio * (30 * i + 18);
+        if (i < this.position) {
+          this.scene.drawImage(this.unit.sprite.img, this.unit.sprite.x, //sx,
+          this.unit.sprite.y, //sy,
+          this.unit.sprite.w, //sw,
+          this.unit.sprite.h, //sh,
+          this.unit.x + x + this.x + dx, //dx,
+          this.unit.y + y + this.y + dy, //dy,
+          this.unit.w, //dw,
+          this.unit.h //dh
+          );
+          //this.scene.setFillColor(Color.FromHex('#990000'));
+          //this.scene.drawRect('', x + this.x + dx, y + this.y, 8, 8);
+        } else {
+          this.scene.setFillColor(Color.FromHex('#000000'));
+          this.scene.drawRect('', x + this.x + dx, y + this.y, 8, 8);
+        }
+      }
+    }
+  }]);
+
+  return GameTimer;
+}(_minibot2.default.display.scene.Container);
+
+exports.default = GameTimer;
+
+},{"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],63:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+var _ViewEvent = require('app/event/ViewEvent');
+
+var _ViewEvent2 = _interopRequireDefault(_ViewEvent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Rect = _minibot2.default.display.scene.Rect;
+var TextStyle = _minibot2.default.display.scene.TextStyle;
+var Text = _minibot2.default.display.scene.Text;
+var Color = _minibot2.default.graphics.Color;
+
+var GameUiHorz = function (_minibot$display$scen) {
+  _inherits(GameUiHorz, _minibot$display$scen);
+
+  function GameUiHorz(width, height, size, matches, ticks, score) {
+    _classCallCheck(this, GameUiHorz);
+
+    var _this = _possibleConstructorReturn(this, (GameUiHorz.__proto__ || Object.getPrototypeOf(GameUiHorz)).call(this));
+
+    _this.setWidth(width);
+    _this.setHeight(height);
+    _this.resizable = false;
+
+    _this.matches = matches;
+
+    var bg = new Rect(_this.w, size, '');
+    _this.addChild(bg);
+
+    var style = new TextStyle("proxima-nova", 30, new Color(Color.RGB, 0, 0, 0), "left", "800");
+    _this.text = new Text(matches, style);
+    _this.text.y = 18;
+    _this.addChild(_this.text);
+
+    return _this;
+  }
+
+  _createClass(GameUiHorz, [{
+    key: 'handleMatchUpdate',
+    value: function handleMatchUpdate(value) {
+      this.text.setText(value.toString());
+    }
+  }, {
+    key: 'handleDropTimerUpdate',
+    value: function handleDropTimerUpdate(value) {
+      //this.gameTimer.handleDropTimerUpdate(value);
+    }
+  }, {
+    key: 'handlePenaltyUpdate',
+    value: function handlePenaltyUpdate(value) {
+      //this.penaltyCount = value;
+    }
+  }, {
+    key: 'handleMenuSelect',
+    value: function handleMenuSelect(event) {
+      console.log('handle menu');
+    }
+  }]);
+
+  return GameUiHorz;
+}(_minibot2.default.display.scene.Container);
+
+exports.default = GameUiHorz;
+
+},{"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],64:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+var _ViewEvent = require('app/event/ViewEvent');
+
+var _ViewEvent2 = _interopRequireDefault(_ViewEvent);
+
+var _GameMenuButton = require('app/display/game/GameMenuButton');
+
+var _GameMenuButton2 = _interopRequireDefault(_GameMenuButton);
+
+var _GameTimer = require('./GameTimer');
+
+var _GameTimer2 = _interopRequireDefault(_GameTimer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GameUiVert = function (_minibot$display$scen) {
+  _inherits(GameUiVert, _minibot$display$scen);
+
+  // gameTimer: null,
+
+  // candiesLeftText: null,
+
+  // penaltyLength: null,
+  // penaltyCount: null,
+  // penaltyOn: null,
+  // penaltyOff: null,
+
+  // ratio: null,
+
+  function GameUiVert(width, height, size, matches, ticks, score) {
+    _classCallCheck(this, GameUiVert);
+
+    var _this = _possibleConstructorReturn(this, (GameUiVert.__proto__ || Object.getPrototypeOf(GameUiVert)).call(this));
+
+    _this.setWidth(width);
+    _this.setHeight(height);
+    _this.resizable = false;
+
+    _this.matches = matches;
+
+    _this.penaltyLength = 3;
+    _this.penaltyCount = 0;
+
+    var r = size * 3 / 4 / 280;
+    _this.ratio = r;
+
+    // BG
+    var pSprite = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.tile'));
+    pSprite.w *= r;
+    pSprite.h *= r;
+    var pPat = new Pattern(pSprite);
+    var bg1 = new Rect(_this.w, size / 4, '', pPat);
+    _this.addChild(bg1);
+    var bg2 = new Rect(size * 3 / 4, _this.h, '', pPat);
+    _this.addChild(bg2);
+    bg2.x = _this.w - bg2.w;
+
+    var vby = size / 4;
+    while (vby < _this.h) {
+      var vbSprite = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.border_vert_right'));
+      vbSprite.w *= r;
+      vbSprite.h *= r;
+      vbSprite.x = _this.w - vbSprite.w - 35 * r;
+      vbSprite.y = vby;
+      _this.addChild(vbSprite);
+      vby += vbSprite.h;
+    }
+
+    var hbx = _this.w - size * 3 / 4;
+    while (hbx > 0) {
+      var hbSprite = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.border_horz_top'));
+      hbSprite.w *= r;
+      hbSprite.h *= r;
+      hbSprite.x = hbx - hbSprite.w;
+      hbSprite.y = size / 4 - hbSprite.h + 35 * r;
+      _this.addChild(hbSprite);
+      hbx -= hbSprite.w;
+    }
+
+    _this.gameTimer = new _GameTimer2.default(r + 0.2, 16);
+    _this.gameTimer.x = 100 * r;
+    _this.gameTimer.y = 10 * r;
+    _this.addChild(_this.gameTimer);
+
+    var scoreBg = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.bar.01'));
+    scoreBg.w *= r + 0.2;
+    scoreBg.h *= r + 0.2;
+    scoreBg.x = _this.w - scoreBg.w - 400 * r;
+    scoreBg.y = 10 * r;
+    _this.addChild(scoreBg);
+    var scoreLabel = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.score'));
+    scoreLabel.w *= r + 0.3;
+    scoreLabel.h *= r + 0.3;
+    scoreLabel.x = _this.w - scoreBg.w - 390 * r;
+    scoreLabel.y = 14 * r;
+    _this.addChild(scoreLabel);
+
+    var candiesLeftBg = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.bar.03'));
+    candiesLeftBg.w *= r + 0.2;
+    candiesLeftBg.h *= r + 0.2;
+    candiesLeftBg.x = _this.w - size * 3 / 8 - candiesLeftBg.w / 2;
+    candiesLeftBg.y = 500 * r;
+    _this.addChild(candiesLeftBg);
+    var candiesLeftLabel = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.candies_left'));
+    candiesLeftLabel.w *= r + 0.3;
+    candiesLeftLabel.h *= r + 0.3;
+    candiesLeftLabel.x = _this.w - size * 3 / 8 - candiesLeftBg.w / 2;
+    candiesLeftLabel.y = 480 * r;
+    _this.addChild(candiesLeftLabel);
+    var style = new TextStyle("proxima-nova", 30, Color.FromHex("#FFDD55"), "center", "800");
+    _this.candiesLeftText = new Text(matches, style);
+    _this.candiesLeftText.x = _this.w - size * 3 / 8;
+    _this.candiesLeftText.y = 500 * r + candiesLeftBg.h - 40 * r;
+    _this.addChild(_this.candiesLeftText);
+
+    var penaltyBg = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.bar.05'));
+    penaltyBg.w *= r + 0.2;
+    penaltyBg.h *= r + 0.2;
+    penaltyBg.x = _this.w - size * 3 / 8 - penaltyBg.w / 2;
+    penaltyBg.y = 800 * r;
+    _this.addChild(penaltyBg);
+    var penaltyLabel = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.penalty'));
+    penaltyLabel.w *= r + 0.3;
+    penaltyLabel.h *= r + 0.3;
+    penaltyLabel.x = _this.w - size * 3 / 8 - penaltyBg.w / 2;
+    penaltyLabel.y = 780 * r;
+    _this.addChild(penaltyLabel);
+    _this.penaltyOn = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.penalty.on'));
+    _this.penaltyOn.w *= r + 0.3;
+    _this.penaltyOn.h *= r + 0.3;
+    _this.penaltyOn.x = penaltyBg.x + 30 * r;
+    _this.penaltyOn.y = penaltyBg.y + 30 * r;
+    _this.penaltyOff = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.penalty.off'));
+    _this.penaltyOff.w *= r + 0.3;
+    _this.penaltyOff.h *= r + 0.3;
+    _this.penaltyOff.x = penaltyBg.x + 30 * r;
+    _this.penaltyOff.y = penaltyBg.y + 30 * r;
+
+    // Menu
+    var menuButtonUp = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.menu.up'));
+    menuButtonUp.w *= r + 0.5;
+    menuButtonUp.h *= r + 0.5;
+    var menuButtonDown = new Sprite(DisplayObject.GetResource(GameUiVert, _ResourceType2.default.SPRITE, 'ui.game.menu.down'));
+    menuButtonDown.w *= r + 0.5;
+    menuButtonDown.h *= r + 0.5;
+    var menuButton = new Button(menuButtonUp, menuButtonDown, menuButtonDown);
+    menuButton.x = _this.w - menuButton.w;
+    menuButton.addEventListener(ButtonEvent.SELECT, _this.handleMenuSelect.bindAsEventListener(_this));
+    menuButton.addEventListener(MouseEvent.MOUSE_UP, function () {});
+    _this.addChild(menuButton);
+
+    /*
+    var button = new GameMenuButton('QUIT', size*3/4, size/4);
+    button.x = this.w - size*3/4;
+    button.y = this.h - 100;
+    this.addChild(button);
+    */
+
+    return _this;
+  }
+
+  _createClass(GameUiVert, [{
+    key: 'render',
+    value: function render(dt, x, y) {
+      _get(GameUiVert.prototype.__proto__ || Object.getPrototypeOf(GameUiVert.prototype), 'render', this).call(this, dt, x, y);
+
+      var dx = 0,
+          dy = 0;
+
+      for (var i = 0; i < this.penaltyLength; i++) {
+        dy = i * 80 * this.ratio;
+        if (i < this.penaltyCount) {
+          this.scene.drawImage(this.penaltyOn.sprite.img, this.penaltyOn.sprite.x, //sx,
+          this.penaltyOn.sprite.y, //sy,
+          this.penaltyOn.sprite.w, //sw,
+          this.penaltyOn.sprite.h, //sh,
+          this.penaltyOn.x + x + this.x + dx, //dx,
+          this.penaltyOn.y + y + this.y + dy, //dy,
+          this.penaltyOn.w, //dw,
+          this.penaltyOn.h //dh
+          );
+        } else {
+          this.scene.drawImage(this.penaltyOff.sprite.img, this.penaltyOff.sprite.x, //sx,
+          this.penaltyOff.sprite.y, //sy,
+          this.penaltyOff.sprite.w, //sw,
+          this.penaltyOff.sprite.h, //sh,
+          this.penaltyOff.x + x + this.x + dx, //dx,
+          this.penaltyOff.y + y + this.y + dy, //dy,
+          this.penaltyOff.w, //dw,
+          this.penaltyOff.h //dh
+          );
+        }
+      }
+    }
+  }, {
+    key: 'handleMatchUpdate',
+    value: function handleMatchUpdate(value) {
+      this.candiesLeftText.setText(value.toString());
+    }
+  }, {
+    key: 'handleDropTimerUpdate',
+    value: function handleDropTimerUpdate(value) {
+      this.gameTimer.handleDropTimerUpdate(value);
+    }
+  }, {
+    key: 'handlePenaltyUpdate',
+    value: function handlePenaltyUpdate(value) {
+      this.penaltyCount = value;
+    }
+  }, {
+    key: 'handleMenuSelect',
+    value: function handleMenuSelect(event) {
+      console.log('handle menu');
+    }
+  }]);
+
+  return GameUiVert;
+}(_minibot2.default.display.scene.Container);
+
+exports.default = GameUiVert;
+
+},{"./GameTimer":62,"app/display/game/GameMenuButton":61,"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],65:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+var _ViewEvent = require('app/event/ViewEvent');
+
+var _ViewEvent2 = _interopRequireDefault(_ViewEvent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GameWin = function (_minibot$display$scen) {
+  _inherits(GameWin, _minibot$display$scen);
+
+  // win: null,
+
+  // t_b: null,
+  // t_c: null,
+  // t_t: null,
+
+  // showing: null,
+
+  function GameWin(size) {
+    _classCallCheck(this, GameWin);
+
+    var _this = _possibleConstructorReturn(this, (GameWin.__proto__ || Object.getPrototypeOf(GameWin)).call(this));
+
+    _this.win = new Sprite(DisplayObject.GetResource(GameWin, _ResourceType2.default.SPRITE, 'ui.game.win'));
+
+    var r = size / _this.win.w * 0.9;
+    _this.win.w *= r;
+    _this.win.h *= r;
+    _this.addChild(_this.win);
+
+    _this.y -= _this.h;
+    _this.x = (size - _this.w) / 2;
+
+    _this.showing = false;
+
+    _this.t_t = 0;
+    _this.t_b = 0;
+    _this.t_c = _this.h + size / 2;
+
+    _this.final = _this.t_c - _this.h;
+
+    return _this;
+  }
+
+  _createClass(GameWin, [{
+    key: 'show',
+    value: function show() {
+      this.showing = true;
+    }
+  }, {
+    key: 'tween',
+    value: function tween(t, b, c, d) {
+      t /= d;
+      return c * t * t + b;
+    }
+  }, {
+    key: 'render',
+    value: function render(dt, x, y) {
+      if (this.showing) {
+        this.t_t += dt;
+        this.y = this.tween(this.t_t, this.t_b, this.t_c, 1000) - this.h;
+        if (this.y >= this.final) {
+          this.showing = false;
+          this.y = this.final;
+        }
+      }
+      _get(GameWin.prototype.__proto__ || Object.getPrototypeOf(GameWin.prototype), 'render', this).call(this, dt, x, y);
+    }
+  }]);
+
+  return GameWin;
+}(_minibot2.default.display.scene.Container);
+
+exports.default = GameWin;
+
+},{"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],66:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+var _ViewEvent = require('app/event/ViewEvent');
+
+var _ViewEvent2 = _interopRequireDefault(_ViewEvent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MatchesCounter = function (_minibot$display$scen) {
+  _inherits(MatchesCounter, _minibot$display$scen);
+
+  // matches: null,
+  // text: null,
+
+  function MatchesCounter(matches) {
+    _classCallCheck(this, MatchesCounter);
+
+    var _this = _possibleConstructorReturn(this, (MatchesCounter.__proto__ || Object.getPrototypeOf(MatchesCounter)).call(this));
+
+    _this.matches = matches;
+
+    var style = new TextStyle("proxima-nova", 30, new Color(Color.RGB, 0, 0, 0), "left", "800");
+    _this.text = new Text(matches, style);
+    _this.text.y = 18;
+    _this.addChild(_this.text);
+
+    return _this;
+  }
+
+  _createClass(MatchesCounter, [{
+    key: 'handleMatchUpdate',
+    value: function handleMatchUpdate(value) {
+      this.text.setText(value.toString());
+    }
+  }]);
+
+  return MatchesCounter;
+}(_minibot2.default.display.scene.Container);
+
+exports.default = MatchesCounter;
+
+},{"app/event/ViewEvent":96,"app/resource/ResourceType":102,"minibot":"minibot"}],67:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _EngineConstants = require('app/engine/EngineConstants');
+
+var _EngineConstants2 = _interopRequireDefault(_EngineConstants);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _GameObjectType = require('app/engine/enum/GameObjectType');
+
+var _GameObjectType2 = _interopRequireDefault(_GameObjectType);
+
+var _CandyType = require('app/engine/enum/CandyType');
+
+var _CandyType2 = _interopRequireDefault(_CandyType);
+
+var _InputSystem = require('app/engine/system/InputSystem');
+
+var _InputSystem2 = _interopRequireDefault(_InputSystem);
+
+var _LogicSystem = require('app/engine/system/LogicSystem');
+
+var _LogicSystem2 = _interopRequireDefault(_LogicSystem);
+
+var _GridSystem = require('app/engine/system/GridSystem');
+
+var _GridSystem2 = _interopRequireDefault(_GridSystem);
+
+var _PhysicsSystem = require('app/engine/system/PhysicsSystem');
+
+var _PhysicsSystem2 = _interopRequireDefault(_PhysicsSystem);
+
+var _DisplaySystem = require('app/engine/system/DisplaySystem');
+
+var _DisplaySystem2 = _interopRequireDefault(_DisplaySystem);
+
+var _SoundSystem = require('app/engine/system/SoundSystem');
+
+var _SoundSystem2 = _interopRequireDefault(_SoundSystem);
+
+var _ObjectFactory = require('app/engine/factory/ObjectFactory');
+
+var _ObjectFactory2 = _interopRequireDefault(_ObjectFactory);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Engine = function (_minibot$event$EventD) {
+  _inherits(Engine, _minibot$event$EventD);
+
+  // List of all systems
+  // systems: null,
+
+  // List of all systems by type
+  // systemsByType: null,
+
+  // List of all objects
+  // objects: null,
+
+  // List of objects by type
+  // objectsByType: null,
+
+  // The primary camera
+  // scene: null,
+  // viewport: null,
+
+  // The resource map
+  // resources: null,
+  // resourcesLoaded: null,
+
+  // flags
+  // running: false,
+  // lastTime: null,
+  // thisTime: null,
+
+  // MOVETHIS TO GRID SYSTEM?
+
+  // list of candy types
+  // candyTypes: null,
+
+
+  function Engine(level) {
+    _classCallCheck(this, Engine);
+
+    // OVERRIDE
+    var _this = _possibleConstructorReturn(this, (Engine.__proto__ || Object.getPrototypeOf(Engine)).call(this));
+
+    level.level = 1;
+    level.initialRows = 3;
+    level.tickSpeed = 800;
+    level.matches = 20;
+    level.candyTypes = [_CandyType2.default.A, _CandyType2.default.B, _CandyType2.default.C, _CandyType2.default.D];
+
+    _this.level = level;
+
+    _this.resources = {};
+    _this.resourcesLoaded = false;
+
+    _this.systems = [];
+    _this.systemsByType = {};
+    _this.objects = [];
+    _this.objectsByType = {};
+
+    _this.inputQueue = [];
+
+    // Set the candy types
+    _this.candyTypes = _this.level.candyTypes;
+
+    // Add the systems
+    _this.addSystem(new _InputSystem2.default());
+    _this.addSystem(new _LogicSystem2.default({
+      tickSpeed: _this.level.tickSpeed,
+      matches: _this.level.matches
+    }));
+    _this.addSystem(new _GridSystem2.default(_EngineConstants2.default.SECTIONS, _EngineConstants2.default.DEPTH));
+    _this.addSystem(new _PhysicsSystem2.default());
+    _this.addSystem(new _DisplaySystem2.default());
+    _this.addSystem(new _SoundSystem2.default());
+    //this.addSystem(new StatisticsSystem());
+
+    // Add cursor
+    var cursor = _ObjectFactory2.default.Create(_GameObjectType2.default.CURSOR);
+    _this.addObject(cursor);
+
+    // Add initial candies
+    for (var y = 0; y < _this.level.initialRows; y++) {
+      for (var x = 0; x < _EngineConstants2.default.SECTIONS; x++) {
+        var candy = _ObjectFactory2.default.Create(_GameObjectType2.default.CANDY, {
+          "candyType": _this.randomCandy(),
+          "x": x,
+          "y": y
+        });
+        _this.addObject(candy);
+      }
+    }
+
+    for (var i = 0; i < _this.systems.length; i++) {
+      _this.systems[i].onInitialized();
+    }
+
+    return _this;
+  }
+
+  _createClass(Engine, [{
+    key: 'destroy',
+    value: function destroy() {
+      this.running = false;
+      for (i = 0; i < this.objects.length; i++) {
+        this.objects.destroy();
+      }
+      for (i = 0; i < this.systems.length; i++) {
+        this.systems.destroy();
+      }
+      this.systems = null;
+      this.objects = null;
+      this.removeAllEventListeners();
+    }
+  }, {
+    key: 'getResources',
+    value: function getResources() {
+      return this.resources;
+    }
+  }, {
+    key: 'getResource',
+    value: function getResource(type, id) {
+      if (this.resources[type] == undefined) return null;
+      if (this.resources[type][id] == undefined) return null;
+      return this.resources[type][id];
+    }
+  }, {
+    key: 'addResource',
+    value: function addResource(type, id) {
+      if (this.resources[type] == undefined) this.resources[type] = {};
+      this.resources[type][id] = null;
+    }
+  }, {
+    key: 'onResourcesLoaded',
+    value: function onResourcesLoaded() {
+      this.resourcesLoaded = true;
+      var i;
+      for (i = 0; i < this.systems.length; i++) {
+        this.systems[i].onResourcesLoaded();
+      }
+      for (i = 0; i < this.objects.length; i++) {
+        this.objects[i].onResourcesLoaded();
+      }
+    }
+  }, {
+    key: 'start',
+    value: function start() {
+      if (this.running) return;
+      this.running = true;
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      this.running = false;
+      // Stop each sub system?
+    }
+  }, {
+    key: 'update',
+    value: function update(dt) {
+      // Check if we are running
+      if (!this.running) return;
+
+      // Update the Systems in preset order
+      for (var s = 0; s < Engine.UPDATE_ORDER.length; s++) {
+        this.systemsByType[Engine.UPDATE_ORDER[s]].update(dt);
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render(dt, x, y) {
+      x += this.viewport.x;
+      y += this.viewport.y;
+      this.systemsByType[_ComponentType2.default.DISPLAY].render(dt, x, y);
+    }
+  }, {
+    key: 'renderPhysics',
+    value: function renderPhysics() {
+      var object, component;
+      for (var i = 0; i < this.objects.length; i++) {
+        object = this.objects[i];
+        if (!object.hasComponent(_ComponentType2.default.PHYSICS)) continue;
+        component = object.getComponent(_ComponentType2.default.PHYSICS);
+        component.render(this.context);
+      }
+    }
+  }, {
+    key: 'setScene',
+    value: function setScene(scene) {
+      this.scene = scene;
+    }
+  }, {
+    key: 'setSoundProxy',
+    value: function setSoundProxy(soundProxy) {
+      this.systemsByType[_ComponentType2.default.SOUND].setSoundProxy(soundProxy);
+    }
+  }, {
+    key: 'setViewport',
+    value: function setViewport(viewport) {
+      this.viewport = viewport;
+      _EngineConstants2.default.R = viewport.w / _EngineConstants2.default.BASE_R;
+    }
+  }, {
+    key: 'addObject',
+    value: function addObject(obj) {
+      // Add to objects
+      this.objects.push(obj);
+
+      // Add to objectsByType
+      var type = obj.getType();
+      if (this.objectsByType[type] == undefined) {
+        this.objectsByType[type] = [];
+      }
+      this.objectsByType[type].push(obj);
+
+      // Add to systems if component is available
+      for (var i = 0; i < this.systems.length; i++) {
+        this.systems[i].addObject(obj);
+      }
+
+      obj.setEngine(this);
+      obj.onAddedToEngine();
+
+      if (this.resourcesLoaded) {
+        obj.onResourcesLoaded();
+      }
+    }
+  }, {
+    key: 'createObject',
+    value: function createObject(type, data) {
+      return _ObjectFactory2.default.Create(type, data);
+    }
+  }, {
+    key: 'removeObject',
+    value: function removeObject(obj) {
+      var i = this.objects.indexOf(obj);
+      if (i != -1) this.objects.splice(i, 1);
+
+      var type = obj.getType();
+      var arr = this.objectsByType[type];
+      i = arr.indexOf(obj);
+      if (i != -1) arr.splice(i, 1);
+
+      for (var i = 0; i < this.systems.length; i++) {
+        this.systems[i].removeObject(obj);
+      }
+
+      //obj.onRemovedFromEngine(this);
+    }
+  }, {
+    key: 'addSystem',
+    value: function addSystem(sys) {
+      // Get type
+      var type = sys.getType();
+      if (this.systemsByType[type] != undefined) {
+        // ERROR?
+        return;
+      }
+
+      // Add to systems
+      this.systems.push(sys);
+
+      // Add to systemsByType
+      this.systemsByType[type] = sys;
+
+      sys.setEngine(this);
+      sys.onAddedToEngine();
+    }
+  }, {
+    key: 'getSystem',
+    value: function getSystem(type) {
+      return this.systemsByType[type];
+    }
+  }, {
+    key: 'removeSystem',
+    value: function removeSystem(sys) {}
+
+    // +++++++++++++++++++++++++++++++++++++ REMOVE THESE FUNCTIONS!!
+
+    /*
+    // Input -->
+      input(type, data)
+    {
+      this.inputQueue.push(
+        {
+    //       type: type,
+          data: data
+        }
+      );
+    }
+      // <-- Input
+      moveCursor(a)
+    {
+      this.cursorLocation = a;
+        //var sec = Math.floor((this.cursorLocation + this.sectionAngle/2) / this.sectionAngle) % (this.sections*2);
+      //if(sec != this.currentSection) {
+      //  this.deleteFlagsOnSection(this.currentSection, GridFlags.SELECTED)
+      //  this.setFlagsOnSection(sec, GridFlags.SELECTED);
+      //
+      //  this.currentSection = sec;
+      //}
+      }
+      processInputQueue()
+    {
+      // test
+      while(this.inputQueue.length) {
+        var q = this.inputQueue.shift();
+        while(this.inputQueue.length && this.inputQueue[0].type == q.type) {
+          q = this.inputQueue.shift();
+        }
+        switch(q.type) {
+          case Engine.INPUT_ADD_PIECE:
+            this.addPiece(q.data);
+            break;
+          case Engine.INPUT_MOVE_CURSOR:
+            this.moveCursor(q.data);
+            break;
+        }
+      }
+    },
+    */
+
+  }, {
+    key: 'randomCandy',
+    value: function randomCandy() {
+      var i = Math.floor(Math.random() * this.candyTypes.length);
+      return this.candyTypes[i];
+    }
+  }, {
+    key: 'addPiece',
+    value: function addPiece() {
+      //if(this.isInserting) return;
+      //this.isInserting = true;
+      //this.insertLocation = a;
+
+
+      var x = Math.floor(Math.random() * 8);
+      var grid = this.systemsByType[_ComponentType2.default.GRID];
+      for (var y = 0; y < _EngineConstants2.default.DEPTH; y++) {
+        if (!grid.hasAt(x, y)) break;
+      }
+
+      var candy = _ObjectFactory2.default.Create(_GameObjectType2.default.CANDY, {
+        "candyType": this.randomCandy(),
+        "x": x,
+        "y": y
+      });
+      this.addObject(candy);
+    }
+  }]);
+
+  return Engine;
+}(_minibot2.default.event.EventDispatcher);
+
+Engine.UPDATE_ORDER = [];
+Engine.UPDATE_ORDER.push(_ComponentType2.default.INPUT);
+Engine.UPDATE_ORDER.push(_ComponentType2.default.LOGIC);
+Engine.UPDATE_ORDER.push(_ComponentType2.default.GRID);
+Engine.UPDATE_ORDER.push(_ComponentType2.default.PHYSICS);
+Engine.UPDATE_ORDER.push(_ComponentType2.default.DISPLAY);
+Engine.UPDATE_ORDER.push(_ComponentType2.default.SOUND);
+//Engine.UPDATE_ORDER.push(ComponentType.STATISTICS);
+
+exports.default = Engine;
+
+},{"app/engine/EngineConstants":68,"app/engine/enum/CandyType":80,"app/engine/enum/ComponentType":81,"app/engine/enum/GameObjectType":82,"app/engine/factory/ObjectFactory":85,"app/engine/system/DisplaySystem":88,"app/engine/system/GridSystem":90,"app/engine/system/InputSystem":91,"app/engine/system/LogicSystem":92,"app/engine/system/PhysicsSystem":93,"app/engine/system/SoundSystem":94,"minibot":"minibot"}],68:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var EngineConstants = {};
+
+// Grid constants
+EngineConstants.SECTIONS = 8;
+EngineConstants.DEPTH = 10;
+
+// World constants
+EngineConstants.SECTION_ANGLE = Math.PI / EngineConstants.SECTIONS;
+
+// Screen constants
+EngineConstants.Si = 20;
+EngineConstants.A = 1.0;
+EngineConstants.B = 6;
+EngineConstants.C = 32;
+EngineConstants.R = 800;
+EngineConstants.BASE_R = 800;
+
+EngineConstants.ScreenS = {};
+EngineConstants.ScreenR = {};
+
+EngineConstants.GridToWorldH = function (x, y) {
+  return y;
+};
+
+EngineConstants.GridToWorldA = function (x, y) {
+  return (2 * x + y) * EngineConstants.SECTION_ANGLE % (2 * Math.PI);
+};
+
+EngineConstants.WorldToScreenS = function (h) {
+  if (EngineConstants.ScreenS[h] == undefined) {
+    EngineConstants.ScreenS[h] = (EngineConstants.Si + Math.pow(h + 1, 2) / 2) * EngineConstants.R;
+  }
+  return EngineConstants.ScreenS[h];
+};
+
+EngineConstants.WorldToScreenR = function (h) {
+  if (EngineConstants.ScreenR[h] == undefined) {
+    EngineConstants.ScreenR[h] = (EngineConstants.C + h * EngineConstants.B + EngineConstants.A * Math.pow(h, 2)) * EngineConstants.R;
+  }
+  return EngineConstants.ScreenR[h];
+};
+
+EngineConstants.INPUT_ADD_PIECE = 1;
+EngineConstants.INPUT_MOVE_CURSOR = 2;
+
+exports.default = EngineConstants;
+
+},{}],69:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _EngineConstants = require('app/engine/EngineConstants');
+
+var _EngineConstants2 = _interopRequireDefault(_EngineConstants);
+
+var _DisplayComponent2 = require('app/engine/component/core/DisplayComponent');
+
+var _DisplayComponent3 = _interopRequireDefault(_DisplayComponent2);
+
+var _ComponentMessage = require('app/engine/component/core/ComponentMessage');
+
+var _ComponentMessage2 = _interopRequireDefault(_ComponentMessage);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _Engine = require('app/engine/Engine');
+
+var _Engine2 = _interopRequireDefault(_Engine);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+var _CandyType = require('app/engine/enum/CandyType');
+
+var _CandyType2 = _interopRequireDefault(_CandyType);
+
+var _GridFlag = require('app/engine/enum/GridFlag');
+
+var _GridFlag2 = _interopRequireDefault(_GridFlag);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CandyDisplayComponent = function (_DisplayComponent) {
+  _inherits(CandyDisplayComponent, _DisplayComponent);
+
+  // sprite: null,
+
+  // sprite_016: null,
+  // sprite_032: null,
+  // sprite_064: null,
+  // sprite_128: null,
+
+  function CandyDisplayComponent() {
+    _classCallCheck(this, CandyDisplayComponent);
+
+    return _possibleConstructorReturn(this, (CandyDisplayComponent.__proto__ || Object.getPrototypeOf(CandyDisplayComponent)).call(this));
+  }
+
+  _createClass(CandyDisplayComponent, [{
+    key: 'onAddedToObject',
+    value: function onAddedToObject() {}
+  }, {
+    key: 'onAddedToSystem',
+    value: function onAddedToSystem() {}
+  }, {
+    key: 'onResourcesLoaded',
+    value: function onResourcesLoaded() {
+      var id = "";
+      switch (this.getProperty("candyType")) {
+        case _CandyType2.default.A:
+          id = "object.candy.01";
+          break;
+        case _CandyType2.default.B:
+          id = "object.candy.02";
+          break;
+        case _CandyType2.default.C:
+          id = "object.candy.03";
+          break;
+        case _CandyType2.default.D:
+          id = "object.candy.04";
+          break;
+        case _CandyType2.default.E:
+          id = "object.candy.05";
+          break;
+        case _CandyType2.default.F:
+          id = "object.candy.06";
+          break;
+        case _CandyType2.default.G:
+          id = "object.candy.07";
+          break;
+      }
+
+      this.sprite = this.getResource(_ResourceType2.default.SPRITE, id);
+
+      this.sprite_016 = this.getResource(_ResourceType2.default.SPRITE, id + ".016");
+      this.sprite_032 = this.getResource(_ResourceType2.default.SPRITE, id + ".032");
+      this.sprite_064 = this.getResource(_ResourceType2.default.SPRITE, id + ".064");
+      this.sprite_128 = this.getResource(_ResourceType2.default.SPRITE, id + ".128");
+    }
+  }, {
+    key: 'update',
+    value: function update(dt) {}
+  }, {
+    key: 'render',
+    value: function render(dt, x, y) {
+
+      var zoom = 10 - this.system.getZoomLevel();
+      var viewport = this.system.getViewport();
+      var scene = this.system.getScene();
+
+      var a = this.getProperty("a");
+      var h = this.getProperty("h") + zoom;
+
+      var s = _EngineConstants2.default.WorldToScreenS(h);
+      var r = _EngineConstants2.default.WorldToScreenR(h);
+
+      var selected = (this.getProperty("flags") >> _GridFlag2.default.SELECTED) % 2 != 0;
+      if (selected) s *= 1.2;
+
+      x += viewport.w / 2 + r * Math.cos(a) - s / 2;
+      y += viewport.h / 2 - r * Math.sin(a) - s / 2;
+
+      var sprite = this.sprite;
+      if (s <= 16) {
+        //sprite = this.sprite_016
+      } else if (s <= 32) {
+        //sprite = this.sprite_032
+      } else if (s <= 64) {
+        //sprite = this.sprite_064
+      } else if (s <= 128) {
+        //sprite = this.sprite_128
+      }
+
+      scene.drawImage(sprite.img, sprite.x, //sx,
+      sprite.y, //sy,
+      sprite.w, //sw,
+      sprite.h, //sh,
+      x, //dx,
+      y, //dy,
+      s, //dw,
+      s //dh
+      );
+    }
+  }]);
+
+  return CandyDisplayComponent;
+}(_DisplayComponent3.default);
+
+exports.default = CandyDisplayComponent;
+
+},{"app/engine/Engine":67,"app/engine/EngineConstants":68,"app/engine/component/core/ComponentMessage":72,"app/engine/component/core/DisplayComponent":73,"app/engine/enum/CandyType":80,"app/engine/enum/ComponentType":81,"app/engine/enum/GridFlag":83,"app/resource/ResourceType":102,"minibot":"minibot"}],70:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _GridSystem = require('app/engine/system/GridSystem');
+
+var _GridSystem2 = _interopRequireDefault(_GridSystem);
+
+var _GridComponent2 = require('app/engine/component/core/GridComponent');
+
+var _GridComponent3 = _interopRequireDefault(_GridComponent2);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _EngineComponent = require('app/engine/component/core/EngineComponent');
+
+var _EngineComponent2 = _interopRequireDefault(_EngineComponent);
+
+var _SigSlt = require('app/engine/message/SigSlt');
+
+var _SigSlt2 = _interopRequireDefault(_SigSlt);
+
+var _EngineConstants = require('app/engine/EngineConstants');
+
+var _EngineConstants2 = _interopRequireDefault(_EngineConstants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CandyGridComponent = function (_GridComponent) {
+  _inherits(CandyGridComponent, _GridComponent);
+
+  function CandyGridComponent() {
+    _classCallCheck(this, CandyGridComponent);
+
+    return _possibleConstructorReturn(this, (CandyGridComponent.__proto__ || Object.getPrototypeOf(CandyGridComponent)).call(this));
+  }
+
+  _createClass(CandyGridComponent, [{
+    key: 'onAddedToObject',
+    value: function onAddedToObject() {
+      _get(CandyGridComponent.prototype.__proto__ || Object.getPrototypeOf(CandyGridComponent.prototype), 'onAddedToObject', this).call(this);
+
+      if (this.hasProperty('fromCursor')) {
+        _SigSlt2.default.AddSlot(this, _EngineComponent2.default.SLT_CANDY_SHOT_END, this.candyShotEnd);
+      }
+
+      _SigSlt2.default.AddSlot(this, _EngineComponent2.default.SLT_CANDY_DROP_END, this.candyDropEnd);
+      _SigSlt2.default.AddSignal(this, _EngineComponent2.default.SIG_CANDY_DROP_START);
+      _SigSlt2.default.AddSignal(this, _EngineComponent2.default.SIG_CANDY_MATCH);
+      _SigSlt2.default.AddSignal(this, _EngineComponent2.default.SIG_CANDY_NONMATCH);
+    }
+  }, {
+    key: 'onComponentsAdded',
+    value: function onComponentsAdded() {
+      if (this.hasProperty('fromCursor')) {
+        this.connect(_ComponentType2.default.PHYSICS, _EngineComponent2.default.SIG_CANDY_SHOT_END, _EngineComponent2.default.SLT_CANDY_SHOT_END);
+      }
+      this.connect(_ComponentType2.default.PHYSICS, _EngineComponent2.default.SIG_CANDY_DROP_END, _EngineComponent2.default.SLT_CANDY_DROP_END);
+    }
+  }, {
+    key: 'candyShotEnd',
+    value: function candyShotEnd(c) {
+      var h = this.getProperty('h');
+      var a = this.getProperty('a');
+
+      var x = _EngineConstants2.default.WorldToGridX(a, h);
+      var y = _EngineConstants2.default.WorldToGridY(a, h);
+
+      this.setProperty("h", _EngineConstants2.default.GridToWorldH(x, y));
+      this.setProperty("a", _EngineConstants2.default.GridToWorldA(x, y));
+      this.setProperty("x", x);
+      this.setProperty("y", y);
+
+      this.system.setAt(x, y, this);
+
+      var matches = this.system.getMatches(x, y, function (objA, objB) {
+        return objA.getProperty("candyType") == objB.getProperty("candyType");
+      });
+      if (matches.length >= 3) {
+
+        _SigSlt2.default.Emit(this, _EngineComponent2.default.SIG_CANDY_MATCH, matches);
+
+        for (var i = 0; i < matches.length; i++) {
+          matches[i].matched();
+        }
+      } else {
+        console.log("NO MATCH");
+        _SigSlt2.default.Emit(this, _EngineComponent2.default.SIG_CANDY_NONMATCH, matches);
+      }
+
+      this.system.findMaxDepth();
+    }
+  }, {
+    key: 'candyDropEnd',
+    value: function candyDropEnd(c) {
+      var h = this.getProperty('h');
+      var a = this.getProperty('a');
+
+      var x = _EngineConstants2.default.WorldToGridX(a, h);
+      var y = _EngineConstants2.default.WorldToGridY(a, h);
+
+      this.setProperty("h", _EngineConstants2.default.GridToWorldH(x, y));
+      this.setProperty("a", _EngineConstants2.default.GridToWorldA(x, y));
+      this.setProperty("x", x);
+      this.setProperty("y", y);
+
+      this.system.setAt(x, y, this);
+      this.system.findMaxDepth();
+    }
+  }, {
+    key: 'matched',
+    value: function matched() {
+      var x = this.getProperty("x");
+      var y = this.getProperty("y");
+      var o = this.object;
+      var s = this.system;
+      s.engine.removeObject(o);
+      s.fallPiecesAt(x, y);
+    }
+  }, {
+    key: 'drop',
+    value: function drop() {
+      var x = this.getProperty("x");
+      var y = this.getProperty("y");
+      this.setProperty("sec", _EngineConstants2.default.GridToWorldSec(x, y));
+      this.system.deleteAt(x, y);
+      _SigSlt2.default.Emit(this, _EngineComponent2.default.SIG_CANDY_DROP_START, this);
+    }
+  }]);
+
+  return CandyGridComponent;
+}(_GridComponent3.default);
+
+exports.default = CandyGridComponent;
+
+},{"app/engine/EngineConstants":68,"app/engine/component/core/EngineComponent":74,"app/engine/component/core/GridComponent":75,"app/engine/enum/ComponentType":81,"app/engine/message/SigSlt":86,"app/engine/system/GridSystem":90}],71:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _GridSystem = require('app/engine/system/GridSystem');
+
+var _GridSystem2 = _interopRequireDefault(_GridSystem);
+
+var _EngineConstants = require('app/engine/EngineConstants');
+
+var _EngineConstants2 = _interopRequireDefault(_EngineConstants);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _GameObjectType = require('app/engine/enum/GameObjectType');
+
+var _GameObjectType2 = _interopRequireDefault(_GameObjectType);
+
+var _EngineComponent = require('app/engine/component/core/EngineComponent');
+
+var _EngineComponent2 = _interopRequireDefault(_EngineComponent);
+
+var _PhysicsComponent2 = require('app/engine/component/core/PhysicsComponent');
+
+var _PhysicsComponent3 = _interopRequireDefault(_PhysicsComponent2);
+
+var _EngineEvent = require('app/event/EngineEvent');
+
+var _EngineEvent2 = _interopRequireDefault(_EngineEvent);
+
+var _SigSlt = require('app/engine/message/SigSlt');
+
+var _SigSlt2 = _interopRequireDefault(_SigSlt);
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CandyPhysicsComponent = function (_PhysicsComponent) {
+  _inherits(CandyPhysicsComponent, _PhysicsComponent);
+
+  // dropping: null,
+
+  // shooting: null,
+  // shootingSection: null,
+
+  function CandyPhysicsComponent() {
+    _classCallCheck(this, CandyPhysicsComponent);
+
+    var _this = _possibleConstructorReturn(this, (CandyPhysicsComponent.__proto__ || Object.getPrototypeOf(CandyPhysicsComponent)).call(this));
+
+    _this.shooting = false;
+    _this.dropping = false;
+    return _this;
+  }
+
+  _createClass(CandyPhysicsComponent, [{
+    key: 'onAddedToObject',
+    value: function onAddedToObject() {
+      if (this.hasProperty('fromCursor')) {
+        this.shooting = true;
+        this.shootingSection = this.getProperty('sec');
+        _SigSlt2.default.AddSignal(this, _EngineComponent2.default.SIG_CANDY_SHOT_END);
+      }
+
+      _SigSlt2.default.AddSignal(this, _EngineComponent2.default.SIG_CANDY_DROP_END);
+      _SigSlt2.default.AddSlot(this, _EngineComponent2.default.SLT_CANDY_DROP_START, this.candyDropStart);
+    }
+  }, {
+    key: 'onAddedToSystem',
+    value: function onAddedToSystem() {}
+  }, {
+    key: 'onComponentsAdded',
+    value: function onComponentsAdded() {
+      this.connect(_ComponentType2.default.GRID, _EngineComponent2.default.SIG_CANDY_DROP_START, _EngineComponent2.default.SLT_CANDY_DROP_START);
+    }
+  }, {
+    key: 'onResourcesLoaded',
+    value: function onResourcesLoaded() {}
+  }, {
+    key: 'update',
+    value: function update(dt) {
+      if (this.shooting) {
+        var h = this.getProperty('h');
+        h -= dt / 40;
+        this.setProperty('h', h);
+        var sec = this.getProperty('sec');
+
+        if (h <= sec % 2) {
+          this.shooting = false;
+          this.setProperty('h', sec % 2);
+          _SigSlt2.default.Emit(this, _EngineComponent2.default.SIG_CANDY_SHOT_END, this);
+        } else {
+          var gridSystem = this.system.engine.getSystem(_ComponentType2.default.GRID);
+          gridSystem.iterateBySection(this.shootingSection, function (x, y) {
+            if (gridSystem.hasAt(x, y)) {
+              var t = _EngineConstants2.default.GridToWorldH(x, y) + 2;
+              if (h <= t) {
+                this.shooting = false;
+                this.setProperty('h', t);
+                _SigSlt2.default.Emit(this, _EngineComponent2.default.SIG_CANDY_SHOT_END, this);
+                throw _GridSystem2.default.$break;
+              }
+            }
+          }.bind(this));
+        }
+      } else if (this.dropping) {
+        var h = this.getProperty('h');
+        h -= dt / 80;
+        this.setProperty('h', h);
+        var sec = this.getProperty('sec');
+
+        if (h <= sec % 2) {
+          this.dropping = false;
+          this.setProperty('h', sec % 2);
+          _SigSlt2.default.Emit(this, _EngineComponent2.default.SIG_CANDY_DROP_END, this);
+        } else {
+          var gridSystem = this.system.engine.getSystem(_ComponentType2.default.GRID);
+          gridSystem.iterateBySection(sec, function (x, y) {
+            if (gridSystem.hasAt(x, y)) {
+              var t = _EngineConstants2.default.GridToWorldH(x, y) + 2;
+              if (h <= t) {
+                this.dropping = false;
+                this.setProperty('h', t);
+                _SigSlt2.default.Emit(this, _EngineComponent2.default.SIG_CANDY_DROP_END, this);
+                throw _GridSystem2.default.$break;
+              }
+            }
+          }.bind(this));
+        }
+      }
+    }
+  }, {
+    key: 'candyDropStart',
+    value: function candyDropStart() {
+      console.log("DROPPING");
+      this.dropping = true;
+    }
+  }]);
+
+  return CandyPhysicsComponent;
+}(_PhysicsComponent3.default);
+
+exports.default = CandyPhysicsComponent;
+
+},{"app/engine/EngineConstants":68,"app/engine/component/core/EngineComponent":74,"app/engine/component/core/PhysicsComponent":76,"app/engine/enum/ComponentType":81,"app/engine/enum/GameObjectType":82,"app/engine/message/SigSlt":86,"app/engine/system/GridSystem":90,"app/event/EngineEvent":95,"minibot":"minibot"}],72:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ComponentMessage =
+
+// type: null,
+
+// data: null,
+
+function ComponentMessage(type, data) {
+  _classCallCheck(this, ComponentMessage);
+
+  if (!data) data = {};
+  this.type = type;
+  this.data = data;
+};
+
+exports.default = ComponentMessage;
+
+},{}],73:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _EngineComponent2 = require('app/engine/component/core/EngineComponent');
+
+var _EngineComponent3 = _interopRequireDefault(_EngineComponent2);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DisplayComponent = function (_EngineComponent) {
+  _inherits(DisplayComponent, _EngineComponent);
+
+  function DisplayComponent() {
+    _classCallCheck(this, DisplayComponent);
+
+    return _possibleConstructorReturn(this, (DisplayComponent.__proto__ || Object.getPrototypeOf(DisplayComponent)).call(this, _ComponentType2.default.DISPLAY));
+  }
+
+  _createClass(DisplayComponent, [{
+    key: 'getLayers',
+    value: function getLayers() {
+      return [0];
+    }
+  }, {
+    key: 'isVisible',
+    value: function isVisible() {
+      return true;
+    }
+  }, {
+    key: 'update',
+    value: function update(dt) {
+      //-- OVERRIDE
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      //-- OVERRIDE
+    }
+  }]);
+
+  return DisplayComponent;
+}(_EngineComponent3.default);
+
+exports.default = DisplayComponent;
+
+},{"app/engine/component/core/EngineComponent":74,"app/engine/enum/ComponentType":81}],74:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _SigSlt = require('app/engine/message/SigSlt');
+
+var _SigSlt2 = _interopRequireDefault(_SigSlt);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var EngineComponent = function () {
+
+  // type: null,
+
+  // object: null,
+
+  // system: null,
+
+  // listeners: null,
+
+  // signals: null,
+
+  function EngineComponent(type) {
+    _classCallCheck(this, EngineComponent);
+
+    this.type = type;
+
+    this.listeners = {};
+    this.signals = {};
+    this.slots = {};
+  }
+
+  _createClass(EngineComponent, [{
+    key: 'destroy',
+    value: function destroy() {
+      for (var i = 0; i < this.signals.length; i++) {
+        this.signals[i].disconnect_all();
+      }
+      this.signals = null;
+      this.slots = null;
+      this.listeners = null;
+      this.system = null;
+      this.object = null;
+    }
+  }, {
+    key: 'getType',
+    value: function getType() {
+      return this.type;
+    }
+  }, {
+    key: 'setProperty',
+    value: function setProperty(key, value) {
+      this.object.setProperty(key, value);
+    }
+  }, {
+    key: 'getProperty',
+    value: function getProperty(key) {
+      return this.object.getProperty(key);
+    }
+  }, {
+    key: 'hasProperty',
+    value: function hasProperty(key) {
+      return this.object.hasProperty(key);
+    }
+  }, {
+    key: 'setObject',
+    value: function setObject(object) {
+      this.object = object;
+    }
+  }, {
+    key: 'onAddedToObject',
+    value: function onAddedToObject() {
+      //-- OVERRIDE
+    }
+  }, {
+    key: 'onComponentsAdded',
+    value: function onComponentsAdded() {
+      //-- OVERRIDE
+    }
+  }, {
+    key: 'setSystem',
+    value: function setSystem(system) {
+      this.system = system;
+    }
+  }, {
+    key: 'getSystem',
+    value: function getSystem() {
+      return this.system;
+    }
+  }, {
+    key: 'onAddedToSystem',
+    value: function onAddedToSystem() {
+      //-- OVERIDE?
+    }
+  }, {
+    key: 'sendMessage',
+    value: function sendMessage(message) {
+      this.object.sendMessage(message);
+    }
+  }, {
+    key: 'addListener',
+    value: function addListener(type, func, obj) {
+      if (obj == null) obj = this.listeners;
+      obj[type] = func;
+    }
+  }, {
+    key: 'addResource',
+    value: function addResource(type, id) {
+      if (this.system == null) return;
+      this.system.addResource(type, id);
+    }
+  }, {
+    key: 'getResource',
+    value: function getResource(type, id) {
+      if (this.system == null) return;
+      return this.system.getResource(type, id);
+    }
+  }, {
+    key: 'onResourcesLoaded',
+    value: function onResourcesLoaded() {}
+  }, {
+    key: 'callListener',
+    value: function callListener(type, listeners, params) {
+      var f = listeners[type];
+      if (f == null) return;
+      f(params);
+    }
+  }, {
+    key: 'receiveMessage',
+    value: function receiveMessage(message) {
+      this.callListener(message.type, this.listeners, message);
+    }
+  }, {
+    key: 'update',
+    value: function update(dt) {
+      //-- OVERRIDE
+    }
+  }, {
+    key: 'connect',
+    value: function connect(sender, signal, slot) {
+      var c = this.object.getComponent(sender);
+      if (!c) return;
+      _SigSlt2.default.Connect(c, signal, this, slot);
+    }
+  }]);
+
+  return EngineComponent;
+}();
+
+exports.default = EngineComponent;
+
+},{"app/engine/message/SigSlt":86}],75:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _GridSystem = require('app/engine/system/GridSystem');
+
+var _GridSystem2 = _interopRequireDefault(_GridSystem);
+
+var _EngineComponent2 = require('app/engine/component/core/EngineComponent');
+
+var _EngineComponent3 = _interopRequireDefault(_EngineComponent2);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _EngineConstants = require('app/engine/EngineConstants');
+
+var _EngineConstants2 = _interopRequireDefault(_EngineConstants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GridComponent = function (_EngineComponent) {
+  _inherits(GridComponent, _EngineComponent);
+
+  function GridComponent() {
+    _classCallCheck(this, GridComponent);
+
+    return _possibleConstructorReturn(this, (GridComponent.__proto__ || Object.getPrototypeOf(GridComponent)).call(this, _ComponentType2.default.GRID));
+  }
+
+  _createClass(GridComponent, [{
+    key: 'onAddedToObject',
+    value: function onAddedToObject() {
+      //if(!this.hasProperty("x")) this.setProperty("x", 0);
+      //if(!this.hasProperty("y")) this.setProperty("y", 0);
+      if (!this.hasProperty("flags")) this.setProperty("flags", 0);
+
+      var x = this.getProperty("x");
+      var y = this.getProperty("y");
+
+      if (x != null && y != null) {
+        this.setProperty("h", _EngineConstants2.default.GridToWorldH(x, y));
+        this.setProperty("a", _EngineConstants2.default.GridToWorldA(x, y));
+      }
+    }
+  }, {
+    key: 'getFlag',
+    value: function getFlag(flag) {
+      return this.system.getFlagAt(this.getProperty("x"), this.getProperty("y"), flag);
+    }
+  }, {
+    key: 'setFlag',
+    value: function setFlag(flag) {
+      return this.system.setFlagAt(this.getProperty("x"), this.getProperty("y"), flag);
+    }
+  }]);
+
+  return GridComponent;
+}(_EngineComponent3.default);
+
+exports.default = GridComponent;
+
+},{"app/engine/EngineConstants":68,"app/engine/component/core/EngineComponent":74,"app/engine/enum/ComponentType":81,"app/engine/system/GridSystem":90}],76:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _PhysicsSystem = require('app/engine/system/PhysicsSystem');
+
+var _PhysicsSystem2 = _interopRequireDefault(_PhysicsSystem);
+
+var _EngineComponent2 = require('app/engine/component/core/EngineComponent');
+
+var _EngineComponent3 = _interopRequireDefault(_EngineComponent2);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PhysicsComponent = function (_EngineComponent) {
+  _inherits(PhysicsComponent, _EngineComponent);
+
+  function PhysicsComponent() {
+    _classCallCheck(this, PhysicsComponent);
+
+    return _possibleConstructorReturn(this, (PhysicsComponent.__proto__ || Object.getPrototypeOf(PhysicsComponent)).call(this, _ComponentType2.default.PHYSICS));
+  }
+
+  _createClass(PhysicsComponent, [{
+    key: 'onAddedToObject',
+    value: function onAddedToObject() {}
+  }, {
+    key: 'update',
+    value: function update(dt) {}
+  }, {
+    key: 'render',
+    value: function render() {
+      //-- OVERRIDE
+    }
+  }]);
+
+  return PhysicsComponent;
+}(_EngineComponent3.default);
+
+exports.default = PhysicsComponent;
+
+},{"app/engine/component/core/EngineComponent":74,"app/engine/enum/ComponentType":81,"app/engine/system/PhysicsSystem":93}],77:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _EngineConstants = require('app/engine/EngineConstants');
+
+var _EngineConstants2 = _interopRequireDefault(_EngineConstants);
+
+var _DisplayComponent2 = require('app/engine/component/core/DisplayComponent');
+
+var _DisplayComponent3 = _interopRequireDefault(_DisplayComponent2);
+
+var _ComponentMessage = require('app/engine/component/core/ComponentMessage');
+
+var _ComponentMessage2 = _interopRequireDefault(_ComponentMessage);
+
+var _Engine = require('app/engine/Engine');
+
+var _Engine2 = _interopRequireDefault(_Engine);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+var _CandyType = require('app/engine/enum/CandyType');
+
+var _CandyType2 = _interopRequireDefault(_CandyType);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CursorDisplayComponent = function (_DisplayComponent) {
+  _inherits(CursorDisplayComponent, _DisplayComponent);
+
+  // bow: null,
+
+  // candyMap: null,
+
+  function CursorDisplayComponent() {
+    _classCallCheck(this, CursorDisplayComponent);
+
+    return _possibleConstructorReturn(this, (CursorDisplayComponent.__proto__ || Object.getPrototypeOf(CursorDisplayComponent)).call(this));
+  }
+
+  _createClass(CursorDisplayComponent, [{
+    key: 'onAddedToObject',
+    value: function onAddedToObject() {
+      this.setProperty("dLocation", 0);
+    }
+  }, {
+    key: 'onAddedToSystem',
+    value: function onAddedToSystem() {}
+  }, {
+    key: 'onResourcesLoaded',
+    value: function onResourcesLoaded() {
+      this.bow = this.getResource(_ResourceType2.default.SPRITE, "object.bow");
+      this.candyMap = {};
+      this.candyMap[_CandyType2.default.A] = this.getResource(_ResourceType2.default.SPRITE, "object.candy.01");
+      this.candyMap[_CandyType2.default.B] = this.getResource(_ResourceType2.default.SPRITE, "object.candy.02");
+      this.candyMap[_CandyType2.default.C] = this.getResource(_ResourceType2.default.SPRITE, "object.candy.03");
+      this.candyMap[_CandyType2.default.D] = this.getResource(_ResourceType2.default.SPRITE, "object.candy.04");
+      this.candyMap[_CandyType2.default.E] = this.getResource(_ResourceType2.default.SPRITE, "object.candy.05");
+      this.candyMap[_CandyType2.default.F] = this.getResource(_ResourceType2.default.SPRITE, "object.candy.06");
+      this.candyMap[_CandyType2.default.G] = this.getResource(_ResourceType2.default.SPRITE, "object.candy.07");
+    }
+  }, {
+    key: 'update',
+    value: function update(dt) {}
+  }, {
+    key: 'render',
+    value: function render(dt, x, y) {
+      var zoom = 10 - this.system.getZoomLevel();
+      var viewport = this.system.getViewport();
+      var scene = this.system.getScene();
+
+      var a = this.getProperty("dLocation");
+
+      var r = 400 * _EngineConstants2.default.R;
+
+      var bw = this.bow.w * _EngineConstants2.default.R;
+      var bh = this.bow.h * _EngineConstants2.default.R;
+      var bx = x + viewport.w / 2 + r * Math.cos(a);
+      var by = y + viewport.h / 2 - r * Math.sin(a);
+
+      //scene.drawRect("", x - s/2, y - s/2, s, s);
+      var _a = a * -1 - 3 * Math.PI / 4;
+
+      scene.save();
+      scene.translate(bx, by);
+      scene.rotate(_a);
+      // draw bow
+      scene.drawImage(this.bow.img, this.bow.x, //sx,
+      this.bow.y, //sy,
+      this.bow.w, //sw,
+      this.bow.h, //sh,
+      bw / -2, //dx,
+      bh / -2, //dy,
+      bw, //dw,
+      bh //dh
+      );
+      scene.restore();
+
+      var candy = this.candyMap[this.getProperty('nextPiece')];
+      var candys = _EngineConstants2.default.WorldToScreenS(CursorDisplayComponent.CANDY_H);
+      var candyr = _EngineConstants2.default.WorldToScreenR(CursorDisplayComponent.CANDY_H);
+      var candyx = x + viewport.w / 2 + candyr * Math.cos(a);
+      var candyy = y + viewport.h / 2 - candyr * Math.sin(a);
+
+      // draw
+      scene.save();
+      scene.translate(candyx, candyy);
+      scene.rotate(_a);
+      scene.drawImage(candy.img, candy.x, //sx,
+      candy.y, //sy,
+      candy.w, //sw,
+      candy.h, //sh,
+      candys / -2, //dx,
+      candys / -2, //dy,
+      candys, //dw,
+      candys //dh
+      );
+      scene.restore();
+
+      /*
+      var ca = this.getProperty("cLocation");
+      var cr = 400 * EngineConstants.R;
+      var cx = x + (viewport.w/2) + (cr * Math.cos(ca));
+      var cy = y + (viewport.h/2) - (cr * Math.sin(ca));
+      scene.drawLine(cx, cy, (viewport.w/2), (viewport.h/2));
+        var da = this.getProperty("dLocation");
+      var ds = 20 * EngineConstants.R;
+      var dr = 400 * EngineConstants.R;
+      var dx = x + (viewport.w/2) + (dr * Math.cos(da)) - ds/2;
+      var dy = y + (viewport.h/2) - (dr * Math.sin(da)) - ds/2;
+      scene.drawRect("", dx, dy, ds, ds);
+      */
+    }
+  }]);
+
+  return CursorDisplayComponent;
+}(_DisplayComponent3.default);
+
+CursorDisplayComponent.CANDY_H = 13;
+
+exports.default = CursorDisplayComponent;
+
+},{"app/engine/Engine":67,"app/engine/EngineConstants":68,"app/engine/component/core/ComponentMessage":72,"app/engine/component/core/DisplayComponent":73,"app/engine/enum/CandyType":80,"app/resource/ResourceType":102,"minibot":"minibot"}],78:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _EngineConstants = require('app/engine/EngineConstants');
+
+var _EngineConstants2 = _interopRequireDefault(_EngineConstants);
+
+var _EngineComponent2 = require('app/engine/component/core/EngineComponent');
+
+var _EngineComponent3 = _interopRequireDefault(_EngineComponent2);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _InputType = require('app/engine/enum/InputType');
+
+var _InputType2 = _interopRequireDefault(_InputType);
+
+var _GridFlag = require('app/engine/enum/GridFlag');
+
+var _GridFlag2 = _interopRequireDefault(_GridFlag);
+
+var _EngineEvent = require('app/event/EngineEvent');
+
+var _EngineEvent2 = _interopRequireDefault(_EngineEvent);
+
+var _SigSlt = require('app/engine/message/SigSlt');
+
+var _SigSlt2 = _interopRequireDefault(_SigSlt);
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CursorInputComponent = function (_EngineComponent) {
+  _inherits(CursorInputComponent, _EngineComponent);
+
+  // currentSection: null,
+
+  function CursorInputComponent() {
+    _classCallCheck(this, CursorInputComponent);
+
+    var _this = _possibleConstructorReturn(this, (CursorInputComponent.__proto__ || Object.getPrototypeOf(CursorInputComponent)).call(this, _ComponentType2.default.INPUT));
+
+    _SigSlt2.default.AddSignal(_this, _EngineComponent3.default.SIG_INPUT_MOVE);
+    _SigSlt2.default.AddSignal(_this, _EngineComponent3.default.SIG_INPUT_ADD);
+    //this.addSignal(EngineComponent.SIG_MOVE_CURSOR);
+    //this.addSlot(CursorInputComponent.MOVE_CURSOR, function() {alert('moved')});
+    return _this;
+  }
+
+  _createClass(CursorInputComponent, [{
+    key: 'onAddedToObject',
+    value: function onAddedToObject() {
+      // location properties
+      //this.setProperty("dLocation", 0);
+      //this.setProperty("cLocation", 0);
+      //this.setProperty("iLocation", 0);
+      //this.setProperty("section", 0);
+
+      // flags
+      //this.setProperty("moving", false);
+      //this.setProperty("inserting", false);
+      //this.setProperty("firing", false);
+    }
+  }, {
+    key: 'onComponentsAdded',
+    value: function onComponentsAdded() {}
+  }, {
+    key: 'onAddedToSystem',
+    value: function onAddedToSystem() {
+      this.system.addInputHandler(this, _InputType2.default.MOVE_CURSOR);
+      this.system.addInputHandler(this, _InputType2.default.ADD_PIECE);
+    }
+  }, {
+    key: 'update',
+    value: function update(dt) {
+      // Not allowed on input types
+    }
+  }, {
+    key: 'input',
+    value: function input(type, data) {
+      switch (type) {
+        case _InputType2.default.ADD_PIECE:
+          this.addPiece(data);
+          break;
+        case _InputType2.default.MOVE_CURSOR:
+          this.moveCursor(data);
+          break;
+      }
+    }
+  }, {
+    key: 'addPiece',
+    value: function addPiece(a) {
+      _SigSlt2.default.Emit(this, _EngineComponent3.default.SIG_INPUT_ADD, a);
+      /*
+      var inserting = this.getProperty("inserting");
+      if(inserting) return;
+      this.setProperty("inserting", true);
+      this.setProperty("iLocation", a);
+      */
+    }
+  }, {
+    key: 'moveCursor',
+    value: function moveCursor(a) {
+      _SigSlt2.default.Emit(this, _EngineComponent3.default.SIG_INPUT_MOVE, a);
+      /*
+      var sec = Math.floor((a + EngineConstants.SECTION_ANGLE/2) / EngineConstants.SECTION_ANGLE) % (EngineConstants.SECTIONS*2);
+      if(sec != this.currentSection) {
+        this.system.dispatchEvent(new EngineEvent(EngineEvent.DEL_SEC_FLAGS, null, null, {"sec": this.currentSection, "flag": GridFlag.SELECTED}));
+        this.system.dispatchEvent(new EngineEvent(EngineEvent.SET_SEC_FLAGS, null, null, {"sec": sec, "flag": GridFlag.SELECTED}));
+        this.currentSection = sec;
+        this.setProperty('section', this.currentSection);
+      }
+      */
+    }
+  }]);
+
+  return CursorInputComponent;
+}(_EngineComponent3.default);
+
+exports.default = CursorInputComponent;
+
+},{"app/engine/EngineConstants":68,"app/engine/component/core/EngineComponent":74,"app/engine/enum/ComponentType":81,"app/engine/enum/GridFlag":83,"app/engine/enum/InputType":84,"app/engine/message/SigSlt":86,"app/event/EngineEvent":95,"minibot":"minibot"}],79:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _EngineConstants = require('app/engine/EngineConstants');
+
+var _EngineConstants2 = _interopRequireDefault(_EngineConstants);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _GameObjectType = require('app/engine/enum/GameObjectType');
+
+var _GameObjectType2 = _interopRequireDefault(_GameObjectType);
+
+var _EngineComponent = require('app/engine/component/core/EngineComponent');
+
+var _EngineComponent2 = _interopRequireDefault(_EngineComponent);
+
+var _PhysicsComponent2 = require('app/engine/component/core/PhysicsComponent');
+
+var _PhysicsComponent3 = _interopRequireDefault(_PhysicsComponent2);
+
+var _EngineEvent = require('app/event/EngineEvent');
+
+var _EngineEvent2 = _interopRequireDefault(_EngineEvent);
+
+var _SigSlt = require('app/engine/message/SigSlt');
+
+var _SigSlt2 = _interopRequireDefault(_SigSlt);
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BindAsEventListener = _minibot2.default.core.Utils.BindAsEventListener;
+
+var CursorPhysicsComponent = function (_PhysicsComponent) {
+  _inherits(CursorPhysicsComponent, _PhysicsComponent);
+
+  // firingTime: null,
+
+  // dispenserLocation: null,
+  // cursorLocation: null,
+  // insertLocation: null,
+  // section: null,
+
+  // currentSection: null,
+  // dispenserSection: null,
+
+  // moving: null,
+  // inserting: null,
+  // firing: null,
+  // shooting: null,
+
+  function CursorPhysicsComponent() {
+    _classCallCheck(this, CursorPhysicsComponent);
+
+    var _this = _possibleConstructorReturn(this, (CursorPhysicsComponent.__proto__ || Object.getPrototypeOf(CursorPhysicsComponent)).call(this));
+
+    _this.dispenserLocation = 0;
+    _this.cursorLocation = 0;
+    _this.insertLocation = 0;
+    _this.section = 0;
+
+    _this.currentSection = 0;
+    _this.dispenserSection = 0;
+    _this.insertSection = 0;
+
+    _this.moving = false;
+    _this.inserting = false;
+    _this.firing = false;
+    _this.shooting = false;
+
+    _SigSlt2.default.AddSlot(_this, _EngineComponent2.default.SLT_CURSOR_MOVE, _this.cursorMove);
+    _SigSlt2.default.AddSlot(_this, _EngineComponent2.default.SLT_CURSOR_ADD, _this.cursorAdd);
+
+    _SigSlt2.default.AddSlot(_this, _EngineComponent2.default.SLT_CANDY_SHOT_END, _this.candyShotEnd);
+    return _this;
+  }
+
+  _createClass(CursorPhysicsComponent, [{
+    key: 'onAddedToObject',
+    value: function onAddedToObject() {}
+  }, {
+    key: 'onAddedToSystem',
+    value: function onAddedToSystem() {
+      this.setProperty('nextPiece', this.system.engine.randomCandy());
+
+      this.system.engine.addEventListener(_EngineEvent2.default.FORCE_DROP, BindAsEventListener(this.handleForceDrop, this));
+    }
+  }, {
+    key: 'onComponentsAdded',
+    value: function onComponentsAdded() {
+      this.connect(_ComponentType2.default.INPUT, _EngineComponent2.default.SIG_INPUT_MOVE, _EngineComponent2.default.SLT_CURSOR_MOVE);
+      this.connect(_ComponentType2.default.INPUT, _EngineComponent2.default.SIG_INPUT_ADD, _EngineComponent2.default.SLT_CURSOR_ADD);
+    }
+  }, {
+    key: 'onResourcesLoaded',
+    value: function onResourcesLoaded() {}
+  }, {
+    key: 'update',
+    value: function update(dt) {
+      this.moveDispenser(dt);
+    }
+  }, {
+    key: 'cursorMove',
+    value: function cursorMove(a) {
+      var sec = Math.floor((a + _EngineConstants2.default.SECTION_ANGLE / 2) / _EngineConstants2.default.SECTION_ANGLE) % (_EngineConstants2.default.SECTIONS * 2);
+      if (sec != this.currentSection) {
+        this.moving = true;
+        this.currentSection = sec;
+      }
+    }
+  }, {
+    key: 'cursorAdd',
+    value: function cursorAdd(a) {
+      if (this.inserting || this.shooting) return;
+      this.inserting = true;
+      this.insertSection = Math.floor((a + _EngineConstants2.default.SECTION_ANGLE / 2) / _EngineConstants2.default.SECTION_ANGLE) % (_EngineConstants2.default.SECTIONS * 2);
+    }
+  }, {
+    key: 'handleForceDrop',
+    value: function handleForceDrop() {
+      if (this.inserting || this.shooting) return;
+      this.inserting = true;
+      this.insertSection = this.currentSection;
+    }
+  }, {
+    key: 'moveDispenser',
+    value: function moveDispenser(dt) {
+      //if(this.shooting) return;
+      // Move dispenser to insert location
+      var MOVE_ANGLE = Math.PI / 180;
+      var MIN_ANGLE = Math.PI / 4;
+      var dest = null;
+
+      if (this.moving) {
+        if (this.inserting) {
+          dest = this.insertSection * _EngineConstants2.default.SECTION_ANGLE;
+        } else {
+          dest = this.currentSection * _EngineConstants2.default.SECTION_ANGLE;
+        }
+        var d1 = dest - this.dispenserLocation;
+        var d2;
+        var dF = this.dispenserLocation;
+        if (d1 < 0) {
+          d2 = 2 * Math.PI + d1;
+        } else {
+          d2 = -1 * (2 * Math.PI - d1);
+        }
+        if (Math.abs(d1) <= Math.abs(d2)) {
+          dF = d1;
+        } else {
+          dF = d2;
+        }
+
+        if (Math.abs(dF) < MOVE_ANGLE) {
+          this.dispenserLocation = dest;
+          this.moving = false;
+          if (this.inserting) {
+            this.firing = true;
+          }
+        } else {
+          this.dispenserLocation = (this.dispenserLocation + dF * dt / 150) % (2 * Math.PI);
+          if (this.dispenserLocation < 0) this.dispenserLocation += 2 * Math.PI;
+        }
+        this.setProperty("dLocation", this.dispenserLocation);
+      } else if (this.inserting) {
+        this.firing = true;
+      }
+
+      if (this.firing) {
+
+        this.firing = false;
+        this.inserting = false;
+        this.shooting = true;
+
+        var type = this.getProperty('nextPiece');
+        this.setProperty('nextPiece', this.system.engine.randomCandy());
+
+        var h = 13 - (10 - this.system.engine.getSystem(_ComponentType2.default.DISPLAY).getZoomLevel());
+        var a = this.insertSection * _EngineConstants2.default.SECTION_ANGLE;
+
+        var candy = this.system.engine.createObject(_GameObjectType2.default.CANDY, {
+          "candyType": type,
+          "fromCursor": true,
+          "h": h,
+          "a": a,
+          "sec": this.insertSection
+        });
+
+        _SigSlt2.default.Connect(candy.getComponent(_ComponentType2.default.PHYSICS), _EngineComponent2.default.SIG_CANDY_SHOT_END, this, _EngineComponent2.default.SLT_CANDY_SHOT_END);
+        this.system.engine.addObject(candy);
+      }
+    }
+  }, {
+    key: 'candyShotEnd',
+    value: function candyShotEnd(candy) {
+      this.shooting = false;
+      this.moving = true;
+    }
+  }]);
+
+  return CursorPhysicsComponent;
+}(_PhysicsComponent3.default);
+
+exports.default = CursorPhysicsComponent;
+
+},{"app/engine/EngineConstants":68,"app/engine/component/core/EngineComponent":74,"app/engine/component/core/PhysicsComponent":76,"app/engine/enum/ComponentType":81,"app/engine/enum/GameObjectType":82,"app/engine/message/SigSlt":86,"app/event/EngineEvent":95,"minibot":"minibot"}],80:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var CandyType = {};
+
+CandyType.A = 1;
+CandyType.B = 2;
+CandyType.C = 3;
+CandyType.D = 4;
+CandyType.E = 5;
+CandyType.F = 6;
+CandyType.G = 7;
+
+exports.default = CandyType;
+
+},{}],81:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var ComponentType = {};
+
+ComponentType.PHYSICS = 2;
+ComponentType.DISPLAY = 3;
+ComponentType.INPUT = 4;
+ComponentType.GRID = 5;
+ComponentType.LOGIC = 6;
+ComponentType.SOUND = 7;
+ComponentType.STATISTICS = 8;
+
+exports.default = ComponentType;
+
+},{}],82:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var GameObjectType = {};
+
+GameObjectType.CANDY = 1;
+GameObjectType.POWERUP = 2;
+GameObjectType.CAMERA = 3;
+GameObjectType.CURSOR = 4;
+
+exports.default = GameObjectType;
+
+},{}],83:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var GridFlag = {};
+
+GridFlag.SELECTED = 1;
+
+exports.default = GridFlag;
+
+},{}],84:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var InputType = {};
+
+InputType.MOVE_CURSOR = 1;
+InputType.ADD_PIECE = 2;
+
+exports.default = InputType;
+
+},{}],85:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _GameObjectType = require('app/engine/enum/GameObjectType');
+
+var _GameObjectType2 = _interopRequireDefault(_GameObjectType);
+
+var _EngineObject = require('app/engine/object/EngineObject');
+
+var _EngineObject2 = _interopRequireDefault(_EngineObject);
+
+var _CandyGridComponent = require('app/engine/component/candy/CandyGridComponent');
+
+var _CandyGridComponent2 = _interopRequireDefault(_CandyGridComponent);
+
+var _CandyDisplayComponent = require('app/engine/component/candy/CandyDisplayComponent');
+
+var _CandyDisplayComponent2 = _interopRequireDefault(_CandyDisplayComponent);
+
+var _CandyPhysicsComponent = require('app/engine/component/candy/CandyPhysicsComponent');
+
+var _CandyPhysicsComponent2 = _interopRequireDefault(_CandyPhysicsComponent);
+
+var _CursorPhysicsComponent = require('app/engine/component/cursor/CursorPhysicsComponent');
+
+var _CursorPhysicsComponent2 = _interopRequireDefault(_CursorPhysicsComponent);
+
+var _CursorInputComponent = require('app/engine/component/cursor/CursorInputComponent');
+
+var _CursorInputComponent2 = _interopRequireDefault(_CursorInputComponent);
+
+var _CursorDisplayComponent = require('app/engine/component/cursor/CursorDisplayComponent');
+
+var _CursorDisplayComponent2 = _interopRequireDefault(_CursorDisplayComponent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ObjectFactory = {};
+
+ObjectFactory.Create = function (type, data) {
+
+  var object = new _EngineObject2.default(type, data);
+  switch (type) {
+    case _GameObjectType2.default.CANDY:
+      object.addComponent(new _CandyGridComponent2.default());
+      object.addComponent(new _CandyDisplayComponent2.default());
+      object.addComponent(new _CandyPhysicsComponent2.default());
+      break;
+    case _GameObjectType2.default.CURSOR:
+      object.addComponent(new _CursorPhysicsComponent2.default());
+      object.addComponent(new _CursorInputComponent2.default());
+      object.addComponent(new _CursorDisplayComponent2.default());
+      break;
+  }
+
+  object.onComponentsAdded();
+
+  return object;
+};
+
+exports.default = ObjectFactory;
+
+},{"app/engine/component/candy/CandyDisplayComponent":69,"app/engine/component/candy/CandyGridComponent":70,"app/engine/component/candy/CandyPhysicsComponent":71,"app/engine/component/cursor/CursorDisplayComponent":77,"app/engine/component/cursor/CursorInputComponent":78,"app/engine/component/cursor/CursorPhysicsComponent":79,"app/engine/enum/GameObjectType":82,"app/engine/object/EngineObject":87}],86:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var SigSlt = {};
+/* From: http://codeforthecloset.blogspot.in/2008/12/signals-and-slots-for-javascript.html */
+
+/* Signal : Factory Function
+* Returns a function that has methods
+* for connecting and disconnecting functions
+* from it.
+* When the function is invoked, the invocation
+* is dispatched to each of the registered
+* functions
+* stateful - if the calling scope should be
+*    passed on to
+*    underlying dispatches. */
+SigSlt.Signal = function (stateful) {
+    var slots = [];
+    /* _signal : Proxy Function
+     * acts as a multicast proxy to the
+     * functions connected to it,
+     * passing along the arguments it was
+     * invoked with */
+    var _signal = function _signal() {
+        //var arglist = [];
+        if (stateful) arglist.push(this);
+        //convertArguments(arguments,0,arglist);
+        for (var j = 0; j < slots.length; j++) {
+            var obj = slots[j][0];
+            if (obj == undefined) obj = this;
+            var fun = slots[j][1];
+            try {
+                fun.apply(obj, arguments);
+            } catch (e) {}
+        }
+    };
+    /* _signal.connect: Function
+    * Connects a function and the scope to be
+    * called when the signal is invoked.
+    * fun - The function to be invoked on
+    *    signal.
+    * obj - The scope
+    */
+    _signal.connect = function (fun, scope) {
+        slots.push([scope, fun]);
+    };
+    /*  _signal.disconnect: Function
+    * Disconnects a matching function from a
+    * signal.
+    * fun - The function to be removed.
+    * obj - The scope
+    */
+    _signal.disconnect = function (fun, scope) {
+        var shift = false;
+        for (var i = 0; i < slots.length; i++) {
+            if (shift) slots[i - 1] = slots[i];else if (scope == slots[i][0] && fun == slots[i][1]) shift = true;
+        }
+        if (shift) slots.pop();
+    };
+    _signal.disconnect_all = function () {
+        var slen = slots.length;
+        for (var i = 0; i < slen; i++) {
+            slots.pop();
+        }
+    };
+    return _signal;
+};
+
+/* Connect : Helper function
+* connects a sender to a reciever
+* through a signal and slot
+* sender - the object which will send
+*      the signal.
+* signal - string name representing
+*      the signal
+* rec - object to recieve the
+*      signal notification.
+* slot - a string that will be used
+*      to look up the same named attr
+*      on rec, which should be a
+*      function.  The function gets
+*      the arguments passed to the
+*      signal.  If stateful, the
+*      first argument will be the
+*      scope of the connect call.*/
+SigSlt.Connect = function (sender, signal, rec, slot) {
+    var sigf;
+    var err = null;
+    if (sender.signals[signal] == undefined) {
+        sigf = Signal(true);
+        sender.signals[signal] = sigf;
+    } else {
+        if (!sender.signals[signal].connect) {
+            err = "No Signal " + signal;
+            throw new Error(err);
+        } else {
+            sigf = sender.signals[signal];
+        }
+    }
+    var slot_type = typeof slot === "undefined" ? "undefined" : _typeof(slot);
+    var rec_type = typeof rec === "undefined" ? "undefined" : _typeof(rec);
+    if (rec) {
+        var slotf = rec.slots[slot];
+        if (typeof slotf == "function") {
+            sigf.connect(slotf, rec);
+            return;
+        }
+    }
+    err = "Bad Slot";
+    throw new Error(err);
+};
+
+SigSlt.AddSignal = function (obj, name) {
+    if (!obj['signals']) obj['signals'] = {};
+    obj['signals'][name] = SigSlt.Signal(false);
+};
+
+SigSlt.AddSlot = function (obj, name, fx) {
+    if (!obj['slots']) obj['slots'] = {};
+    obj['slots'][name] = fx;
+};
+
+SigSlt.Emit = function (obj, name) {
+    var args = [].slice.call(arguments, 2);
+    if (!obj['signals'] || !obj['signals'][name]) return;
+    obj['signals'][name].apply(obj, args);
+};
+
+exports.default = SigSlt;
+
+},{}],87:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var EngineObject = function () {
+
+  // type: null,
+  // components: null,
+  // data: null,
+  // engine: null,
+
+  function EngineObject(type, data) {
+    _classCallCheck(this, EngineObject);
+
+    this.type = type;
+    this.components = {};
+
+    if (data == undefined) data = {};
+    this.data = data;
+  }
+
+  _createClass(EngineObject, [{
+    key: "destroy",
+    value: function destroy() {
+      this.components = null;
+      this.engine = null;
+    }
+  }, {
+    key: "getType",
+    value: function getType() {
+      return this.type;
+    }
+  }, {
+    key: "addComponent",
+    value: function addComponent(component) {
+      var type = component.getType();
+      if (this.components[type] == undefined) {
+        this.components[type] = component;
+        component.setObject(this);
+        component.onAddedToObject();
+      }
+    }
+  }, {
+    key: "onComponentsAdded",
+    value: function onComponentsAdded() {
+      for (var c in this.components) {
+        this.components[c].onComponentsAdded();
+      }
+    }
+  }, {
+    key: "removeComponent",
+    value: function removeComponent(component) {}
+  }, {
+    key: "setEngine",
+    value: function setEngine(engine) {
+      this.engine = engine;
+    }
+  }, {
+    key: "onAddedToEngine",
+    value: function onAddedToEngine() {
+      //-- OVERRIDE
+    }
+  }, {
+    key: "onResourcesLoaded",
+    value: function onResourcesLoaded() {
+      for (var c in this.components) {
+        this.components[c].onResourcesLoaded();
+      }
+    }
+  }, {
+    key: "getComponent",
+    value: function getComponent(type) {
+      if (this.components[type] != undefined) {
+        return this.components[type];
+      }
+      return null;
+    }
+  }, {
+    key: "hasComponent",
+    value: function hasComponent(type) {
+      return this.components[type] != undefined;
+    }
+  }, {
+    key: "update",
+    value: function update(dt) {
+      for (var c in this.components) {
+        this.components[c].update(dt);
+      }
+    }
+  }, {
+    key: "setProperty",
+    value: function setProperty(key, value) {
+      this.data[key] = value;
+    }
+  }, {
+    key: "getProperty",
+    value: function getProperty(key) {
+      return this.data[key];
+    }
+  }, {
+    key: "hasProperty",
+    value: function hasProperty(key) {
+      return this.data[key] != undefined;
+    }
+  }, {
+    key: "sendMessage",
+    value: function sendMessage(message) {
+      for (var c in this.components) {
+        this.components[c].receiveMessage(message);
+      }
+    }
+  }]);
+
+  return EngineObject;
+}();
+
+exports.default = EngineObject;
+
+},{}],88:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _EngineSystem2 = require('app/engine/system/EngineSystem');
+
+var _EngineSystem3 = _interopRequireDefault(_EngineSystem2);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _EngineEvent = require('app/event/EngineEvent');
+
+var _EngineEvent2 = _interopRequireDefault(_EngineEvent);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BindAsEventListener = _minibot2.default.core.Utils.BindAsEventListener;
+
+var DisplaySystem = function (_EngineSystem) {
+  _inherits(DisplaySystem, _EngineSystem);
+
+  // layers: null,
+
+
+  // maxDepth: null,
+
+  // isZooming: null,
+  // zoomLevel: null,
+  // zoomLevelDest: null,
+
+  function DisplaySystem() {
+    _classCallCheck(this, DisplaySystem);
+
+    var _this = _possibleConstructorReturn(this, (DisplaySystem.__proto__ || Object.getPrototypeOf(DisplaySystem)).call(this, _ComponentType2.default.DISPLAY));
+
+    _this.layers = [];
+    _this.isInserting = false;
+    _this.isZooming = false;
+    _this.zoomLevel = 2;
+    return _this;
+  }
+
+  _createClass(DisplaySystem, [{
+    key: 'setup',
+    value: function setup() {
+      this.findMaxDepth();
+      this.zoomLevel = this.maxDepth;
+      this.zoomLevel = 2;
+    }
+  }, {
+    key: 'addObject',
+    value: function addObject(obj) {
+      var c = _get(DisplaySystem.prototype.__proto__ || Object.getPrototypeOf(DisplaySystem.prototype), 'addObject', this).call(this, obj);
+      if (c == null) return null;
+
+      var l = c.getLayers();
+      for (var i = 0; i < l.length; i++) {
+        this.addToLayer(c, l[i]);
+      }
+    }
+  }, {
+    key: 'removeObject',
+    value: function removeObject(obj) {
+      var c = _get(DisplaySystem.prototype.__proto__ || Object.getPrototypeOf(DisplaySystem.prototype), 'removeObject', this).call(this, obj);
+      if (c == null) return null;
+
+      var l = c.getLayers();
+      for (var i = 0; i < l.length; i++) {
+        this.removeFromLayer(c, l[i]);
+      }
+    }
+  }, {
+    key: 'addToLayer',
+    value: function addToLayer(component, layer) {
+      while (!this.layers[layer]) {
+        this.layers.push([]);
+      }
+      this.layers[layer].push(component);
+    }
+  }, {
+    key: 'removeFromLayer',
+    value: function removeFromLayer(component, layer) {
+      var arr = this.layers[layer];
+      var i = arr.indexOf(component);
+      if (i != -1) arr.splice(i, 1);
+    }
+  }, {
+    key: 'onAddedToEngine',
+    value: function onAddedToEngine() {
+      this.engine.addEventListener(_EngineEvent2.default.DEPTH_CHANGED, BindAsEventListener(this.handleDepthChanged, this));
+
+      this.addResource(_ResourceType2.default.SPRITE, 'object.candy.01');
+      this.addResource(_ResourceType2.default.SPRITE, 'object.candy.02');
+      this.addResource(_ResourceType2.default.SPRITE, 'object.candy.03');
+      this.addResource(_ResourceType2.default.SPRITE, 'object.candy.04');
+      this.addResource(_ResourceType2.default.SPRITE, 'object.candy.05');
+      this.addResource(_ResourceType2.default.SPRITE, 'object.candy.06');
+      this.addResource(_ResourceType2.default.SPRITE, 'object.candy.07');
+
+      this.addResource(_ResourceType2.default.SPRITE, 'object.bow');
+    }
+
+    // update all of the components
+
+  }, {
+    key: 'update',
+    value: function update(dt) {}
+  }, {
+    key: 'getZoomLevel',
+    value: function getZoomLevel() {
+      if (this.zoomLevel < 2) return 2;
+      return this.zoomLevel;
+    }
+  }, {
+    key: 'getViewport',
+    value: function getViewport() {
+      return this.engine.viewport;
+    }
+  }, {
+    key: 'getScene',
+    value: function getScene() {
+      return this.engine.scene;
+    }
+
+    // render the scene layer by layer, check if each component is on screen first
+
+  }, {
+    key: 'render',
+    value: function render(dt, x, y) {
+
+      if (this.isZooming) {
+        this.zoomLevel += (this.zoomLevelDest - this.zoomLevel) * 0.1;
+        if (Math.abs(this.zoomLevelDest - this.zoomLevel) <= 0.01) {
+          this.isZooming = false;
+          this.zoomLevel = this.zoomLevelDest;
+        }
+      }
+
+      var i, j, layer, component;
+      for (i = 0; i < this.layers.length; i++) {
+        layer = this.layers[i];
+        for (j = 0; j < layer.length; j++) {
+          component = layer[j];
+          if (!component.isVisible()) continue;
+          component.render(dt, x, y);
+        }
+      }
+    }
+  }, {
+    key: 'handleDepthChanged',
+    value: function handleDepthChanged(event) {
+      if (!this.isZooming) {
+        this.isZooming = true;
+        this.zoomLevelDest = event.data;
+      }
+    }
+  }]);
+
+  return DisplaySystem;
+}(_EngineSystem3.default);
+
+exports.default = DisplaySystem;
+
+},{"app/engine/enum/ComponentType":81,"app/engine/system/EngineSystem":89,"app/event/EngineEvent":95,"app/resource/ResourceType":102,"minibot":"minibot"}],89:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var EngineSystem = function () {
+
+  // type: null,
+
+  // components: null,
+
+  // componentsByObject: null,
+
+  // engine: null,
+
+  // initialized: null,
+
+  function EngineSystem(type) {
+    _classCallCheck(this, EngineSystem);
+
+    this.type = type;
+
+    this.components = [];
+
+    this.componentsByObject = {};
+
+    this.initialized = false;
+  }
+
+  _createClass(EngineSystem, [{
+    key: "destroy",
+    value: function destroy() {
+      for (var i = 0; i < this.components.length; i++) {
+        this.components[i].destroy();
+      }
+      this.components = null;
+      this.componentsByObject = null;
+      this.engine = null;
+    }
+  }, {
+    key: "onInitialized",
+    value: function onInitialized() {
+      this.initialized = true;
+    }
+  }, {
+    key: "getType",
+    value: function getType() {
+      return this.type;
+    }
+  }, {
+    key: "addObject",
+    value: function addObject(obj) {
+      if (obj.hasComponent(this.type)) {
+        var c = obj.getComponent(this.type);
+        this.components.push(c);
+        this.componentsByObject[obj] = c;
+
+        c.setSystem(this);
+        c.onAddedToSystem();
+
+        return c;
+      }
+
+      return null;
+    }
+  }, {
+    key: "addResource",
+    value: function addResource(type, id) {
+      if (!this.engine) return;
+      this.engine.addResource(type, id);
+    }
+  }, {
+    key: "getResource",
+    value: function getResource(type, id) {
+      if (!this.engine) return;
+      return this.engine.getResource(type, id);
+    }
+  }, {
+    key: "removeObject",
+    value: function removeObject(obj) {
+      if (obj.hasComponent(this.type)) {
+        var c = obj.getComponent(this.type);
+
+        var i = this.components.indexOf(c);
+        if (i != -1) this.components.splice(i, 1);
+
+        if (this.componentsByObject[obj] != undefined) {
+          delete this.componentsByObject[obj];
+        }
+
+        return c;
+      }
+
+      return null;
+    }
+  }, {
+    key: "setEngine",
+    value: function setEngine(engine) {
+      this.engine = engine;
+    }
+  }, {
+    key: "onAddedToEngine",
+    value: function onAddedToEngine() {
+      //-- OVERRIDE
+    }
+  }, {
+    key: "onResourcesLoaded",
+    value: function onResourcesLoaded() {}
+  }, {
+    key: "update",
+    value: function update(dt) {}
+    //-- OVERRIDE
+
+
+    // Helper function to update all components of the system
+
+  }, {
+    key: "updateComponents",
+    value: function updateComponents(dt) {
+      for (var i = 0; i < this.components.length; i++) {
+        this.components[i].update(dt);
+      }
+    }
+  }, {
+    key: "dispatchEvent",
+    value: function dispatchEvent(event) {
+      this.engine.dispatchEvent(event);
+    }
+  }, {
+    key: "addEventListener",
+    value: function addEventListener(type, callback) {
+      this.engine.addEventListener(type, callback);
+    }
+  }]);
+
+  return EngineSystem;
+}();
+
+exports.default = EngineSystem;
+
+},{}],90:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _EngineSystem2 = require('app/engine/system/EngineSystem');
+
+var _EngineSystem3 = _interopRequireDefault(_EngineSystem2);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _EngineEvent = require('app/event/EngineEvent');
+
+var _EngineEvent2 = _interopRequireDefault(_EngineEvent);
+
+var _EngineConstants = require('app/engine/EngineConstants');
+
+var _EngineConstants2 = _interopRequireDefault(_EngineConstants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BindAsEventListener = _minibot2.default.core.Utils.BindAsEventListener;
+
+var GridSystem = function (_EngineSystem) {
+  _inherits(GridSystem, _EngineSystem);
+
+  // width: null,
+  // height: null,
+  // length: null,
+
+  // objects: null,
+  // flags: null,
+
+  // maxDepth: null,
+
+  function GridSystem(width, height) {
+    _classCallCheck(this, GridSystem);
+
+    var _this = _possibleConstructorReturn(this, (GridSystem.__proto__ || Object.getPrototypeOf(GridSystem)).call(this, _ComponentType2.default.GRID));
+
+    _this.width = width;
+    _this.height = height;
+    _this.length = width * height;
+
+    _this.objects = [];
+    _this.flags = [];
+
+    for (var i = 0; i < _this.length; i++) {
+      _this.objects[i] = null;
+      _this.flags[i] = 0;
+    }
+
+    return _this;
+  }
+
+  _createClass(GridSystem, [{
+    key: 'onInitialized',
+    value: function onInitialized() {
+      _get(GridSystem.prototype.__proto__ || Object.getPrototypeOf(GridSystem.prototype), 'onInitialized', this).call(this);
+      this.findMaxDepth();
+    }
+  }, {
+    key: 'addObject',
+    value: function addObject(obj) {
+      var c = _get(GridSystem.prototype.__proto__ || Object.getPrototypeOf(GridSystem.prototype), 'addObject', this).call(this, obj);
+
+      if (c != null) {
+        var x = c.getProperty("x");
+        var y = c.getProperty("y");
+        if (x != null && y != null) {
+          this.setAt(x, y, c);
+        }
+      }
+
+      return c;
+    }
+  }, {
+    key: 'removeObject',
+    value: function removeObject(obj) {
+      var c = _get(GridSystem.prototype.__proto__ || Object.getPrototypeOf(GridSystem.prototype), 'removeObject', this).call(this, obj);
+
+      if (c != null) {
+        var x = c.getProperty("x");
+        var y = c.getProperty("y");
+        if (x != null && y != null) {
+          this.deleteAt(x, y);
+        }
+      }
+
+      return c;
+    }
+  }, {
+    key: 'onAddedToEngine',
+    value: function onAddedToEngine() {
+      this.engine.addEventListener(_EngineEvent2.default.DEL_SEC_FLAGS, BindAsEventListener(this.handleDelSecFlags, this));
+      this.engine.addEventListener(_EngineEvent2.default.SET_SEC_FLAGS, BindAsEventListener(this.handleSetSecFlags, this));
+      this.engine.addEventListener(_EngineEvent2.default.DEL_ROW_FLAGS, BindAsEventListener(this.handleDelRowFlags, this));
+      this.engine.addEventListener(_EngineEvent2.default.SET_ROW_FLAGS, BindAsEventListener(this.handleSetRowFlags, this));
+    }
+  }, {
+    key: 'update',
+    value: function update(dt) {}
+  }, {
+    key: 'inGrid',
+    value: function inGrid(x, y) {
+      if (x < 0 || x >= this.width) return false;
+      if (y < 0 || y >= this.height) return false;
+      return true;
+    }
+  }, {
+    key: 'hasAt',
+    value: function hasAt(x, y) {
+      return this.getAt(x, y) != null;
+    }
+  }, {
+    key: 'getAt',
+    value: function getAt(x, y) {
+      if (!this.inGrid(x, y)) return null;
+      return this.objects[x + y * this.width];
+    }
+  }, {
+    key: 'setAt',
+    value: function setAt(x, y, value) {
+
+      // Detect End Game!
+      if (y >= this.height) {
+        this.engine.stop();
+        var event = new _EngineEvent2.default(_EngineEvent2.default.GAME_FAIL, null, null, null);
+        this.dispatchEvent(event);
+      }
+
+      if (!this.inGrid(x, y)) return;
+      this.objects[x + y * this.width] = value;
+      this.deleteFlagsAt(x, y);
+    }
+  }, {
+    key: 'deleteAt',
+    value: function deleteAt(x, y) {
+      this.setAt(x, y, null);
+      this.deleteFlagsAt(x, y);
+    }
+  }, {
+    key: 'getFlagAt',
+    value: function getFlagAt(x, y, bit) {
+      if (!this.inGrid(x, y)) return null;
+      return (this.flags[x + y * this.width] >> bit) % 2 != 0;
+    }
+  }, {
+    key: 'setFlagAt',
+    value: function setFlagAt(x, y, bit) {
+      if (!this.inGrid(x, y)) return;
+      var i = x + y * this.width;
+      this.flags[i] = this.flags[i] | 1 << bit;
+      if (this.objects[i] != null) this.objects[i].setProperty('flags', this.flags[i]);
+    }
+  }, {
+    key: 'deleteFlagAt',
+    value: function deleteFlagAt(x, y, bit) {
+      if (!this.inGrid(x, y)) return;
+      var i = x + y * this.width;
+      this.flags[i] = this.flags[i] & ~(1 << bit);
+      if (this.objects[i] != null) this.objects[i].setProperty('flags', this.flags[i]);
+    }
+  }, {
+    key: 'deleteFlagsAt',
+    value: function deleteFlagsAt(x, y) {
+      if (!this.inGrid(x, y)) return;
+      var i = x + y * this.width;
+      this.flags[i] = 0;
+      if (this.objects[i] != null) this.objects[i].setProperty('flags', this.flags[i]);
+    }
+  }, {
+    key: 'getMatches',
+    value: function getMatches(x, y, compare) {
+      var matches = [];
+      if (!this.hasAt(x, y)) return matches;
+      var objA = this.getAt(x, y);
+
+      var checked = [];
+      for (var i = 0; i < this.length; i++) {
+        checked[i] = false;
+      }
+      this.getMatchesAt(x, y, matches, checked, function (objB) {
+        return compare(objA, objB);
+      }.bind(this));
+      return matches;
+    }
+  }, {
+    key: 'getMatchesAt',
+    value: function getMatchesAt(x, y, matches, checked, compare) {
+      if (x < 0) x += this.width;
+      if (x >= this.width) x -= this.width;
+      if (y < 0) y += this.height;
+      if (y >= this.height) y -= this.height;
+
+      if (checked[x + y * this.width]) return;
+      checked[x + y * this.width] = true;
+      if (!this.hasAt(x, y)) return;
+      var obj = this.getAt(x, y);
+      if (!compare(obj)) return;
+
+      //if(getFlagAt(x, y, MATCHING_FLAG)) return;
+
+      matches.push(obj);
+
+      this.getMatchesAt(x + 1, y - 1, matches, checked, compare);
+      this.getMatchesAt(x - 1, y + 1, matches, checked, compare);
+      this.getMatchesAt(x, y + 1, matches, checked, compare);
+      this.getMatchesAt(x, y - 1, matches, checked, compare);
+      this.getMatchesAt(x - 1, y + 2, matches, checked, compare);
+      this.getMatchesAt(x + 1, y - 2, matches, checked, compare);
+    }
+  }, {
+    key: 'fallPiecesAt',
+    value: function fallPiecesAt(ix, iy) {
+      var sec = _EngineConstants2.default.GridToWorldSec(ix, iy);
+      this.iterateBySection(sec, function (x, y) {
+        if (y > iy) {
+          if (this.hasAt(x, y)) {
+            var c = this.getAt(x, y);
+            c.drop();
+          }
+        }
+      }.bind(this));
+    }
+  }, {
+    key: 'findMaxDepth',
+    value: function findMaxDepth() {
+      var depth = 0;
+      for (var y = 0; y < this.height; y++) {
+        for (var x = 0; x < this.width; x++) {
+          if (this.hasAt(x, y)) {
+            depth = y;
+            break;
+          }
+        }
+      }
+
+      // We need to update the zoom!
+      if (this.maxDepth != depth) {
+        this.maxDepth = depth;
+
+        var event = new _EngineEvent2.default(_EngineEvent2.default.DEPTH_CHANGED, null, null, depth);
+        this.dispatchEvent(event);
+      }
+    }
+  }, {
+    key: 'iterateBySection',
+    value: function iterateBySection(section, each) {
+      var y = 0;
+      var x = Math.floor(section / 2);
+      if (section % 2) y = 1;
+      try {
+        while (y < _EngineConstants2.default.DEPTH) {
+          each(x, y);
+          y += 2;
+          x -= 1;
+          if (x < 0) x += _EngineConstants2.default.SECTIONS;
+        }
+      } catch (e) {
+        if (e != GridSystem.$break) throw e;
+      }
+    }
+  }, {
+    key: 'iterateByRing',
+    value: function iterateByRing(ring, each) {
+      var y = ring;
+      var x = 0;
+      try {
+        while (x < _EngineConstants2.default.SECTIONS) {
+          each(x, y);
+          x += 1;
+        }
+      } catch (e) {
+        if (e != GridSystem.$break) throw e;
+      }
+    }
+  }, {
+    key: 'setFlagsOnSection',
+    value: function setFlagsOnSection(section, flag) {
+      this.iterateBySection(section, function (x, y) {
+        this.setFlagAt(x, y, flag);
+      }.bind(this));
+    }
+  }, {
+    key: 'deleteFlagsOnSection',
+    value: function deleteFlagsOnSection(section, flag) {
+      this.iterateBySection(section, function (x, y) {
+        this.deleteFlagAt(x, y, flag);
+      }.bind(this));
+    }
+
+    /**
+     *
+     */
+
+  }, {
+    key: 'handleSetSecFlags',
+    value: function handleSetSecFlags(event) {
+      this.setFlagsOnSection(event.data.sec, event.data.flag);
+    }
+  }, {
+    key: 'handleDelSecFlags',
+    value: function handleDelSecFlags(event) {
+      this.deleteFlagsOnSection(event.data.sec, event.data.flag);
+    }
+  }, {
+    key: 'handleSetRowFlags',
+    value: function handleSetRowFlags(event) {}
+  }, {
+    key: 'handleDelRowFlags',
+    value: function handleDelRowFlags(event) {}
+  }]);
+
+  return GridSystem;
+}(_EngineSystem3.default);
+
+exports.default = GridSystem;
+
+},{"app/engine/EngineConstants":68,"app/engine/enum/ComponentType":81,"app/engine/system/EngineSystem":89,"app/event/EngineEvent":95,"minibot":"minibot"}],91:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _EngineSystem2 = require('app/engine/system/EngineSystem');
+
+var _EngineSystem3 = _interopRequireDefault(_EngineSystem2);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _EngineEvent = require('app/event/EngineEvent');
+
+var _EngineEvent2 = _interopRequireDefault(_EngineEvent);
+
+var _InputType = require('app/engine/enum/InputType');
+
+var _InputType2 = _interopRequireDefault(_InputType);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BindAsEventListener = _minibot2.default.core.Utils.BindAsEventListener;
+
+var InputSystem = function (_EngineSystem) {
+  _inherits(InputSystem, _EngineSystem);
+
+  // inputQueue: null,
+
+  // inputHandlers: null,
+
+  function InputSystem() {
+    _classCallCheck(this, InputSystem);
+
+    var _this = _possibleConstructorReturn(this, (InputSystem.__proto__ || Object.getPrototypeOf(InputSystem)).call(this, _ComponentType2.default.INPUT));
+
+    _this.inputQueue = [];
+    _this.inputHandlers = {};
+    return _this;
+  }
+
+  _createClass(InputSystem, [{
+    key: 'onAddedToEngine',
+    value: function onAddedToEngine() {
+      this.addEventListener(_EngineEvent2.default.INPUT, BindAsEventListener(this.handleInput, this));
+    }
+  }, {
+    key: 'update',
+    value: function update(dt) {
+      while (this.inputQueue.length) {
+        var q = this.inputQueue.shift();
+        while (this.inputQueue.length && this.inputQueue[0].type == q.type) {
+          q = this.inputQueue.shift();
+        }
+        var c = this.inputHandlers[q.type];
+        if (c != null) {
+          c.input(q.type, q.data);
+        }
+      }
+    }
+  }, {
+    key: 'handleInput',
+    value: function handleInput(event) {
+      this.inputQueue.push(event.data);
+    }
+  }, {
+    key: 'addInputHandler',
+    value: function addInputHandler(component, type) {
+      if (this.inputHandlers[type] != null) {
+        // THROW AN ERROR HERE or change to array type...
+        alert('hey fix this so it can use multiple handlers');
+      } else {
+        this.inputHandlers[type] = component;
+      }
+    }
+  }, {
+    key: 'removeInputHandler',
+    value: function removeInputHandler(component, type) {}
+  }]);
+
+  return InputSystem;
+}(_EngineSystem3.default);
+
+exports.default = InputSystem;
+
+},{"app/engine/enum/ComponentType":81,"app/engine/enum/InputType":84,"app/engine/system/EngineSystem":89,"app/event/EngineEvent":95,"minibot":"minibot"}],92:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _EngineSystem2 = require('app/engine/system/EngineSystem');
+
+var _EngineSystem3 = _interopRequireDefault(_EngineSystem2);
+
+var _EngineEvent = require('app/event/EngineEvent');
+
+var _EngineEvent2 = _interopRequireDefault(_EngineEvent);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _GameObjectType = require('app/engine/enum/GameObjectType');
+
+var _GameObjectType2 = _interopRequireDefault(_GameObjectType);
+
+var _ObjectFactory = require('app/engine/factory/ObjectFactory');
+
+var _ObjectFactory2 = _interopRequireDefault(_ObjectFactory);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LogicSystem = function (_EngineSystem) {
+  _inherits(LogicSystem, _EngineSystem);
+
+  // 1 to length
+  // dropTimerPosition: null,
+  // dropTimerLength: null,
+  // dropTimerLast: null,
+  // dropTimerCallback: null,
+
+  // 1 to length
+  // comboMeterPosition: null,
+  // comboMeterLength: null,
+  // comboMeterLast: null,
+  // comboCount: null,
+  // comboMeterCallback: null,
+
+  // The counter that counts consecutive non matches
+  // voidCount: null,
+  // voidLength: null,
+  // voidCallback: null,
+
+  //
+  // penalizing: null,
+  // penaltyPosition: null,
+  // penaltyLast: null,
+  // penaltyLocations: null,
+
+  // matchesLeft: null,
+  // matchesCallback: null,
+
+  // isRunning: null,
+
+  // tickSpeed: null,
+
+  function LogicSystem(options) {
+    _classCallCheck(this, LogicSystem);
+
+    var _this = _possibleConstructorReturn(this, (LogicSystem.__proto__ || Object.getPrototypeOf(LogicSystem)).call(this, _ComponentType2.default.LOGIC));
+
+    _this.dropTimerLength = LogicSystem.PENALTY_TIMER_TICKS;
+    _this.dropTimerPosition = LogicSystem.PENALTY_TIMER_TICKS;
+    _this.dropTimerLast = 0;
+
+    _this.comboMeterPosition = 0;
+    _this.comboMeterLength = LogicSystem.COMBO_METER_TICKS;
+    _this.comboMeterLast = 0;
+    _this.comboCount = 0;
+
+    _this.penalizing = false;
+    _this.penaltyPosition = 0;
+    _this.penaltyLast = 0;
+
+    _this.voidCount = 0;
+    _this.voidLength = 3;
+
+    _this.matchesLeft = options.matches;
+
+    _this.isRunning = true;
+
+    _this.tickSpeed = options.tickSpeed;
+
+    return _this;
+  }
+
+  _createClass(LogicSystem, [{
+    key: 'onAddedToEngine',
+    value: function onAddedToEngine() {}
+  }, {
+    key: 'update',
+    value: function update(dt) {
+      if (!this.isRunning) return;
+
+      var ticks;
+      var s = this.tickSpeed;
+      var cs = this.tickSpeed * 2;
+
+      // Update the penalty timer
+      this.dropTimerLast += dt;
+      if (this.dropTimerLast >= s) {
+        ticks = 0;
+
+        while (this.dropTimerLast >= s) {
+          ticks += 1;
+          this.dropTimerLast -= s;
+        }
+
+        if (ticks > 0) {
+          this.dropTimerPosition -= ticks;
+          if (this.dropTimerPosition <= 0) {
+            this.drop();
+            this.dropTimerPosition = this.dropTimerLength;
+          }
+          if (this.dropTimerCallback) {
+            this.dropTimerCallback(this.dropTimerPosition);
+          }
+        }
+      }
+
+      // Update the combo meter
+      /*
+      if(this.comboMeterPosition != 0) {
+        this.comboMeterLast += dt;
+        if(this.comboMeterLast >= cs) {
+          ticks = 0;
+          while(this.comboMeterLast >= cs) {
+            ticks += 1;
+            this.comboMeterLast -= cs;
+          }
+            if(ticks > 0) {
+            this.comboMeterPosition -= ticks;
+            if(this.comboMeterPosition <= 0) {
+              this.comboMeterPosition = 0;
+              this.comboCount = 0;
+            }
+            if(this.comboMeterCallback) {
+              this.comboMeterCallback(this.comboMeterPosition, this.comboCount);
+            }
+          }
+        }
+      }
+      */
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      this.isRunning = false;
+    }
+  }, {
+    key: 'start',
+    value: function start() {
+      this.isRunning = true;
+    }
+  }, {
+    key: 'setDropTimerCallback',
+    value: function setDropTimerCallback(callback) {
+      this.dropTimerCallback = callback;
+    }
+  }, {
+    key: 'setComboMeterCallback',
+    value: function setComboMeterCallback(callback) {
+      this.comboMeterCallback = callback;
+    }
+  }, {
+    key: 'setMatchesCallback',
+    value: function setMatchesCallback(callback) {
+      this.matchesCallback = callback;
+    }
+  }, {
+    key: 'setPenaltyCallback',
+    value: function setPenaltyCallback(callback) {
+      this.voidCallback = callback;
+    }
+  }, {
+    key: 'handleMatch',
+    value: function handleMatch(length) {
+
+      // END GAME Detection
+      if (this.matchesLeft <= length) {
+        this.matchesLeft = 0;
+        this.matchesCallback(this.matchesLeft);
+        this.gameWin();
+        return;
+      }
+
+      this.matchesLeft -= length;
+      if (this.matchesCallback) {
+        this.matchesCallback(this.matchesLeft);
+      }
+
+      this.voidCount = 0;
+      // Send the updated void count
+      if (this.voidCallback) {
+        this.voidCallback(this.voidCount);
+      }
+
+      this.dropTimerPosition = this.dropTimerLength;
+      if (this.dropTimerPosition > this.dropTimerLength) {
+        this.dropTimerPosition = this.dropTimerLength;
+      }
+      if (this.dropTimerCallback) {
+        this.dropTimerCallback(this.dropTimerPosition);
+      }
+
+      /*
+      this.comboCount += 1;
+      if(this.comboCount == 1) {
+        // Start the combo timer
+        this.comboMeterPosition = length;
+        this.comboMeterLast = 0;
+      } else {
+        this.comboMeterPosition += length;
+        if(this.comboMeterPosition > this.comboMeterLength) {
+          this.comboMeterPosition = this.comboMeterLength;
+        }
+      }
+      if(this.comboMeterCallback) {
+        this.comboMeterCallback(this.comboMeterPosition, this.comboCount);
+      }
+      */
+    }
+  }, {
+    key: 'handleNonmatch',
+    value: function handleNonmatch() {
+      this.voidCount += 1;
+      if (this.voidCount >= this.voidLength) {
+        // Penalty
+        this.penalty();
+        this.voidCount = 0;
+      } else {}
+      //
+
+      // Send the updated void count
+      if (this.voidCallback) {
+        this.voidCallback(this.voidCount);
+      }
+    }
+  }, {
+    key: 'penalty',
+    value: function penalty() {
+      var gridSystem = this.engine.getSystem(_ComponentType2.default.GRID);
+      var candies = LogicSystem.CANDY_PENALTY;
+      var ring = 0;
+      var spots;
+      while (candies) {
+        spots = [];
+        gridSystem.iterateByRing(ring, function (x, y) {
+          if (!gridSystem.hasAt(x, y)) {
+            spots.push([x, y]);
+          }
+        });
+
+        var added = 0;
+        for (var i = 0; i < candies; i++) {
+          if (spots.length == 0) break;
+          var ri = Math.floor(Math.random() * spots.length);
+          var spot = spots.splice(ri, 1)[0];
+          var candy = _ObjectFactory2.default.Create(_GameObjectType2.default.CANDY, {
+            //           "candyType": this.engine.randomCandy(),
+            //           "x": spot[0],
+            "y": spot[1]
+          });
+          this.engine.addObject(candy);
+          added += 1;
+        }
+
+        candies -= added;
+        ring += 1;
+      }
+
+      gridSystem.findMaxDepth();
+
+      var soundSystem = this.engine.getSystem(_ComponentType2.default.SOUND);
+      soundSystem.playSound("sfx.time.penalty");
+    }
+  }, {
+    key: 'drop',
+    value: function drop() {
+      console.log("DROP CURSOR PIECE");
+      var event = new _EngineEvent2.default(_EngineEvent2.default.FORCE_DROP);
+      this.dispatchEvent(event);
+    }
+  }, {
+    key: 'getComboCount',
+    value: function getComboCount() {
+      return this.comboCount;
+    }
+  }, {
+    key: 'gameWin',
+    value: function gameWin() {
+      // Logic to progress to the next level
+      this.stop();
+      var event = new _EngineEvent2.default(_EngineEvent2.default.GAME_WIN, null, null, null);
+      this.dispatchEvent(event);
+    }
+  }]);
+
+  return LogicSystem;
+}(_EngineSystem3.default);
+
+exports.default = LogicSystem;
+
+},{"app/engine/enum/ComponentType":81,"app/engine/enum/GameObjectType":82,"app/engine/factory/ObjectFactory":85,"app/engine/system/EngineSystem":89,"app/event/EngineEvent":95}],93:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _EngineSystem2 = require('app/engine/system/EngineSystem');
+
+var _EngineSystem3 = _interopRequireDefault(_EngineSystem2);
+
+var _EngineEvent = require('app/event/EngineEvent');
+
+var _EngineEvent2 = _interopRequireDefault(_EngineEvent);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PhysicsSystem = function (_EngineSystem) {
+  _inherits(PhysicsSystem, _EngineSystem);
+
+  function PhysicsSystem() {
+    _classCallCheck(this, PhysicsSystem);
+
+    var _this = _possibleConstructorReturn(this, (PhysicsSystem.__proto__ || Object.getPrototypeOf(PhysicsSystem)).call(this, _ComponentType2.default.PHYSICS));
+
+    _this.updateStack = [];
+    return _this;
+  }
+
+  _createClass(PhysicsSystem, [{
+    key: 'onAddedToEngine',
+    value: function onAddedToEngine() {}
+  }, {
+    key: 'update',
+    value: function update(dt) {
+      this.updateComponents(dt);
+    }
+  }]);
+
+  return PhysicsSystem;
+}(_EngineSystem3.default);
+
+exports.default = PhysicsSystem;
+
+},{"app/engine/enum/ComponentType":81,"app/engine/system/EngineSystem":89,"app/event/EngineEvent":95}],94:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _EngineSystem2 = require('app/engine/system/EngineSystem');
+
+var _EngineSystem3 = _interopRequireDefault(_EngineSystem2);
+
+var _EngineEvent = require('app/event/EngineEvent');
+
+var _EngineEvent2 = _interopRequireDefault(_EngineEvent);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SoundSystem = function (_EngineSystem) {
+  _inherits(SoundSystem, _EngineSystem);
+
+  // soundProxy: null,
+
+  function SoundSystem() {
+    _classCallCheck(this, SoundSystem);
+
+    return _possibleConstructorReturn(this, (SoundSystem.__proto__ || Object.getPrototypeOf(SoundSystem)).call(this, _ComponentType2.default.SOUND));
+  }
+
+  _createClass(SoundSystem, [{
+    key: 'onAddedToEngine',
+    value: function onAddedToEngine() {}
+  }, {
+    key: 'setSoundProxy',
+    value: function setSoundProxy(soundProxy) {
+      this.soundProxy = soundProxy;
+    }
+  }, {
+    key: 'update',
+    value: function update(dt) {
+      //this.updateComponents(dt);
+    }
+  }, {
+    key: 'playSound',
+    value: function playSound(id, options) {
+      return this.soundProxy.playSound(id, options);
+    }
+  }]);
+
+  return SoundSystem;
+}(_EngineSystem3.default);
+
+exports.default = SoundSystem;
+
+},{"app/engine/enum/ComponentType":81,"app/engine/system/EngineSystem":89,"app/event/EngineEvent":95}],95:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EngineEvent = function (_minibot$event$Engine) {
+  _inherits(EngineEvent, _minibot$event$Engine);
+
+  function EngineEvent(type, object, component, data) {
+    _classCallCheck(this, EngineEvent);
+
+    return _possibleConstructorReturn(this, (EngineEvent.__proto__ || Object.getPrototypeOf(EngineEvent)).call(this, type, object, component, data));
+  }
+
+  return EngineEvent;
+}(_minibot2.default.event.EngineEvent);
+
+exports.default = EngineEvent;
+
+},{"minibot":"minibot"}],96:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9043,7 +13667,7 @@ ViewEvent.NEXT_STAGE = "NextStage";
 
 exports.default = ViewEvent;
 
-},{"minibot":"minibot"}],58:[function(require,module,exports){
+},{"minibot":"minibot"}],97:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9247,7 +13871,7 @@ DataProxy.DATA = {
 exports.default = DataProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./vo/LevelVO":62}],59:[function(require,module,exports){
+},{"./vo/LevelVO":101}],98:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9490,7 +14114,7 @@ ResourceProxy.TEMPLATE_URL = "tpl/";
 exports.default = ResourceProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/resource/ResourceType":63,"app/resource/TemplateResource":64,"http":26,"minibot":"minibot"}],60:[function(require,module,exports){
+},{"app/resource/ResourceType":102,"app/resource/TemplateResource":103,"http":26,"minibot":"minibot"}],99:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9698,7 +14322,7 @@ var SoundProxy = function (_puremvc$Proxy) {
 exports.default = SoundProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],61:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9719,7 +14343,7 @@ var BaseVO = function BaseVO(data) {
 
 exports.default = BaseVO;
 
-},{}],62:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9758,7 +14382,7 @@ var LevelVO = function (_BaseVO) {
 
 exports.default = LevelVO;
 
-},{"./BaseVO":61}],63:[function(require,module,exports){
+},{"./BaseVO":100}],102:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9780,7 +14404,7 @@ exports.default = {
   TEMPLATE: 13
 };
 
-},{"minibot":"minibot"}],64:[function(require,module,exports){
+},{"minibot":"minibot"}],103:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9860,7 +14484,7 @@ var TemplateResource = function (_minibot$resource$Res) {
 
 exports.default = TemplateResource;
 
-},{"app/resource/ResourceType":63,"minibot":"minibot"}],65:[function(require,module,exports){
+},{"app/resource/ResourceType":102,"minibot":"minibot"}],104:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9934,7 +14558,98 @@ var BaseMediator = function (_puremvc$Mediator) {
 exports.default = BaseMediator;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/event/ViewEvent":57,"minibot":"minibot"}],66:[function(require,module,exports){
+},{"app/event/ViewEvent":96,"minibot":"minibot"}],105:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _BaseMediator2 = require('app/view/BaseMediator');
+
+var _BaseMediator3 = _interopRequireDefault(_BaseMediator2);
+
+var _ApplicationConstants = require('app/ApplicationConstants');
+
+var _ApplicationConstants2 = _interopRequireDefault(_ApplicationConstants);
+
+var _ViewEvent = require('app/event/ViewEvent');
+
+var _ViewEvent2 = _interopRequireDefault(_ViewEvent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GameMediator = function (_BaseMediator) {
+  _inherits(GameMediator, _BaseMediator);
+
+  function GameMediator(viewComponent) {
+    _classCallCheck(this, GameMediator);
+
+    return _possibleConstructorReturn(this, (GameMediator.__proto__ || Object.getPrototypeOf(GameMediator)).call(this, GameMediator.NAME, viewComponent));
+  }
+
+  _createClass(GameMediator, [{
+    key: 'handleViewEvent',
+    value: function handleViewEvent(event) {
+      var eventName = event.eventName;
+      var data = event.data;
+      switch (eventName) {
+        case _ViewEvent2.default.EXIT_SELECTED:
+          this.handlePlaySelected();
+          break;
+        case _ViewEvent2.default.NEXT_STAGE:
+          this.handleNextStage(data);
+          break;
+        case _ViewEvent2.default.GAME_EXIT:
+          this.handleGameExit();
+          break;
+        default:
+          break;
+      }
+    }
+  }, {
+    key: 'handlePlaySelected',
+    value: function handlePlaySelected() {
+      this.sendNotification(_ApplicationConstants2.default.LOAD_GAME);
+      this.facade.removeMediator(this.getMediatorName());
+    }
+  }, {
+    key: 'handleOptionsSelected',
+    value: function handleOptionsSelected() {
+      this.sendNotification(_ApplicationConstants2.default.LOAD_OPTIONS);
+      this.facade.removeMediator(this.getMediatorName());
+    }
+  }, {
+    key: 'handleNextStage',
+    value: function handleNextStage(level) {
+      var nextLevel = level.level + 1;
+      var tmpFacade = this.facade;
+      this.facade.removeMediator(this.getMediatorName());
+
+      tmpFacade.sendNotification(_ApplicationConstants2.default.LOAD_GAME, nextLevel);
+    }
+  }, {
+    key: 'handleGameExit',
+    value: function handleGameExit() {
+      this.sendNotification(_ApplicationConstants2.default.LOAD_TITLE);
+      this.facade.removeMediator(this.getMediatorName());
+    }
+  }]);
+
+  return GameMediator;
+}(_BaseMediator3.default);
+
+exports.default = GameMediator;
+
+},{"app/ApplicationConstants":37,"app/event/ViewEvent":96,"app/view/BaseMediator":104}],106:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10000,7 +14715,7 @@ OptionsMediator.NAME = "OptionsMediator";
 
 exports.default = OptionsMediator;
 
-},{"app/ApplicationConstants":37,"app/event/ViewEvent":57,"app/view/BaseMediator":65}],67:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/event/ViewEvent":96,"app/view/BaseMediator":104}],107:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -10080,7 +14795,7 @@ var ShellMediator = function (_puremvc$Mediator) {
 exports.default = ShellMediator;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37}],68:[function(require,module,exports){
+},{"app/ApplicationConstants":37}],108:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10125,7 +14840,7 @@ var TitleMediator = function (_BaseMediator) {
       var data = event.data;
       switch (eventName) {
         case _ViewEvent2.default.LEVEL_SELECTED:
-          this.handleLevelSelected();
+          this.handleLevelSelected(data);
           break;
         case _ViewEvent2.default.EXIT_SELECTED:
           this.handleExitSelected();
@@ -10136,16 +14851,15 @@ var TitleMediator = function (_BaseMediator) {
     }
   }, {
     key: 'handleLevelSelected',
-    value: function handleLevelSelected() {
-      // this.sendNotification(ApplicationConstants.LOAD_GAME);
-      // this.facade.removeMediator(this.getMediatorName());
+    value: function handleLevelSelected(level) {
+      this.sendNotification(_ApplicationConstants2.default.LOAD_GAME, level);
+      this.facade.removeMediator(this.getMediatorName());
     }
   }, {
     key: 'handleExitSelected',
     value: function handleExitSelected() {
       console.log('TitleMediator::handleExitSelected');
       this.sendNotification(_ApplicationConstants2.default.EXIT_APP);
-      //this.facade.removeMediator(this.getMediatorName());
     }
   }]);
 
@@ -10156,7 +14870,7 @@ TitleMediator.NAME = "TitleMediator";
 
 exports.default = TitleMediator;
 
-},{"app/ApplicationConstants":37,"app/event/ViewEvent":57,"app/view/BaseMediator":65}],"app":[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/event/ViewEvent":96,"app/view/BaseMediator":104}],"app":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10195,4 +14909,4 @@ app.view.ShellMediator = require('app/view/ShellMediator').default;
 
 exports.default = app;
 
-},{"app/ApplicationConstants":37,"app/ApplicationFacade":38,"app/controller/ManagerPrepCommand":45,"app/controller/ModelPrepCommand":47,"app/controller/StartupCommand":49,"app/controller/ViewPrepCommand":51,"app/display/Shell":54,"app/model/DataProxy":58,"app/model/ResourceProxy":59,"app/view/ShellMediator":67}]},{},[]);
+},{"app/ApplicationConstants":37,"app/ApplicationFacade":38,"app/controller/ManagerPrepCommand":45,"app/controller/ModelPrepCommand":47,"app/controller/StartupCommand":49,"app/controller/ViewPrepCommand":51,"app/display/Shell":55,"app/model/DataProxy":97,"app/model/ResourceProxy":98,"app/view/ShellMediator":107}]},{},[]);

@@ -5,12 +5,12 @@ import ComponentType from 'app/engine/enum/ComponentType';
 
 class SoundSystem extends EngineSystem
 {
-  
+
   // soundProxy: null,
 
   constructor()
   {
-    $super(ComponentType.SOUND);
+    super(ComponentType.SOUND);
   }
 
   onAddedToEngine()
@@ -22,7 +22,7 @@ class SoundSystem extends EngineSystem
   {
     this.soundProxy = soundProxy;
   }
-  
+
   update(dt)
   {
     //this.updateComponents(dt);

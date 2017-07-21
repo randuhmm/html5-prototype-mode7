@@ -1,58 +1,62 @@
-
+import minibot from 'minibot';
 import EngineSystem from 'app/engine/system/EngineSystem';
 import ComponentType from 'app/engine/enum/ComponentType';
 import EngineEvent from 'app/event/EngineEvent';
 import ResourceType from 'app/resource/ResourceType';
 
+var BindAsEventListener = minibot.core.Utils.BindAsEventListener;
+
 class DisplaySystem extends EngineSystem
 {
-  
+
   // layers: null,
-  
-  
+
+
   // maxDepth: null,
-  
+
   // isZooming: null,
   // zoomLevel: null,
   // zoomLevelDest: null,
-  
+
   constructor()
   {
-    $super(ComponentType.DISPLAY);
-    
+    super(ComponentType.DISPLAY);
+
     this.layers = [];
     this.isInserting = false;
     this.isZooming = false;
+    this.zoomLevel = 2;
   }
-  
+
   setup()
   {
     this.findMaxDepth();
     this.zoomLevel = this.maxDepth;
+    this.zoomLevel = 2;
   }
-  
+
   addObject(obj)
   {
-    var c = $super(obj);
+    var c = super.addObject(obj);
     if(c == null) return null;
-    
+
     var l = c.getLayers();
     for(var i = 0; i < l.length; i++) {
       this.addToLayer(c, l[i]);
     }
   }
-  
+
   removeObject(obj)
   {
-    var c = $super(obj);
+    var c = super.removeObject(obj);
     if(c == null) return null;
-    
+
     var l = c.getLayers();
     for(var i = 0; i < l.length; i++) {
       this.removeFromLayer(c, l[i]);
     }
   }
-  
+
   addToLayer(component, layer)
   {
     while(!this.layers[layer]) {
@@ -60,7 +64,7 @@ class DisplaySystem extends EngineSystem
     }
     this.layers[layer].push(component);
   }
-  
+
   removeFromLayer(component, layer)
   {
     var arr = this.layers[layer];
@@ -71,8 +75,8 @@ class DisplaySystem extends EngineSystem
 
   onAddedToEngine()
   {
-    this.engine.addEventListener(EngineEvent.DEPTH_CHANGED, this.handleDepthChanged.bindAsEventListener(this));
-    
+    this.engine.addEventListener(EngineEvent.DEPTH_CHANGED, BindAsEventListener(this.handleDepthChanged, this));
+
     this.addResource(ResourceType.SPRITE, 'object.candy.01');
     this.addResource(ResourceType.SPRITE, 'object.candy.02');
     this.addResource(ResourceType.SPRITE, 'object.candy.03');
@@ -83,29 +87,29 @@ class DisplaySystem extends EngineSystem
 
     this.addResource(ResourceType.SPRITE, 'object.bow');
   }
-  
-  // update all of the components 
+
+  // update all of the components
   update(dt)
   {
-    
+
   }
-  
+
   getZoomLevel()
   {
     if(this.zoomLevel < 2) return 2;
     return this.zoomLevel;
   }
-  
+
   getViewport()
   {
     return this.engine.viewport;
   }
-  
+
   getScene()
   {
     return this.engine.scene;
   }
-  
+
   // render the scene layer by layer, check if each component is on screen first
   render(dt, x, y)
   {
@@ -117,7 +121,7 @@ class DisplaySystem extends EngineSystem
         this.zoomLevel = this.zoomLevelDest;
       }
     }
-    
+
     var i, j, layer, component;
     for(i = 0; i < this.layers.length; i++) {
       layer = this.layers[i];
@@ -128,7 +132,7 @@ class DisplaySystem extends EngineSystem
       }
     }
   }
-  
+
   handleDepthChanged(event)
   {
     if(!this.isZooming) {
@@ -136,7 +140,7 @@ class DisplaySystem extends EngineSystem
       this.zoomLevelDest = event.data;
     }
   }
-  
+
 }
 
 export default DisplaySystem;

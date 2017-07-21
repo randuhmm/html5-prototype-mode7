@@ -1,12 +1,12 @@
 
 import puremvc from 'puremvc';
 import minibot from 'minibot';
-// import ApplicationConstants from 'app/ApplicationConstants';
-// import GameMediator from 'app/view/GameMediator';
-// import Game from 'app/display/Game';
-// import Engine from 'app/engine/Engine';
-// import SoundProxy from 'app/model/SoundProxy';
-// import DataProxy from 'app/model/DataProxy';
+import ApplicationConstants from 'app/ApplicationConstants';
+import GameMediator from 'app/view/GameMediator';
+import Game from 'app/display/Game';
+import Engine from 'app/engine/Engine';
+import SoundProxy from 'app/model/SoundProxy';
+import DataProxy from 'app/model/DataProxy';
 
 class LoadGameCommand extends puremvc.SimpleCommand
 {
@@ -14,8 +14,6 @@ class LoadGameCommand extends puremvc.SimpleCommand
   execute(notification)
   {
     console.log('LoadGameCommand::execute');
-
-    /*
 
     var levelNum = notification.getBody();
     if(!levelNum) levelNum = 1;
@@ -30,7 +28,7 @@ class LoadGameCommand extends puremvc.SimpleCommand
     var engine = new Engine(level);
 
     var soundProxy = this.facade.retrieveProxy(SoundProxy.NAME);
-    soundProxy.setBgm('bgm.game');
+    // soundProxy.setBgm('bgm.game');
 
     // Add the engine to the update loop
     minibot.system.SetUpdateCallback(engine.update.bind(engine));
@@ -50,8 +48,6 @@ class LoadGameCommand extends puremvc.SimpleCommand
 
     // Show the new view
     this.sendNotification(ApplicationConstants.SHOW_VIEW, view);
-
-    */
 
   }
 

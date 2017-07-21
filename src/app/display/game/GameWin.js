@@ -3,9 +3,9 @@ import minibot from 'minibot';
 import ResourceType from 'app/resource/ResourceType';
 import ViewEvent from 'app/event/ViewEvent';
 
-class MouseEvent extends Container
+class GameWin extends minibot.display.scene.Container
 {
-  
+
   // win: null,
 
   // t_b: null,
@@ -16,7 +16,7 @@ class MouseEvent extends Container
 
   constructor(size)
   {
-    $super();
+    super();
     this.win = new Sprite(DisplayObject.GetResource(GameWin, ResourceType.SPRITE, 'ui.game.win'));
 
     var r = (size / this.win.w) * 0.9;
@@ -58,11 +58,11 @@ class MouseEvent extends Container
         this.y = this.final;
       }
     }
-    $super(dt, x, y);
+    super.render(dt, x, y);
   }
 
 }
 
-export default MouseEvent;
+export default GameWin;
 
 

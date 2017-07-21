@@ -4,12 +4,12 @@ import ComponentType from 'app/engine/enum/ComponentType';
 
 class SoundComponent extends EngineComponent
 {
-  
+
   constructor()
   {
-    $super(ComponentType.SOUND);
+    super(ComponentType.SOUND);
   }
-  
+
 }
 
 export default SoundComponent;

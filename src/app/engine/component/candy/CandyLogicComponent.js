@@ -17,13 +17,13 @@ class CandyLogicComponent extends LogicComponent
 
   constructor()
   {
-    $super();
+    super();
   }
-  
+
   onAddedToObject()
   {
-    $super();
-    
+    super.onAddedToObject();
+
     SigSlt.AddSlot(this, EngineComponent.SLT_CANDY_MATCH, this.candyMatch);
     SigSlt.AddSlot(this, EngineComponent.SLT_CANDY_NONMATCH, this.candyNonmatch);
     SigSlt.AddSignal(this, EngineComponent.SIG_CANDY_SHATTER_START);
@@ -34,12 +34,12 @@ class CandyLogicComponent extends LogicComponent
     this.connect(ComponentType.GRID, EngineComponent.SIG_CANDY_MATCH, EngineComponent.SLT_CANDY_MATCH);
     this.connect(ComponentType.GRID, EngineComponent.SIG_CANDY_NONMATCH, EngineComponent.SLT_CANDY_NONMATCH);
   }
-  
+
   onAddedToSystem()
   {
-    
+
   }
-  
+
   onResourcesLoaded()
   {
 
@@ -56,7 +56,7 @@ class CandyLogicComponent extends LogicComponent
   {
     this.system.handleNonmatch();
   }
-  
+
 }
 
 export default CandyLogicComponent;

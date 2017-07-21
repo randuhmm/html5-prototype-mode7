@@ -17,7 +17,7 @@ class TitleMediator extends BaseMediator
     var data = event.data;
     switch(eventName) {
       case ViewEvent.LEVEL_SELECTED:
-        this.handleLevelSelected();
+        this.handleLevelSelected(data);
         break;
       case ViewEvent.EXIT_SELECTED:
         this.handleExitSelected();
@@ -27,17 +27,16 @@ class TitleMediator extends BaseMediator
     }
   }
 
-  handleLevelSelected()
+  handleLevelSelected(level)
   {
-    // this.sendNotification(ApplicationConstants.LOAD_GAME);
-    // this.facade.removeMediator(this.getMediatorName());
+    this.sendNotification(ApplicationConstants.LOAD_GAME, level);
+    this.facade.removeMediator(this.getMediatorName());
   }
 
   handleExitSelected()
   {
     console.log('TitleMediator::handleExitSelected');
     this.sendNotification(ApplicationConstants.EXIT_APP);
-    //this.facade.removeMediator(this.getMediatorName());
   }
 
 }

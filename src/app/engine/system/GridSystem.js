@@ -1,49 +1,51 @@
-
+import minibot from 'minibot';
 import EngineSystem from 'app/engine/system/EngineSystem';
 import ComponentType from 'app/engine/enum/ComponentType';
 import EngineEvent from 'app/event/EngineEvent';
 import EngineConstants from 'app/engine/EngineConstants';
 
+var BindAsEventListener = minibot.core.Utils.BindAsEventListener;
+
 class GridSystem extends EngineSystem
 {
-  
+
   // width: null,
   // height: null,
   // length: null,
-  
+
   // objects: null,
   // flags: null,
-  
+
   // maxDepth: null,
-  
+
   constructor(width, height)
   {
-    $super(ComponentType.GRID);
-    
+    super(ComponentType.GRID);
+
     this.width = width;
     this.height = height;
     this.length = width * height;
-    
+
     this.objects = [];
     this.flags = [];
-    
+
     for(var i = 0; i < this.length; i++) {
       this.objects[i] = null;
       this.flags[i] = 0;
     }
-    
+
   }
-  
+
   onInitialized()
   {
-    $super();
+    super.onInitialized();
     this.findMaxDepth();
   }
-  
+
   addObject(obj)
   {
-    var c = $super(obj);
-    
+    var c = super.addObject(obj);
+
     if(c != null) {
       var x = c.getProperty("x");
       var y = c.getProperty("y");
@@ -55,14 +57,14 @@ class GridSystem extends EngineSystem
         );
       }
     }
-    
+
     return c;
   }
-  
+
   removeObject(obj)
   {
-    var c = $super(obj);
-    
+    var c = super.removeObject(obj);
+
     if(c != null) {
       var x = c.getProperty("x");
       var y = c.getProperty("y");
@@ -73,41 +75,41 @@ class GridSystem extends EngineSystem
         );
       }
     }
-    
+
     return c;
   }
 
   onAddedToEngine()
   {
-    this.engine.addEventListener(EngineEvent.DEL_SEC_FLAGS, this.handleDelSecFlags.bindAsEventListener(this));
-    this.engine.addEventListener(EngineEvent.SET_SEC_FLAGS, this.handleSetSecFlags.bindAsEventListener(this));
-    this.engine.addEventListener(EngineEvent.DEL_ROW_FLAGS, this.handleDelRowFlags.bindAsEventListener(this));
-    this.engine.addEventListener(EngineEvent.SET_ROW_FLAGS, this.handleSetRowFlags.bindAsEventListener(this));
+    this.engine.addEventListener(EngineEvent.DEL_SEC_FLAGS, BindAsEventListener(this.handleDelSecFlags, this));
+    this.engine.addEventListener(EngineEvent.SET_SEC_FLAGS, BindAsEventListener(this.handleSetSecFlags, this));
+    this.engine.addEventListener(EngineEvent.DEL_ROW_FLAGS, BindAsEventListener(this.handleDelRowFlags, this));
+    this.engine.addEventListener(EngineEvent.SET_ROW_FLAGS, BindAsEventListener(this.handleSetRowFlags, this));
   }
-  
+
   update(dt)
   {
-    
+
   }
-  
+
   inGrid(x, y)
   {
     if(x < 0 || x >= this.width) return false;
     if(y < 0 || y >= this.height) return false;
     return true;
   }
-  
+
   hasAt(x, y)
   {
     return (this.getAt(x, y) != null);
   }
-  
+
   getAt(x, y)
   {
     if(!this.inGrid(x, y)) return null;
     return this.objects[x + (y*this.width)];
   }
-  
+
   setAt(x, y, value)
   {
 
@@ -122,19 +124,19 @@ class GridSystem extends EngineSystem
     this.objects[x + (y*this.width)] = value;
     this.deleteFlagsAt(x, y);
   }
-  
+
   deleteAt(x, y)
   {
     this.setAt(x, y, null);
     this.deleteFlagsAt(x, y);
   }
-  
+
   getFlagAt(x, y, bit)
   {
     if(!this.inGrid(x, y)) return null;
     return ((this.flags[x + (y*this.width)] >> bit) % 2 != 0);
   }
-  
+
   setFlagAt(x, y, bit)
   {
     if(!this.inGrid(x, y)) return;
@@ -143,7 +145,7 @@ class GridSystem extends EngineSystem
     if(this.objects[i] != null)
       this.objects[i].setProperty('flags', this.flags[i]);
   }
-  
+
   deleteFlagAt(x, y, bit)
   {
     if(!this.inGrid(x, y)) return;
@@ -152,7 +154,7 @@ class GridSystem extends EngineSystem
     if(this.objects[i] != null)
       this.objects[i].setProperty('flags', this.flags[i]);
   }
-  
+
   deleteFlagsAt(x, y)
   {
     if(!this.inGrid(x, y)) return;
@@ -161,13 +163,13 @@ class GridSystem extends EngineSystem
     if(this.objects[i] != null)
       this.objects[i].setProperty('flags', this.flags[i]);
   }
-  
+
   getMatches(x, y, compare)
   {
     var matches = [];
     if(!this.hasAt(x, y)) return matches;
     var objA = this.getAt(x, y);
-    
+
     var checked = [];
     for(var i = 0; i < this.length; i++) {
       checked[i] = false;
@@ -184,17 +186,17 @@ class GridSystem extends EngineSystem
     if(x >= this.width) x -= this.width;
     if(y < 0) y += this.height;
     if(y >= this.height) y -= this.height;
-    
+
     if(checked[x + (y*this.width)]) return;
       checked[x + (y*this.width)] = true;
     if(!this.hasAt(x, y)) return;
     var obj = this.getAt(x, y);
     if(!compare(obj)) return;
-    
+
     //if(getFlagAt(x, y, MATCHING_FLAG)) return;
-    
+
     matches.push(obj);
-    
+
     this.getMatchesAt(x+1, y-1, matches, checked, compare);
     this.getMatchesAt(x-1, y+1, matches, checked, compare);
     this.getMatchesAt(x, y+1, matches, checked, compare);
@@ -202,7 +204,7 @@ class GridSystem extends EngineSystem
     this.getMatchesAt(x-1, y+2, matches, checked, compare);
     this.getMatchesAt(x+1, y-2, matches, checked, compare);
   }
-  
+
   fallPiecesAt(ix, iy)
   {
     var sec = EngineConstants.GridToWorldSec(ix, iy);
@@ -227,17 +229,17 @@ class GridSystem extends EngineSystem
         }
       }
     }
-    
+
     // We need to update the zoom!
     if(this.maxDepth != depth) {
       this.maxDepth = depth;
-      
+
       var event = new EngineEvent(EngineEvent.DEPTH_CHANGED, null, null, depth);
       this.dispatchEvent(event);
-      
+
     }
   }
-  
+
   iterateBySection(section, each)
   {
     var y = 0;
@@ -254,7 +256,7 @@ class GridSystem extends EngineSystem
       if (e != GridSystem.$break) throw e;
     }
   }
-  
+
   iterateByRing(ring, each)
   {
     var y = ring;
@@ -268,14 +270,14 @@ class GridSystem extends EngineSystem
       if (e != GridSystem.$break) throw e;
     }
   }
-  
+
   setFlagsOnSection(section, flag)
   {
     this.iterateBySection(section, function(x, y) {
       this.setFlagAt(x, y, flag);
     }.bind(this));
   }
-  
+
   deleteFlagsOnSection(section, flag)
   {
     this.iterateBySection(section, function(x, y) {
@@ -305,7 +307,7 @@ class GridSystem extends EngineSystem
   {
 
   }
-  
+
 }
 
 export default GridSystem;

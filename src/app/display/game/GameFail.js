@@ -3,9 +3,9 @@ import minibot from 'minibot';
 import ResourceType from 'app/resource/ResourceType';
 import ViewEvent from 'app/event/ViewEvent';
 
-class MouseEvent extends Container
+class GameFail extends minibot.display.scene.Container
 {
-  
+
   // fail: null,
 
   // t_b: null,
@@ -16,7 +16,7 @@ class MouseEvent extends Container
 
   constructor(size)
   {
-    $super();
+    super();
     this.fail = new Sprite(DisplayObject.GetResource(GameFail, ResourceType.SPRITE, 'ui.game.fail'));
 
     var r = (size / this.fail.w) * 0.9;
@@ -58,11 +58,11 @@ class MouseEvent extends Container
         this.y = this.final;
       }
     }
-    $super(dt, x, y);
+    super.render(dt, x, y);
   }
 
 }
 
-export default MouseEvent;
+export default GameFail;
 
 

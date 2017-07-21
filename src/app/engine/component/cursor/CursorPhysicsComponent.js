@@ -8,9 +8,11 @@ import EngineEvent from 'app/event/EngineEvent';
 import SigSlt from 'app/engine/message/SigSlt';
 import minibot from 'minibot';
 
+var BindAsEventListener = minibot.core.Utils.BindAsEventListener;
+
 class CursorPhysicsComponent extends PhysicsComponent
 {
-  
+
   // firingTime: null,
 
   // dispenserLocation: null,
@@ -28,7 +30,7 @@ class CursorPhysicsComponent extends PhysicsComponent
 
   constructor()
   {
-    $super();
+    super();
 
 
     this.dispenserLocation = 0;
@@ -50,17 +52,17 @@ class CursorPhysicsComponent extends PhysicsComponent
 
     SigSlt.AddSlot(this, EngineComponent.SLT_CANDY_SHOT_END, this.candyShotEnd);
   }
-  
+
   onAddedToObject()
   {
-    
+
   }
-  
+
   onAddedToSystem()
   {
     this.setProperty('nextPiece', this.system.engine.randomCandy());
 
-    this.system.engine.addEventListener(EngineEvent.FORCE_DROP, this.handleForceDrop.bindAsEventListener(this));
+    this.system.engine.addEventListener(EngineEvent.FORCE_DROP, BindAsEventListener(this.handleForceDrop, this));
   }
 
   onComponentsAdded()
@@ -68,12 +70,12 @@ class CursorPhysicsComponent extends PhysicsComponent
     this.connect(ComponentType.INPUT, EngineComponent.SIG_INPUT_MOVE, EngineComponent.SLT_CURSOR_MOVE);
     this.connect(ComponentType.INPUT, EngineComponent.SIG_INPUT_ADD, EngineComponent.SLT_CURSOR_ADD);
   }
-  
+
   onResourcesLoaded()
   {
 
   }
-  
+
   update(dt)
   {
     this.moveDispenser(dt);
@@ -129,7 +131,7 @@ class CursorPhysicsComponent extends PhysicsComponent
       } else {
         dF = d2;
       }
-      
+
       if(Math.abs(dF) < MOVE_ANGLE) {
         this.dispenserLocation = dest;
         this.moving  = false;
@@ -160,10 +162,10 @@ class CursorPhysicsComponent extends PhysicsComponent
       var candy = this.system.engine.createObject(
         GameObjectType.CANDY,
         {
-  //         "candyType": type,
-  //         "fromCursor": true,
-  //         "h": h,
-  //         "a": a,
+          "candyType": type,
+          "fromCursor": true,
+          "h": h,
+          "a": a,
           "sec": this.insertSection
         }
       );
@@ -179,7 +181,7 @@ class CursorPhysicsComponent extends PhysicsComponent
     this.shooting = false;
     this.moving = true;
   }
-  
+
 }
 
 export default CursorPhysicsComponent;

@@ -5,9 +5,9 @@ import ViewEvent from 'app/event/ViewEvent';
 import GameMenuButton from 'app/display/game/GameMenuButton';
 import GameTimer from './GameTimer';
 
-class MouseEvent extends Container
+class GameUiVert extends minibot.display.scene.Container
 {
-  
+
   // gameTimer: null,
 
   // candiesLeftText: null,
@@ -21,7 +21,7 @@ class MouseEvent extends Container
 
   constructor(width, height, size, matches, ticks, score)
   {
-    $super();
+    super();
 
     this.setWidth(width);
     this.setHeight(height);
@@ -53,7 +53,7 @@ class MouseEvent extends Container
       vbSprite.h *= r;
       vbSprite.x = this.w - vbSprite.w - (35*r);
       vbSprite.y = vby;
-      this.addChild(vbSprite);  
+      this.addChild(vbSprite);
       vby += vbSprite.h;
     }
 
@@ -64,7 +64,7 @@ class MouseEvent extends Container
       hbSprite.h *= r;
       hbSprite.x = hbx - hbSprite.w;
       hbSprite.y = size/4 - hbSprite.h + (35*r);
-      this.addChild(hbSprite);  
+      this.addChild(hbSprite);
       hbx -= hbSprite.w;
     }
 
@@ -156,7 +156,7 @@ class MouseEvent extends Container
 
   render(dt, x, y)
   {
-    $super(dt, x, y);
+    super.render(dt, x, y);
 
     var dx = 0,
       dy = 0;
@@ -192,17 +192,17 @@ class MouseEvent extends Container
 
   }
 
-  handleMatchUpdate: function(value) 
+  handleMatchUpdate(value)
   {
     this.candiesLeftText.setText(value.toString());
   }
 
-  handleDropTimerUpdate: function(value) 
+  handleDropTimerUpdate(value)
   {
     this.gameTimer.handleDropTimerUpdate(value);
   }
 
-  handlePenaltyUpdate: function(value) 
+  handlePenaltyUpdate(value)
   {
     this.penaltyCount = value;
   }
@@ -214,6 +214,4 @@ class MouseEvent extends Container
 
 }
 
-export default MouseEvent;
-
-
+export default GameUiVert;

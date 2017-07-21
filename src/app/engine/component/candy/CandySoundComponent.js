@@ -17,17 +17,17 @@ class CandySoundComponent extends SoundComponent
 
   constructor()
   {
-    $super();
+    super();
   }
-  
+
   onAddedToObject()
   {
-    $super();
+    super.onAddedToObject();
 
     if(this.hasProperty('fromCursor')) {
       SigSlt.AddSlot(this, EngineComponent.SLT_CANDY_SHOT_END, this.candyShotEnd);
     }
-    
+
     SigSlt.AddSlot(this, EngineComponent.SLT_CANDY_DROP_END, this.candyDropEnd);
     SigSlt.AddSlot(this, EngineComponent.SLT_CANDY_SHATTER_START, this.candyShatterStart);
   }
@@ -40,12 +40,12 @@ class CandySoundComponent extends SoundComponent
     this.connect(ComponentType.PHYSICS, EngineComponent.SIG_CANDY_DROP_END, EngineComponent.SLT_CANDY_DROP_END);
     this.connect(ComponentType.LOGIC, EngineComponent.SIG_CANDY_SHATTER_START, EngineComponent.SLT_CANDY_SHATTER_START);
   }
-  
+
   onAddedToSystem()
   {
-    
+
   }
-  
+
   onResourcesLoaded()
   {
 
@@ -87,7 +87,7 @@ class CandySoundComponent extends SoundComponent
     var i = Math.floor(Math.random()*l);
     return CandySoundComponent.CANDY_HIT_SFX[i];
   }
-  
+
 }
 
 export default CandySoundComponent;

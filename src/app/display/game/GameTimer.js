@@ -3,9 +3,9 @@ import minibot from 'minibot';
 import ResourceType from 'app/resource/ResourceType';
 import ViewEvent from 'app/event/ViewEvent';
 
-class MouseEvent extends Container
+class GameTimer extends minibot.display.scene.Container
 {
-  
+
   // length: null,
   // position: null,
 
@@ -15,7 +15,7 @@ class MouseEvent extends Container
 
   constructor(ratio, length)
   {
-    $super();
+    super();
 
     this.length = length;
     this.position = length;
@@ -34,14 +34,14 @@ class MouseEvent extends Container
 
   }
 
-  handleDropTimerUpdate: function(value) 
+  handleDropTimerUpdate(value)
   {
     this.position = value;
   }
 
   render(dt, x, y)
   {
-    $super(dt, x, y);
+    super.render(dt, x, y);
     var dy = this.ratio * 3;
     for(var i = 0; i < this.length; i++) {
       var dx = this.ratio * (30 * i + 18);
@@ -68,6 +68,6 @@ class MouseEvent extends Container
 
 }
 
-export default MouseEvent;
+export default GameTimer;
 
 

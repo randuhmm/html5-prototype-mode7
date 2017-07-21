@@ -7,33 +7,33 @@ import Engine from 'app/engine/Engine';
 import ResourceType from 'app/resource/ResourceType';
 import CandyType from 'app/engine/enum/CandyType';
 
-class SpriteResource extends DisplayComponent
+
+class CursorDisplayComponent extends DisplayComponent
 {
-  
+
   // bow: null,
 
   // candyMap: null,
-  
+
   constructor()
   {
-    $super();
-    
+    super();
+
   }
-  
+
   onAddedToObject()
   {
     this.setProperty("dLocation", 0);
   }
-  
+
   onAddedToSystem()
   {
 
   }
-  
+
   onResourcesLoaded()
   {
     this.bow = this.getResource(ResourceType.SPRITE, "object.bow");
-
     this.candyMap = {};
     this.candyMap[CandyType.A] = this.getResource(ResourceType.SPRITE, "object.candy.01");
     this.candyMap[CandyType.B] = this.getResource(ResourceType.SPRITE, "object.candy.02");
@@ -42,29 +42,28 @@ class SpriteResource extends DisplayComponent
     this.candyMap[CandyType.E] = this.getResource(ResourceType.SPRITE, "object.candy.05");
     this.candyMap[CandyType.F] = this.getResource(ResourceType.SPRITE, "object.candy.06");
     this.candyMap[CandyType.G] = this.getResource(ResourceType.SPRITE, "object.candy.07");
-
   }
-  
+
   update(dt)
   {
-    
+
   }
-  
+
   render(dt, x, y)
   {
     var zoom = 10 - this.system.getZoomLevel();
     var viewport = this.system.getViewport();
     var scene = this.system.getScene();
-    
+
     var a = this.getProperty("dLocation");
-    
+
     var r = 400 * EngineConstants.R;
 
     var bw = this.bow.w * EngineConstants.R;
     var bh = this.bow.h * EngineConstants.R;
     var bx = x + (viewport.w/2) + (r * Math.cos(a));
     var by = y + (viewport.h/2) - (r * Math.sin(a));
-    
+
     //scene.drawRect("", x - s/2, y - s/2, s, s);
     var _a = (a*-1) - (3*Math.PI/4);
 
@@ -91,7 +90,7 @@ class SpriteResource extends DisplayComponent
     var candyx = x + (viewport.w/2) + (candyr * Math.cos(a));
     var candyy = y + (viewport.h/2) - (candyr * Math.sin(a));
 
-    // draw 
+    // draw
     scene.save();
     scene.translate(candyx, candyy);
     scene.rotate(_a);
@@ -114,7 +113,7 @@ class SpriteResource extends DisplayComponent
     var cx = x + (viewport.w/2) + (cr * Math.cos(ca));
     var cy = y + (viewport.h/2) - (cr * Math.sin(ca));
     scene.drawLine(cx, cy, (viewport.w/2), (viewport.h/2));
-    
+
     var da = this.getProperty("dLocation");
     var ds = 20 * EngineConstants.R;
     var dr = 400 * EngineConstants.R;
@@ -123,9 +122,11 @@ class SpriteResource extends DisplayComponent
     scene.drawRect("", dx, dy, ds, ds);
     */
   }
-  
+
 }
 
-export default SpriteResource;
+CursorDisplayComponent.CANDY_H = 13;
+
+export default CursorDisplayComponent;
 
 

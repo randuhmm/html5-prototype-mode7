@@ -6,43 +6,43 @@ import ComponentMessage from 'app/engine/component/core/ComponentMessage';
 import Engine from 'app/engine/Engine';
 import ResourceType from 'app/resource/ResourceType';
 
-class SpriteResource extends DisplayComponent
+class MatchDisplayComponent extends DisplayComponent
 {
-  
-  
+
+
   constructor()
   {
-    $super();
-    
+    super();
+
   }
-  
+
   onAddedToObject()
   {
     this.setProperty("dLocation", 0);
   }
-  
+
   onAddedToSystem()
   {
 
   }
-  
+
   onResourcesLoaded()
   {
 
   }
-  
+
   update(dt)
   {
-    
+
   }
-  
+
   render(dt, x, y)
   {
 
   }
-  
+
 }
 
-export default SpriteResource;
+export default MatchDisplayComponent;
 
 

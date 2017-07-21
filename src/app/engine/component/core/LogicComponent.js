@@ -4,12 +4,12 @@ import ComponentType from 'app/engine/enum/ComponentType';
 
 class LogicComponent extends EngineComponent
 {
-  
+
   constructor()
   {
-    $super(ComponentType.LOGIC);
+    super(ComponentType.LOGIC);
   }
-  
+
 }
 
 export default LogicComponent;

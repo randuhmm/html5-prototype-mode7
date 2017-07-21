@@ -1,19 +1,22 @@
 
+import minibot from 'minibot';
 import EngineSystem from 'app/engine/system/EngineSystem';
 import ComponentType from 'app/engine/enum/ComponentType';
 import EngineEvent from 'app/event/EngineEvent';
 import InputType from 'app/engine/enum/InputType';
 
+var BindAsEventListener = minibot.core.Utils.BindAsEventListener;
+
 class InputSystem extends EngineSystem
 {
-  
+
   // inputQueue: null,
 
   // inputHandlers: null,
 
   constructor()
   {
-    $super(ComponentType.INPUT);
+    super(ComponentType.INPUT);
 
     this.inputQueue = [];
     this.inputHandlers = {};
@@ -21,9 +24,9 @@ class InputSystem extends EngineSystem
 
   onAddedToEngine()
   {
-    this.addEventListener(EngineEvent.INPUT, this.handleInput.bindAsEventListener(this));
+    this.addEventListener(EngineEvent.INPUT, BindAsEventListener(this.handleInput, this));
   }
-  
+
   update(dt)
   {
     while(this.inputQueue.length) {

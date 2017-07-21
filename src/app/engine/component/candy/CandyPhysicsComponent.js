@@ -11,7 +11,7 @@ import minibot from 'minibot';
 
 class CandyPhysicsComponent extends PhysicsComponent
 {
-  
+
   // dropping: null,
 
   // shooting: null,
@@ -19,11 +19,11 @@ class CandyPhysicsComponent extends PhysicsComponent
 
   constructor()
   {
-    $super();
+    super();
     this.shooting = false;
     this.dropping = false;
   }
-  
+
   onAddedToObject()
   {
     if(this.hasProperty('fromCursor')) {
@@ -35,7 +35,7 @@ class CandyPhysicsComponent extends PhysicsComponent
     SigSlt.AddSignal(this, EngineComponent.SIG_CANDY_DROP_END);
     SigSlt.AddSlot(this, EngineComponent.SLT_CANDY_DROP_START, this.candyDropStart);
   }
-  
+
   onAddedToSystem()
   {
 
@@ -45,12 +45,12 @@ class CandyPhysicsComponent extends PhysicsComponent
   {
     this.connect(ComponentType.GRID, EngineComponent.SIG_CANDY_DROP_START, EngineComponent.SLT_CANDY_DROP_START);
   }
-  
+
   onResourcesLoaded()
   {
 
   }
-  
+
   update(dt)
   {
     if(this.shooting) {

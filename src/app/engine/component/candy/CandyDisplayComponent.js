@@ -9,31 +9,31 @@ import ResourceType from 'app/resource/ResourceType';
 import CandyType from 'app/engine/enum/CandyType';
 import GridFlag from 'app/engine/enum/GridFlag';
 
-class SpriteResource extends DisplayComponent
+class CandyDisplayComponent extends DisplayComponent
 {
-  
+
   // sprite: null,
 
   // sprite_016: null,
   // sprite_032: null,
   // sprite_064: null,
   // sprite_128: null,
-  
+
   constructor()
   {
-    $super();
+    super();
   }
-  
+
   onAddedToObject()
   {
-    
+
   }
-  
+
   onAddedToSystem()
   {
-    
+
   }
-  
+
   onResourcesLoaded()
   {
     var id = "";
@@ -60,7 +60,7 @@ class SpriteResource extends DisplayComponent
         id = "object.candy.07";
         break;
     }
-    
+
     this.sprite = this.getResource(ResourceType.SPRITE, id)
 
     this.sprite_016 = this.getResource(ResourceType.SPRITE, id + ".016");
@@ -69,28 +69,28 @@ class SpriteResource extends DisplayComponent
     this.sprite_128 = this.getResource(ResourceType.SPRITE, id + ".128");
 
   }
-  
+
   update(dt)
   {
-    
+
   }
-  
+
   render(dt, x, y)
   {
-    
+
     var zoom = 10 - this.system.getZoomLevel();
     var viewport = this.system.getViewport();
     var scene = this.system.getScene();
-    
+
     var a = this.getProperty("a");
     var h = this.getProperty("h") + zoom;
-    
+
     var s = EngineConstants.WorldToScreenS(h);
     var r = EngineConstants.WorldToScreenR(h);
-    
+
     var selected = ((this.getProperty("flags") >> GridFlag.SELECTED) % 2 != 0)
     if(selected) s *= 1.2;
-    
+
     x += (viewport.w/2) + (r * Math.cos(a)) - s/2;
     y += (viewport.h/2) - (r * Math.sin(a)) - s/2;
 
@@ -116,11 +116,11 @@ class SpriteResource extends DisplayComponent
       s, //dw,
       s //dh
     );
-    
+
   }
-  
+
 }
 
-export default SpriteResource;
+export default CandyDisplayComponent;
 
 

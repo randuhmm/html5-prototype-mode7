@@ -3,15 +3,15 @@ import minibot from 'minibot';
 import ResourceType from 'app/resource/ResourceType';
 import ViewEvent from 'app/event/ViewEvent';
 
-class MouseEvent extends Container
+class MatchesCounter extends minibot.display.scene.Container
 {
-  
+
   // matches: null,
   // text: null,
 
   constructor(matches)
   {
-    $super();
+    super();
 
     this.matches = matches;
 
@@ -22,13 +22,13 @@ class MouseEvent extends Container
 
   }
 
-  handleMatchUpdate: function(value) 
+  handleMatchUpdate(value)
   {
     this.text.setText(value.toString());
   }
 
 }
 
-export default MouseEvent;
+export default MatchesCounter;
 
 

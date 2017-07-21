@@ -58,7 +58,7 @@ class Title extends BaseView
   handleLevelSelect(event, level)
   {
     console.log('Title:handleLevelSelect - ' + level);
-    var viewEvent = new ViewEvent(ViewEvent.LEVEL_SELECTED);
+    var viewEvent = new ViewEvent(ViewEvent.LEVEL_SELECTED, level);
     this.dispatchEvent(viewEvent);
   }
 

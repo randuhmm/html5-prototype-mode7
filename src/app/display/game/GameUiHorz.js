@@ -3,12 +3,17 @@ import minibot from 'minibot';
 import ResourceType from 'app/resource/ResourceType';
 import ViewEvent from 'app/event/ViewEvent';
 
-class MouseEvent extends Container
+var Rect = minibot.display.scene.Rect;
+var TextStyle = minibot.display.scene.TextStyle;
+var Text = minibot.display.scene.Text;
+var Color = minibot.graphics.Color;
+
+class GameUiHorz extends minibot.display.scene.Container
 {
-  
+
   constructor(width, height, size, matches, ticks, score)
   {
-    $super();
+    super();
 
     this.setWidth(width);
     this.setHeight(height);
@@ -26,17 +31,17 @@ class MouseEvent extends Container
 
   }
 
-  handleMatchUpdate: function(value) 
+  handleMatchUpdate(value)
   {
     this.text.setText(value.toString());
   }
 
-  handleDropTimerUpdate: function(value) 
+  handleDropTimerUpdate(value)
   {
     //this.gameTimer.handleDropTimerUpdate(value);
   }
 
-  handlePenaltyUpdate: function(value) 
+  handlePenaltyUpdate(value)
   {
     //this.penaltyCount = value;
   }
@@ -48,6 +53,6 @@ class MouseEvent extends Container
 
 }
 
-export default MouseEvent;
+export default GameUiHorz;
 
 

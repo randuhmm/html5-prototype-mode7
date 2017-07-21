@@ -5,27 +5,27 @@ import ComponentType from 'app/engine/enum/ComponentType';
 
 class PhysicsComponent extends EngineComponent
 {
-  
+
   constructor()
   {
-    $super(ComponentType.PHYSICS);
+    super(ComponentType.PHYSICS);
   }
-  
+
   onAddedToObject()
   {
 
   }
-  
+
   update(dt)
   {
-    
+
   }
-  
+
   render()
   {
     //-- OVERRIDE
   }
-  
+
 }
 
 export default PhysicsComponent;

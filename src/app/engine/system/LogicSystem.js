@@ -26,7 +26,7 @@ class LogicSystem extends EngineSystem
   // voidLength: null,
   // voidCallback: null,
 
-  // 
+  //
   // penalizing: null,
   // penaltyPosition: null,
   // penaltyLast: null,
@@ -41,7 +41,7 @@ class LogicSystem extends EngineSystem
 
   constructor(options)
   {
-    $super(ComponentType.LOGIC);
+    super(ComponentType.LOGIC);
 
     this.dropTimerLength = LogicSystem.PENALTY_TIMER_TICKS;
     this.dropTimerPosition = LogicSystem.PENALTY_TIMER_TICKS;
@@ -71,7 +71,7 @@ class LogicSystem extends EngineSystem
   {
 
   }
-  
+
   update(dt)
   {
     if(!this.isRunning) return;
@@ -216,7 +216,7 @@ class LogicSystem extends EngineSystem
       this.penalty();
       this.voidCount = 0;
     } else {
-      // 
+      //
 
     }
 

@@ -3,9 +3,9 @@ import minibot from 'minibot';
 import ResourceType from 'app/resource/ResourceType';
 import ViewEvent from 'app/event/ViewEvent';
 
-class MouseEvent extends Container
+class ComboMeter extends minibot.display.scene.Container
 {
-  
+
   // length: null,
   // position: null,
   // count: null,
@@ -13,7 +13,7 @@ class MouseEvent extends Container
 
   constructor(width, height, length)
   {
-    $super();
+    super();
 
     this.length = length;
     this.position = 0;
@@ -24,10 +24,9 @@ class MouseEvent extends Container
     this.comboText.hide();
     this.comboText.y = 18;
     this.addChild(this.comboText);
-
   }
 
-  handleComboUpdate: function(value, count) 
+  handleComboUpdate(value, count)
   {
     this.position = value;
     this.count = count;
@@ -41,7 +40,7 @@ class MouseEvent extends Container
 
   render(dt, x, y)
   {
-    $super(dt, x, y);
+    super.render(dt, x, y);
     for(var i = 0; i < this.length; i++) {
       if(i < this.position) {
         this.scene.setFillColor(Color.FromHex('#00AAAA'));
@@ -55,6 +54,6 @@ class MouseEvent extends Container
 
 }
 
-export default MouseEvent;
+export default ComboMeter;
 
 

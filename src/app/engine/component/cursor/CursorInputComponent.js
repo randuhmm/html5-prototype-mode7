@@ -10,19 +10,19 @@ import minibot from 'minibot';
 
 class CursorInputComponent extends EngineComponent
 {
-  
+
   // currentSection: null,
 
   constructor()
   {
-    $super(ComponentType.INPUT);
-    
+    super(ComponentType.INPUT);
+
     SigSlt.AddSignal(this, EngineComponent.SIG_INPUT_MOVE);
     SigSlt.AddSignal(this, EngineComponent.SIG_INPUT_ADD);
     //this.addSignal(EngineComponent.SIG_MOVE_CURSOR);
     //this.addSlot(CursorInputComponent.MOVE_CURSOR, function() {alert('moved')});
   }
-  
+
   onAddedToObject()
   {
     // location properties
@@ -41,13 +41,13 @@ class CursorInputComponent extends EngineComponent
   {
 
   }
-  
+
   onAddedToSystem()
   {
     this.system.addInputHandler(this, InputType.MOVE_CURSOR);
     this.system.addInputHandler(this, InputType.ADD_PIECE);
   }
-  
+
   update(dt)
   {
     // Not allowed on input types
@@ -90,8 +90,8 @@ class CursorInputComponent extends EngineComponent
     */
 
   }
-  
-  
+
+
 }
 
 export default CursorInputComponent;

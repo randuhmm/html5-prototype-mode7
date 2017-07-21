@@ -8,21 +8,21 @@ import EngineConstants from 'app/engine/EngineConstants';
 
 class CandyGridComponent extends GridComponent
 {
-  
+
   constructor()
   {
-    $super();
+    super();
 
   }
-  
+
   onAddedToObject()
   {
-    $super();
+    super.onAddedToObject();
 
     if(this.hasProperty('fromCursor')) {
       SigSlt.AddSlot(this, EngineComponent.SLT_CANDY_SHOT_END, this.candyShotEnd);
     }
-    
+
     SigSlt.AddSlot(this, EngineComponent.SLT_CANDY_DROP_END, this.candyDropEnd);
     SigSlt.AddSignal(this, EngineComponent.SIG_CANDY_DROP_START);
     SigSlt.AddSignal(this, EngineComponent.SIG_CANDY_MATCH);
@@ -105,7 +105,7 @@ class CandyGridComponent extends GridComponent
     this.system.deleteAt(x, y);
     SigSlt.Emit(this, EngineComponent.SIG_CANDY_DROP_START, this);
   }
-  
+
 }
 
 export default CandyGridComponent;

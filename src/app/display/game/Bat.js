@@ -2,7 +2,7 @@
 import minibot from 'minibot';
 import ResourceType from 'app/resource/ResourceType';
 
-class Button extends Container
+class Bat extends minibot.display.scene.Container
 {
 
   // body: null,
@@ -11,7 +11,7 @@ class Button extends Container
 
   constructor(gameSize)
   {
-    $super();
+    super();
 
     var ratio = (gameSize / 5) / 400;
 
@@ -47,9 +47,9 @@ class Button extends Container
   }
 
 
-  
+
 }
 
-export default Button;
+export default Bat;
 
 

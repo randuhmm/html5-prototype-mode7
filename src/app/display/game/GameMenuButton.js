@@ -1,13 +1,13 @@
 
 import minibot from 'minibot';
 
-class Button extends Button
+class GameMenuButton extends minibot.display.scene.Button
 {
   constructor(text, w, h)
   {
-    
+
     var style = new TextStyle("proxima-nova", h*0.70, new Color(Color.RGB, 0, 0, 0), "center", "900");
-    
+
     var upText = new Text(text, style);
     upText.x = w*0.5;
     upText.y = h*0.8;
@@ -17,30 +17,30 @@ class Button extends Button
     var downText = new Text(text, style);
     downText.x = w*0.5;
     downText.y = h*0.8;
-    
+
     var upRect = new Rect(w, h, "", Color.FromHex("#990000"));
     var overRect = new Rect(w, h, "", Color.FromHex("#CC0000"));
     var downRect = new Rect(w, h, "", Color.FromHex("#0000CC"));
-    
+
     var upContainer = new Container();
     upContainer.addChild(upRect);
     upContainer.addChild(upText);
-    
+
     var overContainer = new Container();
     overContainer.addChild(overRect);
     overContainer.addChild(overText);
-    
+
     var downContainer = new Container();
     downContainer.addChild(downRect);
     downContainer.addChild(downText);
-    
-    $super(upContainer, downContainer, overContainer);
+
+    super(upContainer, downContainer, overContainer);
 
     this.addEventListener(MouseEvent.MOUSE_UP, function() {});
   }
-  
+
 }
 
-export default Button;
+export default GameMenuButton;
 
 

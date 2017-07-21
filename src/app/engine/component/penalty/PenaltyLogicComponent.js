@@ -16,29 +16,29 @@ class PenaltyLogicComponent extends LogicComponent
 
   constructor()
   {
-    $super();
+    super();
   }
-  
+
   onAddedToObject()
   {
-    $super();
+    super();
   }
 
   onComponentsAdded()
   {
 
   }
-  
+
   onAddedToSystem()
   {
-    
+
   }
-  
+
   onResourcesLoaded()
   {
 
   }
-  
+
 }
 
 export default PenaltyLogicComponent;
