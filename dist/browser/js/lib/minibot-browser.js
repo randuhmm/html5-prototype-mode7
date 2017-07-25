@@ -496,6 +496,7 @@ var CanvasScene = function (_Scene) {
     }
 
     _this.context = _this.element.getContext("2d");
+    _this.context.imageSmoothingEnabled = false;
 
     _this.touchMap = {};
     _this.touchCount = 0;
@@ -3408,7 +3409,9 @@ var EngineSystem = function () {
     }
   }, {
     key: "onResourcesLoaded",
-    value: function onResourcesLoaded() {}
+    value: function onResourcesLoaded() {
+      //-- OVERRIDE
+    }
   }, {
     key: "update",
     value: function update(dt) {}
@@ -3657,14 +3660,11 @@ var DisplaySystem = function (_EngineSystem) {
 
   }, {
     key: "render",
-    value: function render(dt) {
-
-      var x = 0;
-      var y = 0;
+    value: function render(dt, x, y) {
       var camera = this.getCamera();
       if (camera != null) {
-        var x = camera.getProperty("x") * -1;
-        var y = camera.getProperty("y") * -1;
+        x += camera.getProperty("x") * -1;
+        y += camera.getProperty("y") * -1;
       }
 
       var i, j, layer, component;
@@ -6057,9 +6057,21 @@ system.Stop = function () {
 };
 
 system.CreateScene = function (options) {
+  if (!('element' in options)) {
+    options['element'] = document.createElement('canvas');
+  }
   var scene = new _CanvasScene2.default(options);
   return scene;
 };
+
+// system.CreateBuffer = function(options)
+// {
+//   if(!'element' in options) {
+//     options['element'] = document.createElement('canvas');
+//   }
+//   var buffer = new CanvasBuffer(options);
+//   return buffer;
+// };
 
 // Browser | Native
 system.GetWrapperType = function () {

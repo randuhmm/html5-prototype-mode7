@@ -7712,7 +7712,7 @@ var LoadEngineResourcesCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadEngineResourcesCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/ResourceProxy":73}],40:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/ResourceProxy":75}],40:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7818,7 +7818,7 @@ var LoadGameCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadGameCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/display/Game":53,"app/engine/KartEngine":58,"app/model/DataProxy":72,"app/model/SoundProxy":74,"app/view/GameMediator":80,"minibot":"minibot"}],41:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/display/Game":53,"app/engine/KartEngine":58,"app/model/DataProxy":74,"app/model/SoundProxy":76,"app/view/GameMediator":82,"minibot":"minibot"}],41:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7893,7 +7893,7 @@ var LoadOptionsCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadOptionsCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/display/Options":54,"app/model/ResourceProxy":73,"app/view/OptionsMediator":81}],42:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/display/Options":54,"app/model/ResourceProxy":75,"app/view/OptionsMediator":83}],42:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -7969,7 +7969,7 @@ var LoadTitleCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadTitleCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/display/Title":56,"app/model/ResourceProxy":73,"app/view/TitleMediator":83}],43:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/display/Title":56,"app/model/ResourceProxy":75,"app/view/TitleMediator":85}],43:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8044,7 +8044,7 @@ var LoadViewResourcesCommand = function (_puremvc$SimpleComman) {
 exports.default = LoadViewResourcesCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/ResourceProxy":73,"minibot":"minibot"}],44:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/ResourceProxy":75,"minibot":"minibot"}],44:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8154,7 +8154,7 @@ var ManagerDestroyCommand = function (_puremvc$SimpleComman) {
 exports.default = ManagerDestroyCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/DataProxy":72,"app/model/ResourceProxy":73,"app/model/SoundProxy":74,"minibot":"minibot"}],45:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/DataProxy":74,"app/model/ResourceProxy":75,"app/model/SoundProxy":76,"minibot":"minibot"}],45:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8263,7 +8263,7 @@ var ManagerPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ManagerPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37,"app/model/DataProxy":72,"app/model/ResourceProxy":73,"app/model/SoundProxy":74,"minibot":"minibot"}],46:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/model/DataProxy":74,"app/model/ResourceProxy":75,"app/model/SoundProxy":76,"minibot":"minibot"}],46:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8322,7 +8322,7 @@ var ModelDestroyCommand = function (_puremvc$SimpleComman) {
 exports.default = ModelDestroyCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/model/DataProxy":72,"app/model/ResourceProxy":73,"app/model/SoundProxy":74}],47:[function(require,module,exports){
+},{"app/model/DataProxy":74,"app/model/ResourceProxy":75,"app/model/SoundProxy":76}],47:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8380,7 +8380,7 @@ var ModelPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ModelPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/model/DataProxy":72,"app/model/ResourceProxy":73,"app/model/SoundProxy":74}],48:[function(require,module,exports){
+},{"app/model/DataProxy":74,"app/model/ResourceProxy":75,"app/model/SoundProxy":76}],48:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8574,7 +8574,7 @@ var ViewDestroyCommand = function (_puremvc$SimpleComman) {
 exports.default = ViewDestroyCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/display/BaseView":52,"app/display/Shell":55,"app/view/ShellMediator":82,"minibot":"minibot"}],51:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/Shell":55,"app/view/ShellMediator":84,"minibot":"minibot"}],51:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -8653,7 +8653,7 @@ var ViewPrepCommand = function (_puremvc$SimpleComman) {
 exports.default = ViewPrepCommand;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/display/BaseView":52,"app/display/Shell":55,"app/view/ShellMediator":82,"minibot":"minibot"}],52:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/Shell":55,"app/view/ShellMediator":84,"minibot":"minibot"}],52:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8831,7 +8831,7 @@ var Game = function (_BaseView) {
 
 exports.default = Game;
 
-},{"app/display/BaseView":52,"app/engine/enum/ComponentType":63,"app/engine/enum/InputType":65,"app/event/EngineEvent":70,"app/event/ViewEvent":71,"app/resource/ResourceType":77,"minibot":"minibot"}],54:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/engine/enum/ComponentType":65,"app/engine/enum/InputType":67,"app/event/EngineEvent":72,"app/event/ViewEvent":73,"app/resource/ResourceType":79,"minibot":"minibot"}],54:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8916,7 +8916,7 @@ var Options = function (_BaseView) {
 
 exports.default = Options;
 
-},{"app/display/BaseView":52,"app/display/component/MainMenuButton":57,"app/event/ViewEvent":71,"minibot":"minibot"}],55:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/component/MainMenuButton":57,"app/event/ViewEvent":73,"minibot":"minibot"}],55:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9083,7 +9083,7 @@ DisplayObject.AddResource(Title, _ResourceType2.default.SPRITE, 'ui.title.bg');
 
 exports.default = Title;
 
-},{"app/display/BaseView":52,"app/display/component/MainMenuButton":57,"app/event/ViewEvent":71,"app/resource/ResourceType":77,"minibot":"minibot"}],57:[function(require,module,exports){
+},{"app/display/BaseView":52,"app/display/component/MainMenuButton":57,"app/event/ViewEvent":73,"app/resource/ResourceType":79,"minibot":"minibot"}],57:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9204,16 +9204,21 @@ var KartEngine = function (_Engine) {
   function KartEngine() {
     _classCallCheck(this, KartEngine);
 
-    var systems = [new _KartInputSystem2.default(), new _KartPhysicsSystem2.default(), new _KartDisplaySystem2.default()];
+    // Create the player
+    var player = _ObjectFactory2.default.Create(_GameObjectType2.default.KART, {
+      "x": 0,
+      "y": 0,
+      "a": 0,
+      "av": 0,
+      "lv": 0
+    });
 
-    // Add an object
+    var systems = [new _KartInputSystem2.default(), new _KartPhysicsSystem2.default(), new _KartDisplaySystem2.default(player)];
+
     var _this = _possibleConstructorReturn(this, (KartEngine.__proto__ || Object.getPrototypeOf(KartEngine)).call(this, systems, KartEngine.UPDATE_ORDER));
 
-    var obj = _ObjectFactory2.default.Create(_GameObjectType2.default.KART, {
-      "x": 0,
-      "y": 0
-    });
-    _this.addObject(obj);
+    _this.player = player;
+    _this.addObject(_this.player);
     return _this;
   }
 
@@ -9223,6 +9228,16 @@ var KartEngine = function (_Engine) {
       x += this.viewport.x;
       y += this.viewport.y;
       this.systemsByType[_ComponentType2.default.DISPLAY].render(dt, x, y);
+    }
+  }, {
+    key: 'getPlayer',
+    value: function getPlayer() {
+      return this.player;
+    }
+  }, {
+    key: 'getCamera',
+    value: function getCamera() {
+      return this.camera;
     }
   }]);
 
@@ -9236,7 +9251,7 @@ KartEngine.UPDATE_ORDER.push(_ComponentType2.default.DISPLAY);
 
 exports.default = KartEngine;
 
-},{"./enum/ComponentType":63,"./enum/GameObjectType":64,"./factory/ObjectFactory":66,"./system/KartDisplaySystem":67,"./system/KartInputSystem":68,"./system/KartPhysicsSystem":69,"minibot":"minibot"}],59:[function(require,module,exports){
+},{"./enum/ComponentType":65,"./enum/GameObjectType":66,"./factory/ObjectFactory":68,"./system/KartDisplaySystem":69,"./system/KartInputSystem":70,"./system/KartPhysicsSystem":71,"minibot":"minibot"}],59:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9325,6 +9340,125 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var DisplayComponent = _minibot2.default.engine.component.DisplayComponent;
 
+var CameraDisplayComponent = function (_DisplayComponent) {
+  _inherits(CameraDisplayComponent, _DisplayComponent);
+
+  function CameraDisplayComponent() {
+    _classCallCheck(this, CameraDisplayComponent);
+
+    var _this = _possibleConstructorReturn(this, (CameraDisplayComponent.__proto__ || Object.getPrototypeOf(CameraDisplayComponent)).call(this, _ComponentType2.default.DISPLAY));
+
+    _this.setLayers([1]);
+    return _this;
+  }
+
+  _createClass(CameraDisplayComponent, [{
+    key: 'onResourcesLoaded',
+    value: function onResourcesLoaded() {
+      this.sprite = this.getResource(_ResourceType2.default.SPRITE, "object.bow");
+    }
+  }, {
+    key: 'update',
+    value: function update(dt) {}
+  }, {
+    key: 'render',
+    value: function render(dt, layer, x, y) {
+      var scene = this.system.getScene();
+      scene.drawImage(this.sprite.img, this.sprite.x, //sx,
+      this.sprite.y, //sy,
+      this.sprite.w, //sw,
+      this.sprite.h, //sh,
+      100, 0, this.sprite.w, this.sprite.h);
+    }
+  }]);
+
+  return CameraDisplayComponent;
+}(DisplayComponent);
+
+exports.default = CameraDisplayComponent;
+
+},{"app/engine/KartEngineConstants":59,"app/engine/enum/ComponentType":65,"app/resource/ResourceType":79,"minibot":"minibot"}],61:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _KartEngineConstants = require('app/engine/KartEngineConstants');
+
+var _KartEngineConstants2 = _interopRequireDefault(_KartEngineConstants);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EngineComponent = _minibot2.default.engine.EngineComponent;
+
+var KartPhysicsComponent = function (_EngineComponent) {
+  _inherits(KartPhysicsComponent, _EngineComponent);
+
+  function KartPhysicsComponent() {
+    _classCallCheck(this, KartPhysicsComponent);
+
+    return _possibleConstructorReturn(this, (KartPhysicsComponent.__proto__ || Object.getPrototypeOf(KartPhysicsComponent)).call(this, _ComponentType2.default.PHYSICS));
+  }
+
+  return KartPhysicsComponent;
+}(EngineComponent);
+
+exports.default = KartPhysicsComponent;
+
+},{"app/engine/KartEngineConstants":59,"app/engine/enum/ComponentType":65,"app/resource/ResourceType":79,"minibot":"minibot"}],62:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _minibot = require('minibot');
+
+var _minibot2 = _interopRequireDefault(_minibot);
+
+var _KartEngineConstants = require('app/engine/KartEngineConstants');
+
+var _KartEngineConstants2 = _interopRequireDefault(_KartEngineConstants);
+
+var _ComponentType = require('app/engine/enum/ComponentType');
+
+var _ComponentType2 = _interopRequireDefault(_ComponentType);
+
+var _ResourceType = require('app/resource/ResourceType');
+
+var _ResourceType2 = _interopRequireDefault(_ResourceType);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DisplayComponent = _minibot2.default.engine.component.DisplayComponent;
+
 var KartDisplayComponent = function (_DisplayComponent) {
   _inherits(KartDisplayComponent, _DisplayComponent);
 
@@ -9340,7 +9474,7 @@ var KartDisplayComponent = function (_DisplayComponent) {
   _createClass(KartDisplayComponent, [{
     key: 'onResourcesLoaded',
     value: function onResourcesLoaded() {
-      this.sprite = this.getResource(_ResourceType2.default.SPRITE, "object.bow");
+      this.sprite = this.getResource(_ResourceType2.default.SPRITE, 'level.mariocircuit');
     }
   }, {
     key: 'update',
@@ -9362,7 +9496,7 @@ var KartDisplayComponent = function (_DisplayComponent) {
 
 exports.default = KartDisplayComponent;
 
-},{"app/engine/KartEngineConstants":59,"app/engine/enum/ComponentType":63,"app/resource/ResourceType":77,"minibot":"minibot"}],61:[function(require,module,exports){
+},{"app/engine/KartEngineConstants":59,"app/engine/enum/ComponentType":65,"app/resource/ResourceType":79,"minibot":"minibot"}],63:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9411,7 +9545,7 @@ var KartInputComponent = function (_InputComponent) {
 
 exports.default = KartInputComponent;
 
-},{"app/engine/KartEngineConstants":59,"app/engine/enum/ComponentType":63,"app/resource/ResourceType":77,"minibot":"minibot"}],62:[function(require,module,exports){
+},{"app/engine/KartEngineConstants":59,"app/engine/enum/ComponentType":65,"app/resource/ResourceType":79,"minibot":"minibot"}],64:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9450,7 +9584,7 @@ var KartPhysicsComponent = function (_EngineComponent) {
   function KartPhysicsComponent() {
     _classCallCheck(this, KartPhysicsComponent);
 
-    return _possibleConstructorReturn(this, (KartPhysicsComponent.__proto__ || Object.getPrototypeOf(KartPhysicsComponent)).call(this, _ComponentType2.default.INPUT));
+    return _possibleConstructorReturn(this, (KartPhysicsComponent.__proto__ || Object.getPrototypeOf(KartPhysicsComponent)).call(this, _ComponentType2.default.PHYSICS));
   }
 
   return KartPhysicsComponent;
@@ -9458,7 +9592,7 @@ var KartPhysicsComponent = function (_EngineComponent) {
 
 exports.default = KartPhysicsComponent;
 
-},{"app/engine/KartEngineConstants":59,"app/engine/enum/ComponentType":63,"app/resource/ResourceType":77,"minibot":"minibot"}],63:[function(require,module,exports){
+},{"app/engine/KartEngineConstants":59,"app/engine/enum/ComponentType":65,"app/resource/ResourceType":79,"minibot":"minibot"}],65:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9477,7 +9611,7 @@ ComponentType.STATISTICS = 8;
 
 exports.default = ComponentType;
 
-},{}],64:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9491,7 +9625,7 @@ GameObjectType.CAMERA = 2;
 
 exports.default = GameObjectType;
 
-},{}],65:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9507,7 +9641,7 @@ InputType.RIGHT = 4;
 
 exports.default = InputType;
 
-},{}],66:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9534,10 +9668,15 @@ var _KartPhysicsComponent = require('../component/kart/KartPhysicsComponent');
 
 var _KartPhysicsComponent2 = _interopRequireDefault(_KartPhysicsComponent);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _CameraPhysicsComponent = require('../component/camera/CameraPhysicsComponent');
 
-// import CameraPhysicsComponent from '../component/camera/CameraPhysicsComponent';
-// import CameraDisplayComponent from '../component/Camera/CameraDisplayComponent';
+var _CameraPhysicsComponent2 = _interopRequireDefault(_CameraPhysicsComponent);
+
+var _CameraDisplayComponent = require('../component/Camera/CameraDisplayComponent');
+
+var _CameraDisplayComponent2 = _interopRequireDefault(_CameraDisplayComponent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var EngineObject = _minibot2.default.engine.EngineObject;
 
@@ -9553,8 +9692,8 @@ ObjectFactory.Create = function (type, data) {
       object.addComponent(new _KartPhysicsComponent2.default());
       break;
     case _GameObjectType2.default.CAMERA:
-      // object.addComponent(new CameraPhysicsComponent());
-      // object.addComponent(new CameraDisplayComponent());
+      object.addComponent(new _CameraPhysicsComponent2.default());
+      object.addComponent(new _CameraDisplayComponent2.default());
       break;
   }
 
@@ -9565,7 +9704,7 @@ ObjectFactory.Create = function (type, data) {
 
 exports.default = ObjectFactory;
 
-},{"../component/kart/KartDisplayComponent":60,"../component/kart/KartInputComponent":61,"../component/kart/KartPhysicsComponent":62,"../enum/GameObjectType":64,"minibot":"minibot"}],67:[function(require,module,exports){
+},{"../component/Camera/CameraDisplayComponent":60,"../component/camera/CameraPhysicsComponent":61,"../component/kart/KartDisplayComponent":62,"../component/kart/KartInputComponent":63,"../component/kart/KartPhysicsComponent":64,"../enum/GameObjectType":66,"minibot":"minibot"}],69:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9599,21 +9738,131 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var BindAsEventListener = _minibot2.default.core.Utils.BindAsEventListener,
-    DisplaySystem = _minibot2.default.engine.system.DisplaySystem;
+    DisplaySystem = _minibot2.default.engine.system.DisplaySystem,
+    CreateScene = _minibot2.default.system.CreateScene;
 
 var KartDisplaySystem = function (_DisplaySystem) {
   _inherits(KartDisplaySystem, _DisplaySystem);
 
-  function KartDisplaySystem() {
+  function KartDisplaySystem(player, camera) {
     _classCallCheck(this, KartDisplaySystem);
 
-    return _possibleConstructorReturn(this, (KartDisplaySystem.__proto__ || Object.getPrototypeOf(KartDisplaySystem)).call(this, _ComponentType2.default.DISPLAY));
+    var _this = _possibleConstructorReturn(this, (KartDisplaySystem.__proto__ || Object.getPrototypeOf(KartDisplaySystem)).call(this, _ComponentType2.default.DISPLAY));
+
+    _this.player = player;
+    _this.camera = camera;
+    _this.modes = [];
+    _this.levelSprite = null;
+
+    // Viewport
+    _this.omega = 120 * Math.PI / 180;
+    _this.theta = 60 * Math.PI / 180;
+    _this.alpha = 30 * Math.PI / 180;
+    _this.h = 15;
+    _this.H = 180;
+    _this.LH = 1;
+
+    _this.dx = 0;
+    return _this;
   }
 
   _createClass(KartDisplaySystem, [{
     key: 'onAddedToEngine',
     value: function onAddedToEngine() {
       this.addResource(_ResourceType2.default.SPRITE, 'object.bow');
+      this.addResource(_ResourceType2.default.SPRITE, 'level.mariocircuit');
+    }
+  }, {
+    key: 'onResourcesLoaded',
+    value: function onResourcesLoaded() {
+      // Get the level image
+      this.levelSprite = this.getResource(_ResourceType2.default.SPRITE, 'level.mariocircuit');
+
+      // Prepare the ground canvas
+      var max = Math.max(this.levelSprite.w, this.levelSprite.h);
+      this.groundScene = CreateScene({
+        'enableEvents': false,
+        'width': max,
+        'height': max
+      });
+
+      // INSERT FOR DEBUGGING
+      document.getElementById('wrapper').appendChild(this.groundScene.getElement());
+
+      // Viewport Settings
+      var WIDTH = 320;
+      var omega = 120 * Math.PI / 180;
+      var theta = 60 * Math.PI / 180;
+      var alpha = 30 * Math.PI / 180;
+      var h = 15;
+      var H = 180;
+      var LH = 1;
+      var sx,
+          sy,
+          sw,
+          sh,
+          dx,
+          dw,
+          w = 0,
+          w1 = 0,
+          w2 = 0,
+          d1 = 0,
+          d2 = 0;
+      for (var L = 1; L <= H; L++) {
+        this.modes[L] = null;
+        w1 = 2 * h * Math.tan((Math.PI - theta) / 2 + alpha * (L - 1) / H) / Math.tan(omega / 2);
+        w2 = 2 * h * Math.tan((Math.PI - theta) / 2 + alpha * L / H) / Math.tan(omega / 2);
+        d1 = h * Math.tan((Math.PI - theta) / 2 + alpha * (L - 1) / H);
+        d2 = h * Math.tan((Math.PI - theta) / 2 + alpha * L / H);
+        //w = w1 + (w2-w1)/2;
+        w = w1;
+        //if(d2 > groundScene.height) continue;
+        sx = (this.groundScene.width - w) / 2;
+        sy = this.groundScene.height - d1;
+        sw = w;
+        sh = d2 - d1;
+        dw = WIDTH;
+        dx = 0;
+        if (w > this.groundScene.width) {
+          sx = 0;
+          sw = this.groundScene.width;
+          dw = WIDTH * (sw / w);
+          dx = (WIDTH - dw) / 2;
+        }
+        this.modes[L] = {
+          'sx': sx,
+          'sy': sy,
+          'sw': sw,
+          'sh': sh,
+          'dx': dx,
+          'dw': dw
+        };
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render(dt, x, y) {
+      //super.render(dt, x, y);
+
+      // Clear the canvas
+      this.groundScene.clear();
+      // this.groundContext.save();
+      // this.groundContext.translate(dx + px, dy + py);
+      // this.groundContext.rotate(pa);
+      // this.groundContext.translate((dx + px)*-1, (dy + py)*-1);
+      this.dx += dt / 20.0;
+      this.groundScene.drawImage(this.levelSprite.img, 0, 0, this.levelSprite.w, this.levelSprite.h, 0, this.dx, this.levelSprite.w, this.levelSprite.h);
+      // this.groundContext.restore();
+
+      var element = this.groundScene.getElement();
+
+      var scene = this.getScene();
+      var HEIGHT = 200;
+      for (var L = 1; L <= this.H; L++) {
+        var val = this.modes[L];
+        if (val == undefined) continue;
+        scene.drawImage(element, val.sx, val.sy, val.sw, val.sh, val.dx, HEIGHT - L * this.LH, val.dw, this.LH);
+      }
     }
   }]);
 
@@ -9622,7 +9871,7 @@ var KartDisplaySystem = function (_DisplaySystem) {
 
 exports.default = KartDisplaySystem;
 
-},{"app/engine/enum/ComponentType":63,"app/event/EngineEvent":70,"app/resource/ResourceType":77,"minibot":"minibot"}],68:[function(require,module,exports){
+},{"app/engine/enum/ComponentType":65,"app/event/EngineEvent":72,"app/resource/ResourceType":79,"minibot":"minibot"}],70:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9661,7 +9910,7 @@ var KartInputSystem = function (_InputSystem) {
 
 exports.default = KartInputSystem;
 
-},{"app/engine/enum/ComponentType":63,"minibot":"minibot"}],69:[function(require,module,exports){
+},{"app/engine/enum/ComponentType":65,"minibot":"minibot"}],71:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9709,7 +9958,7 @@ var KartPhysicsSystem = function (_EngineSystem) {
 
 exports.default = KartPhysicsSystem;
 
-},{"app/engine/enum/ComponentType":63,"minibot":"minibot"}],70:[function(require,module,exports){
+},{"app/engine/enum/ComponentType":65,"minibot":"minibot"}],72:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9742,7 +9991,7 @@ var EngineEvent = function (_minibot$event$Engine) {
 
 exports.default = EngineEvent;
 
-},{"minibot":"minibot"}],71:[function(require,module,exports){
+},{"minibot":"minibot"}],73:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9794,7 +10043,7 @@ ViewEvent.NEXT_STAGE = "NextStage";
 
 exports.default = ViewEvent;
 
-},{"minibot":"minibot"}],72:[function(require,module,exports){
+},{"minibot":"minibot"}],74:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -9998,7 +10247,7 @@ DataProxy.DATA = {
 exports.default = DataProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./vo/LevelVO":76}],73:[function(require,module,exports){
+},{"./vo/LevelVO":78}],75:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -10241,7 +10490,7 @@ ResourceProxy.TEMPLATE_URL = "tpl/";
 exports.default = ResourceProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/resource/ResourceType":77,"app/resource/TemplateResource":78,"http":26,"minibot":"minibot"}],74:[function(require,module,exports){
+},{"app/resource/ResourceType":79,"app/resource/TemplateResource":80,"http":26,"minibot":"minibot"}],76:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -10449,7 +10698,7 @@ var SoundProxy = function (_puremvc$Proxy) {
 exports.default = SoundProxy;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],75:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10470,7 +10719,7 @@ var BaseVO = function BaseVO(data) {
 
 exports.default = BaseVO;
 
-},{}],76:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10509,7 +10758,7 @@ var LevelVO = function (_BaseVO) {
 
 exports.default = LevelVO;
 
-},{"./BaseVO":75}],77:[function(require,module,exports){
+},{"./BaseVO":77}],79:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10531,7 +10780,7 @@ exports.default = {
   TEMPLATE: 13
 };
 
-},{"minibot":"minibot"}],78:[function(require,module,exports){
+},{"minibot":"minibot"}],80:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10611,7 +10860,7 @@ var TemplateResource = function (_minibot$resource$Res) {
 
 exports.default = TemplateResource;
 
-},{"app/resource/ResourceType":77,"minibot":"minibot"}],79:[function(require,module,exports){
+},{"app/resource/ResourceType":79,"minibot":"minibot"}],81:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -10685,7 +10934,7 @@ var BaseMediator = function (_puremvc$Mediator) {
 exports.default = BaseMediator;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/event/ViewEvent":71,"minibot":"minibot"}],80:[function(require,module,exports){
+},{"app/event/ViewEvent":73,"minibot":"minibot"}],82:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10776,7 +11025,7 @@ var GameMediator = function (_BaseMediator) {
 
 exports.default = GameMediator;
 
-},{"app/ApplicationConstants":37,"app/event/ViewEvent":71,"app/view/BaseMediator":79}],81:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/event/ViewEvent":73,"app/view/BaseMediator":81}],83:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10842,7 +11091,7 @@ OptionsMediator.NAME = "OptionsMediator";
 
 exports.default = OptionsMediator;
 
-},{"app/ApplicationConstants":37,"app/event/ViewEvent":71,"app/view/BaseMediator":79}],82:[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/event/ViewEvent":73,"app/view/BaseMediator":81}],84:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -10922,7 +11171,7 @@ var ShellMediator = function (_puremvc$Mediator) {
 exports.default = ShellMediator;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"app/ApplicationConstants":37}],83:[function(require,module,exports){
+},{"app/ApplicationConstants":37}],85:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10997,7 +11246,7 @@ TitleMediator.NAME = "TitleMediator";
 
 exports.default = TitleMediator;
 
-},{"app/ApplicationConstants":37,"app/event/ViewEvent":71,"app/view/BaseMediator":79}],"app":[function(require,module,exports){
+},{"app/ApplicationConstants":37,"app/event/ViewEvent":73,"app/view/BaseMediator":81}],"app":[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11036,4 +11285,4 @@ app.view.ShellMediator = require('app/view/ShellMediator').default;
 
 exports.default = app;
 
-},{"app/ApplicationConstants":37,"app/ApplicationFacade":38,"app/controller/ManagerPrepCommand":45,"app/controller/ModelPrepCommand":47,"app/controller/StartupCommand":49,"app/controller/ViewPrepCommand":51,"app/display/Shell":55,"app/model/DataProxy":72,"app/model/ResourceProxy":73,"app/view/ShellMediator":82}]},{},[]);
+},{"app/ApplicationConstants":37,"app/ApplicationFacade":38,"app/controller/ManagerPrepCommand":45,"app/controller/ModelPrepCommand":47,"app/controller/StartupCommand":49,"app/controller/ViewPrepCommand":51,"app/display/Shell":55,"app/model/DataProxy":74,"app/model/ResourceProxy":75,"app/view/ShellMediator":84}]},{},[]);

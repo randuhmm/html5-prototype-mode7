@@ -5,7 +5,7 @@ import ResourceType from 'app/resource/ResourceType';
 
 var DisplayComponent = minibot.engine.component.DisplayComponent;
 
-class KartDisplayComponent extends DisplayComponent {
+class CameraDisplayComponent extends DisplayComponent {
 
   constructor() {
     super(ComponentType.DISPLAY);
@@ -13,7 +13,7 @@ class KartDisplayComponent extends DisplayComponent {
   }
 
   onResourcesLoaded() {
-    this.sprite = this.getResource(ResourceType.SPRITE, 'level.mariocircuit');
+    this.sprite = this.getResource(ResourceType.SPRITE, "object.bow");
   }
 
   update(dt) {
@@ -28,7 +28,7 @@ class KartDisplayComponent extends DisplayComponent {
       this.sprite.y, //sy,
       this.sprite.w, //sw,
       this.sprite.h, //sh,
-      0,
+      100,
       0,
       this.sprite.w,
       this.sprite.h
@@ -37,4 +37,4 @@ class KartDisplayComponent extends DisplayComponent {
 
 }
 
-export default KartDisplayComponent;
+export default CameraDisplayComponent;

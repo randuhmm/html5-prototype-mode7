@@ -1,4 +1,3 @@
-
 import minibot from 'minibot';
 import ComponentType from './enum/ComponentType';
 import KartInputSystem from './system/KartInputSystem';
@@ -10,34 +9,44 @@ import GameObjectType from './enum/GameObjectType';
 var Engine = minibot.engine.Engine
 
 
-class KartEngine extends Engine
-{
+class KartEngine extends Engine {
 
-  constructor()
-  {
+  constructor() {
+    
+    // Create the player
+    var player = ObjectFactory.Create(
+      GameObjectType.KART, {
+        "x": 0,
+        "y": 0,
+        "a": 0,
+        "av": 0,
+        "lv": 0
+      }
+    );
+
     var systems = [
       new KartInputSystem(),
       new KartPhysicsSystem(),
-      new KartDisplaySystem()
+      new KartDisplaySystem(player)
     ];
     super(systems, KartEngine.UPDATE_ORDER);
 
-    // Add an object
-    var obj = ObjectFactory.Create(
-      GameObjectType.KART,
-      {
-        "x": 0,
-        "y": 0
-      }
-    );
-    this.addObject(obj);
+    this.player = player;
+    this.addObject(this.player);
   }
 
-  render(dt, x, y)
-  {
+  render(dt, x, y) {
     x += this.viewport.x;
     y += this.viewport.y;
     this.systemsByType[ComponentType.DISPLAY].render(dt, x, y);
+  }
+
+  getPlayer() {
+    return this.player;
+  }
+
+  getCamera() {
+    return this.camera;
   }
 
 }
