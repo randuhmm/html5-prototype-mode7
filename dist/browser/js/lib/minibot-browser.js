@@ -496,7 +496,6 @@ var CanvasScene = function (_Scene) {
     }
 
     _this.context = _this.element.getContext("2d");
-    _this.context.imageSmoothingEnabled = false;
 
     _this.touchMap = {};
     _this.touchCount = 0;
@@ -577,7 +576,12 @@ var CanvasScene = function (_Scene) {
   }, {
     key: 'drawRect',
     value: function drawRect(mode, x, y, w, h) {
-      this.context.fillRect(x, y, w, h);
+      // TMP HACK FOR STROKE DRAW
+      if (mode) {
+        this.context.strokeRect(x, y, w, h);
+      } else {
+        this.context.fillRect(x, y, w, h);
+      }
     }
   }, {
     key: 'drawText',
@@ -3716,6 +3720,8 @@ var InputSystem = function (_EngineSystem) {
 
   function InputSystem(type) {
     _classCallCheck(this, InputSystem);
+
+    console.log("InputSystem");
 
     var _this = _possibleConstructorReturn(this, (InputSystem.__proto__ || Object.getPrototypeOf(InputSystem)).call(this, type));
 

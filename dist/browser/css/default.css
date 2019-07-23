@@ -45,8 +45,24 @@ div#wrapper {
 	padding: 0;
 }
 
+div#wrapper .rotate {
+	color: #FFFFFF;
+	margin-top: 100px;
+	font-size: 2em;
+	text-align: center;
+}
+
 div#debug {
 	background-color: #999999;
+}
+
+@media (orientation: portrait) {
+	div#wrapper.mobile canvas { display: none; }
+	div#wrapper.mobile .rotate { display: block; }
+}
+@media (orientation: landscape) {
+	div#wrapper.mobile canvas { display: block; }
+	div#wrapper.mobile .rotate { display: none; }
 }
 
 canvas {

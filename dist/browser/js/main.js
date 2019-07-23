@@ -32,6 +32,7 @@
 
     var width = 320;
     var height = 200;
+    var scale = width / height;
     var ratio = 1;
     var eventTypes = minibot.display.scene.Scene.MOUSE_EVENTS;
 
@@ -53,12 +54,28 @@
 
       // Scale the canvas to fit
       var rect = base.getBoundingClientRect();
-      if(rect.width <= rect.height) {
-        ratio = width / rect.width;
-        canvas.style.marginTop = (rect.height - (height / ratio)) / 2 + 'px';
+      var rWidth = rect.width;
+      var rHeight = rect.height;
+      if(platformType == minibot.system.PlatformType.MOBILE) {
+        var overlay = document.createElement('div');
+        overlay.classList.add('rotate');
+        overlay.innerHTML = 'Please rotate your device.<br\>(Or tap to exit)';
+        base.classList.add('mobile');
+        base.appendChild(overlay);
+        rWidth = Math.max(rect.width, rect.height);
+        rHeight = Math.min(rect.width, rect.height);
+        overlay.onclick = function(event) {
+          document.webkitExitFullscreen();
+        };
+      }
+      
+      var rectScale = rWidth / rHeight;
+      if(rectScale <= scale) {
+        ratio = width / rWidth;
+        canvas.style.marginTop = (rHeight - (height / ratio)) / 2 + 'px';
       } else {
-        ratio = height / rect.height;
-        canvas.style.marginLeft = (rect.width - (width / ratio)) / 2 + 'px';
+        ratio = height / rHeight;
+        canvas.style.marginLeft = (rWidth - (width / ratio)) / 2 + 'px';
       }
 
       var options = {
